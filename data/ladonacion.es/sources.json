@@ -1,0 +1,244 @@
+{"sources": [
+    {
+      "id": "abc",
+      "name": "ABC",
+      "logo": "sources/logos/abc.svg",
+      "avatar": "sources/avatars/abc.png",
+      "country": "es",
+      "origin": "https://www.abc.es"
+    },
+    {
+      "id": "elconfidencial",
+      "name": "El Confidencial",
+      "logo": "sources/logos/elconfidencial.svg",
+      "avatar": "sources/avatars/elconfidencial.jpg",
+      "country": "es",
+      "origin": "https://www.elconfidencial.com"
+    },
+    {
+      "id": "eldiario",
+      "name": "elDiario.es",
+      "logo": "sources/logos/eldiario.svg",
+      "avatar": "sources/avatars/eldiario.jpg",
+      "country": "es",
+      "origin": "https://www.eldiario.es"
+    },
+    {
+      "id": "elespanol",
+      "name": "El Español",
+      "logo": "sources/logos/elespanol.svg",
+      "avatar": "sources/avatars/elespanol.jpg",
+      "country": "es",
+      "origin": "https://www.elespanol.com"
+    },
+    {
+      "id": "elmundo",
+      "name": "El Mundo",
+      "logo": "sources/logos/elmundo.svg",
+      "avatar": "sources/avatars/elmundo.jpg",
+      "country": "es",
+      "origin": "https://www.elmundo.es"
+    },
+    {
+      "id": "elpais",
+      "name": "El País",
+      "logo": "sources/logos/elpais.svg",
+      "avatar": "sources/avatars/elpais.png",
+      "country": "es",
+      "origin": "https://(english\\.)?elpais.com"
+    },
+    {
+      "id": "huffpost",
+      "name": "El HuffPost",
+      "logo": "sources/logos/huffpost.svg",
+      "avatar": "sources/avatars/huffpost.jpg",
+      "country": "es",
+      "origin": "https://www.huffingtonpost.es"
+    },
+    {
+      "id": "larazon",
+      "name": "La Razón",
+      "logo": "sources/logos/larazon.svg",
+      "avatar": "sources/avatars/larazon.jpg",
+      "country": "es",
+      "origin": "https://www.larazon.es"
+    },
+    {
+      "id": "lavanguardia",
+      "name": "La Vanguardia",
+      "logo": "sources/logos/lavanguardia.svg",
+      "avatar": "sources/avatars/lavanguardia.jpg",
+      "country": "es",
+      "origin": "https://www.lavanguardia.com"
+    },
+    {
+      "id": "rtve",
+      "name": "RTVE",
+      "logo": "sources/logos/rtve.svg",
+      "avatar": "sources/avatars/rtve.jpg",
+      "country": "es",
+      "origin": "https://www.rtve.es"
+    },
+    {
+      "id": "telegraph",
+      "name": "The Telegraph",
+      "logo": "sources/logos/telegraph.svg",
+      "avatar": "sources/avatars/telegraph.jpg",
+      "country": "gb",
+      "origin": "https://www.telegraph.co.uk"
+    },
+    {
+      "id": "vozpopuli",
+      "name": "Vozpópuli",
+      "logo": "sources/logos/vozpopuli.svg",
+      "avatar": "sources/avatars/vozpopuli.png",
+      "country": "es",
+      "origin": "https://www.vozpopuli.com"
+    },
+    {
+      "id": "tagesanzeiger",
+      "name": "Tages-Anzeiger",
+      "logo": "sources/logos/tagesanzeiger.svg",
+      "avatar": "sources/avatars/tagesanzeiger.jpg",
+      "country": "ch",
+      "origin": "https://www.tagesanzeiger.ch"
+    },
+    {
+      "id": "ft",
+      "name": "Financial Times",
+      "logo": "sources/logos/ft.svg",
+      "avatar": "sources/avatars/ft.jpg",
+      "country": "gb",
+      "origin": "https://www.ft.com"
+    },
+    {
+      "id": "dw",
+      "name": "Deutsche Welle",
+      "logo": "sources/logos/dw.svg",
+      "avatar": "sources/avatars/dw.jpg",
+      "country": "de",
+      "origin": "https://www.dw.com"
+    },
+    {
+      "id": "thetimes",
+      "name": "The Times",
+      "logo": "sources/logos/times.svg",
+      "avatar": "sources/avatars/thetimes.png",
+      "country": "gb",
+      "origin": "https://www.thetimes.co.uk"
+    },
+    {
+      "id": "tdg",
+      "name": "Tribune de Genève",
+      "logo": "sources/logos/tdg.svg",
+      "avatar": "sources/avatars/tdg.jpg",
+      "country": "ch",
+      "origin": "https://www.tdg.ch"
+    },
+    {
+      "id": "bbc",
+      "name": "BBC News",
+      "logo": "sources/logos/bbc.svg",
+      "avatar": "sources/avatars/bbc.jpg",
+      "country": "gb",
+      "origin": "https://www.bbc.com"
+    },
+    {
+      "id": "sueddeutsche",
+      "name": "Süddeutsche Zeitung",
+      "logo": "sources/logos/sueddeutsche.svg",
+      "avatar": "sources/avatars/sueddeutsche.jpg",
+      "country": "de",
+      "origin": "https://www.sueddeutsche.de"
+    },
+    {
+      "id": "lesoir",
+      "name": "Le Soir Plus",
+      "logo": "sources/logos/lesoir.svg",
+      "avatar": "sources/avatars/lesoir.png",
+      "country": "be",
+      "origin": "https://plus.lesoir.be"
+    },
+    {
+      "id": "lastampa",
+      "name": "La Stampa",
+      "logo": "sources/logos/lastampa.svg",
+      "avatar": "sources/avatars/lastampa.png",
+      "country": "it",
+      "origin": "https://www.lastampa.it"
+    },
+    {
+      "id": "bild",
+      "name": "Bild",
+      "logo": "sources/logos/bild.svg",
+      "avatar": "sources/avatars/bild.jpg",
+      "country": "de",
+      "origin": "https://www.bild.de"
+    },
+    {
+      "id": "20minutos",
+      "name": "20 minutos",
+      "logo": "sources/logos/20minutos.svg",
+      "avatar": "sources/avatars/20minutos.png",
+      "country": "es",
+      "origin": "https://www.20minutos.es"
+    },
+    {
+      "id": "casareal",
+      "name": "Casa Real",
+      "logo": "sources/logos/casa_real.svg",
+      "avatar": "sources/avatars/casareal.jpg",
+      "country": "es",
+      "origin": "https://www.casareal.es"
+    },
+    {
+      "id": "boe",
+      "name": "BOE",
+      "logo": "sources/logos/boe.svg",
+      "avatar": "sources/avatars/boe.jpg",
+      "country": "es",
+      "origin": "https://www.boe.es"
+    },
+    {
+      "id": "okdiario",
+      "name": "Okdiario",
+      "logo": "sources/logos/okdiario.svg",
+      "avatar": "sources/avatars/okdiario.png",
+      "country": "es",
+      "origin": "https://okdiario.com"
+    },
+    {
+      "id": "companies_house",
+      "name": "Companies House",
+      "logo": "sources/logos/companies_house.svg",
+      "avatar": "sources/avatars/companies_house.jpg",
+      "country": "gb",
+      "origin": "https://find-and-update.company-information.service.gov.uk"
+    },
+    {
+      "id": "icij",
+      "name": "Consorcio Internacional de Periodistas de Investigación",
+      "logo": "sources/logos/icij.svg",
+      "avatar": "sources/avatars/icij.png",
+      "country": "us",
+      "origin": "https://offshoreleaks.icij.org"
+    },
+    {
+      "id": "nyt",
+      "name": "New York Times",
+      "logo": "sources/logos/nyt.svg",
+      "avatar": "sources/avatars/nyt.png",
+      "country": "us",
+      "origin": "https://www.nytimes.com"
+    },
+    {
+      "id": "nius",
+      "name": "Nius",
+      "logo": "sources/logos/nius.svg",
+      "avatar": "sources/avatars/nius.png",
+      "country": "es",
+      "origin": "https://www.niusdiario.es/"
+    }
+  ]
+
+}
