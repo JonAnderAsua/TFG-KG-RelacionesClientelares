@@ -2,6 +2,7 @@ from rdflib import Graph, URIRef, Literal, BNode
 from rdflib.namespace import FOAF, RDF
 import json
 import Sinpleak
+import Erlaziodunak
 
 #Elementuen hasieraketa
 artikuluak = ""
@@ -97,8 +98,6 @@ def pertsonakAtera():
         zerrenda.append(x)
     return zerrenda
 
-
-
 def bilatuObjektua(s, zerrenda):
 #In: Id bat eta zein zerrendan bilatu behar den
 #Out: Objektua
@@ -109,7 +108,32 @@ def bilatuObjektua(s, zerrenda):
             break
     return emaitza
 
+def getErlazioak(lista):
+#In: Erlazioen zerrenda JSON eran
+#Out: Erlazioen zerrenda objektu eran
+    global entZer, dokZer, perZer, lekZer, ekiZer
+    zerrenda = []
+    for i in lista:
+        ida = i["object"].split("/")[2]
+        if "persons/" in i["object"]:  # Pertsona bat da
+            erabilZer = perZer
+        elif "entities/" in i["object"]:  # Entitate bat da
+            erabilZer = entZer
+        elif "document/" in i["object"]:  # Dokumentu bat da
+            erabilZer = dokZer
+        elif "places/" in i["object"]: #Leku bat da
+            erabilZer = lekZer
+        elif "events/" in i["object"]: # Ekitaldi bat da
+            erabilZer = ekiZer
+        zerrenda.append(bilatuObjektua(ida, erabilZer))
 
+def dokumentuakAtera():
+#In: -
+#Out: Dokumentu objetuen zerrenda bat
+    global dokumentuak
+    for i in dokumentuak["documents"]:
+        erlazioak = getErlazioak(i["relations"])
+        x = Erlaziodunak.Dokumentua(i["id"],i["title"],i["description"],i["date"],erlazioak)
 
 
 def tuplakAtera():
@@ -138,6 +162,8 @@ if __name__ == "__main__":
     #lekZer = lekuakAtera()
     #perZer = pertsonakAtera()
 
+    print("Dokumentuak aterako dira")
+    dokZer = dokumentuakAtera()
     print("Tuplak sortuko dira")
     tuplakAtera()
 
