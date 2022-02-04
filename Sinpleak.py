@@ -1,7 +1,11 @@
 class Entitatea:
-    def __init__(self, izena, desk):
+    def __init__(self, id, izena, desk):
+        self.id = id
         self.izena = izena
         self.deskribapena = desk
+
+    def getId(self):
+        return self.id
 
     def getIzena(self):
         return self.izena
@@ -10,10 +14,14 @@ class Entitatea:
         return self.deskribapena
 
 class Ekitaldi:
-    def __init__(self, izena, data, desk):
+    def __init__(self, id, izena, data, desk):
+        self.id = id
         self.izena = izena
         self.data = data
         self.deskribapena = desk
+
+    def getId(self):
+        return self.id
 
     def getIzena(self):
         return self.izena
@@ -25,9 +33,13 @@ class Ekitaldi:
         return self.deskribapena
 
 class Aldizkari:
-    def __init__(self, izena, web):
+    def __init__(self, id, izena, web):
+        self.id = id
         self.izena = izena
         self.webgune = web
+
+    def getId(self):
+        return self.id
 
     def getIzena(self):
         return self.izena
@@ -36,11 +48,15 @@ class Aldizkari:
         return self.webgune
 
 class Lekua:
-    def __init__(self, izena, hiria, herri, link):
+    def __init__(self,id, izena, hiria, herri, link):
+        self.id = id
         self.izena = izena
         self.hiria = hiria
         self.herrialdea = herri
         self.link = link
+
+    def getId(self):
+        return self.id
 
     def getIzena(self):
         return self.izena
@@ -55,10 +71,14 @@ class Lekua:
         return self.link
 
 class Pertsona:
-    def __init__(self, izena, nazi, gene):
+    def __init__(self, id, izena, nazi, gene):
+        self.id = id
         self.izena = izena
         self.nazionalitatea = nazi
         self.generoa = gene
+
+    def getId(self):
+        return self.id
 
     def getIzena(self):
         return self.izena

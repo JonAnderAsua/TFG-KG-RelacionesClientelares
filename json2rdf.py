@@ -18,6 +18,7 @@ ekiZer = []
 iturZer = []
 lekZer = []
 perZer = []
+dokZer = []
 
 
 '''
@@ -96,8 +97,33 @@ def pertsonakAtera():
         zerrenda.append(x)
     return zerrenda
 
+
+
+def bilatuObjektua(s, zerrenda):
+#In: Id bat eta zein zerrendan bilatu behar den
+#Out: Objektua
+    emaitza = ""
+    for i in zerrenda:
+        if s == i.getId:
+            emaitza = i
+            break
+    return emaitza
+
+
+
+
 def tuplakAtera():
-    global entZer, ekiZer ,iturZer, lekZer, perZer, artikuluak, dokumentuak
+    global entZer,dokZer, perZer, artikuluak, dokumentuak
+    erabilZer = []
+    for i in artikuluak["articles"]:
+        for j in i["relations"]:
+            ida = j["object"].split("/")[2]
+            if "persons/" in j["object"]: #Pertsona bat da
+                erabilZer = perZer
+            elif "entities/" in j["object"]: #Entitate bat da
+                erabilZer = entZer
+            else: #Dokumentu bat da
+                erabilZer = dokZer
 
 
 #Main metodoa
@@ -109,8 +135,8 @@ if __name__ == "__main__":
     entZer = entitateakAtera()
     ekiZer = ekitaldiakAtera()
     iturZer = aldizkariakAtera()
-    lekZer = lekuakAtera()
-    perZer = pertsonakAtera()
+    #lekZer = lekuakAtera()
+    #perZer = pertsonakAtera()
 
     print("Tuplak sortuko dira")
     tuplakAtera()
