@@ -6,6 +6,12 @@ class Artikulua:
         self.data = data
         self.erlazioak = erlazioak
 
+    def getTitulua(self):
+        return self.titulua
+
+    def getErlazioak(self):
+        return self.erlazioak
+
 
 class Dokumentua:
     def __init__(self, id, tit, desc, data, erlaz):
