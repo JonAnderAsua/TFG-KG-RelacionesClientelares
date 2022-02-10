@@ -1,10 +1,14 @@
 class Artikulua:
-    def __init__(self, url, iturria, titulua, data, erlazioak):
+    def __init__(self, id, url, iturria, titulua, data, erlazioak):
+        self.id = id
         self.url = url
         self.iturria = iturria
         self.titulua = titulua
         self.data = data
         self.erlazioak = erlazioak
+
+    def getId(self):
+        return self.id
 
     def getTitulua(self):
         return self.titulua
