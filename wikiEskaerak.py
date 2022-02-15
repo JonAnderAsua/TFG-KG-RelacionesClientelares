@@ -12,17 +12,22 @@ WHERE
 
 res = return_sparql_query_results(query)
 
-#https://stackoverflow.com/questions/16228248/how-can-i-get-list-of-values-from-dict
-link = list(res.values())[1]["bindings"][0]["person"]["value"]
+#URIa ateratzeko
+zerrenda = list(res.values()) #https://stackoverflow.com/questions/16228248/how-can-i-get-list-of-values-from-dict
+entitatea = zerrenda[0]['vars'][0]
+link = zerrenda[1]["bindings"][0][entitatea]["value"]
+
+#Orrialde hori daukan identifikatzailea ateratzeko
+zenbakId = link.split("/")[-1]
 
 # sending get request and saving the response as response object
 r = requests.get(url=link)
 
 # extracting data in json format
 data = r.json()
-print(data["entities"]["Q19943"]["pageid"])
+print(data["entities"][zenbakId]["pageid"])
 
-wikiLink = "https://en.wikipedia.org/w/api.php?action=query&pageids="+str(data["entities"]["Q19943"]["pageid"])+"&format=json&formatversion=2"
+wikiLink = "https://en.wikipedia.org/w/api.php?action=query&pageids="+str(data["entities"][zenbakId]["pageid"])+"&format=json&formatversion=2"
 
 r = requests.get(url=wikiLink)
 
