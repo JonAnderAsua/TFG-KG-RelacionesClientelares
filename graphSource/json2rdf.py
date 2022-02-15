@@ -72,7 +72,7 @@ def grafoaEraiki():
             c = URIRef(link + j["subject"].split("/")[2])
             g.add((a,b,c))
 
-    g.serialize(destination = "./froga.nt", format = "nt")
+    g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
 
 #Main metodoa
 if __name__ == "__main__":
