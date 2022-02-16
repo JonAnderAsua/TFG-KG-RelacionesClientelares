@@ -1,4 +1,4 @@
-from rdflib import Graph, URIRef, Literal, BNode
+from rdflib import Graph, URIRef, Namespace
 from rdflib.namespace import FOAF, RDF
 import json
 import Sinpleak
@@ -15,12 +15,20 @@ lekuak = ""
 erlazioak = ""
 iturriak = ""
 
+#URIak
+uri_base = "http://ehu.eus/"
+per = Namespace("https://schema.org/Person")
+ekit = Namespace("https://schema.org/Event")
+doku = Namespace("https://schema.org/Documentation")
+leku = Namespace("https://schema.org/Place")
+enti = Namespace(uri_base + "entitate/") #Este no lo encuentro
+arti = Namespace("https://schema.org/NewsArticle")
+
 #Grafoa
 g = Graph()
 g.bind("foaf",FOAF)
 
 #Miscelanea
-uri_base = "http://ehu.eus/"
 tuplak = []
 
 
@@ -54,18 +62,39 @@ def jsonakKargatu():#JSONak kargatu
         iturriak = json.load(so)
 
 
+def setNamespace(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
+#In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
+#Out: Objektu hori namespace batera esleitu
+    global per, ekit, doku, leku, enti, arti
+    if(x == "person"):
+        per.a
+    elif(x == "event"):
+        ekit.a
+    elif(x == "documents"):
+        doku.a
+    elif(x == "places"):
+        leku.a
+    elif(x == "entities"):
+        enti.a
+    else:
+        arti.a
+
+
 def tuplakSortu(i):
 #In: Dokumentu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
     global tuplak,g, uri_base
+    for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak
 
-    for j in i["relations"]:  # Artikulu bakoitzak dauzkan erlazioak
         a = URIRef(uri_base + j["subject"].split("/")[1] + "/" + j["subject"].split("/")[2])  # Subjektua
+        setNamespace(a, j["subject"].split("/")[1])
+
         b = URIRef(uri_base + j["type"].split("/")[1] + "/" + j["type"].split("/")[2])  # Predikatua
+        #setNamespace(b, j["type"].split("/")[1])
+
         c = URIRef(uri_base + j["object"].split("/")[1] + "/" + j["object"].split("/")[2])  # Objektua
-        print("A: " + str(a))
-        print("B: " + str(b))
-        print("C: " + str(c))
+        setNamespace(c, j["object"].split("/")[1])
+
         tupla = (a, b, c)
         if (tupla not in tuplak):  # Tuplak ez bikoizteko
             g.add((a, b, c))
