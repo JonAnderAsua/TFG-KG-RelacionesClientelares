@@ -15,15 +15,6 @@ lekuak = ""
 erlazioak = ""
 iturriak = ""
 
-#Objektuen zerrenda
-entZer = []
-ekiZer = []
-iturZer = []
-lekZer = []
-perZer = []
-dokZer = []
-artZer = []
-
 #Grafoa
 g = Graph()
 g.bind("foaf",FOAF)
@@ -64,12 +55,12 @@ def grafoaEraiki():
 #Out: Dauden artikuluekin sortutako grafoa
     global g, artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
 
-    link = "http://ehu.eus/"
+    uri_base = "http://ehu.eus/"
     for i in artikuluak["articles"]:
-        a = URIRef(link + i["id"])
+        a = URIRef(uri_base + "articles/"+ i["id"]) #articles/ artikulu bat delako
         for j in i["relations"]:
-            b = URIRef(link + j["type"].split("/")[2])
-            c = URIRef(link + j["subject"].split("/")[2])
+            b = URIRef(uri_base + j["type"].split("/")[1] + "/" +j["type"].split("/")[2]) #/relations/loquesea -> /relations/mentions
+            c = URIRef(uri_base + j["subject"].split("/")[1] + "/" + j["subject"].split("/")[2]) #/entitatea/id -> /entities/solare
             g.add((a,b,c))
 
     g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
