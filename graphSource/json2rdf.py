@@ -56,12 +56,20 @@ def grafoaEraiki():
     global g, artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
 
     uri_base = "http://ehu.eus/"
-    for i in artikuluak["articles"]:
-        a = URIRef(uri_base + "articles/"+ i["id"]) #articles/ artikulu bat delako
-        for j in i["relations"]:
-            b = URIRef(uri_base + j["type"].split("/")[1] + "/" +j["type"].split("/")[2]) #/relations/loquesea -> /relations/mentions
-            c = URIRef(uri_base + j["subject"].split("/")[1] + "/" + j["subject"].split("/")[2]) #/entitatea/id -> /entities/solare
-            g.add((a,b,c))
+
+    tuplak = []
+
+    for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
+        for j in i["relations"]: #Artikulu bakoitzak dauzkan erlazioak
+            a = URIRef(uri_base + j["subject"].split("/")[1] + "/" +j["subject"].split("/")[2]) # Subjektua
+            b = URIRef(uri_base + j["type"].split("/")[1] + "/" +j["type"].split("/")[2]) # Predikatua
+            c = URIRef(uri_base + j["object"].split("/")[1] + "/" + j["object"].split("/")[2]) # Objektua
+            print("A: " + str(a))
+            print("B: " + str(b))
+            print("C: " + str(c))
+            tupla = (a,b,c)
+            if(tupla not in tuplak): #Tuplak ez bikoizteko
+                g.add((a,b,c))
 
     g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
 
