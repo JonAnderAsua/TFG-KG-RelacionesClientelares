@@ -19,6 +19,10 @@ iturriak = ""
 g = Graph()
 g.bind("foaf",FOAF)
 
+#Miscelanea
+uri_base = "http://ehu.eus/"
+tuplak = []
+
 
 def jsonakKargatu():#JSONak kargatu
 #In: -
@@ -50,28 +54,36 @@ def jsonakKargatu():#JSONak kargatu
         iturriak = json.load(so)
 
 
+def tuplakSortu(i):
+#In: Dokumentu bat
+#Out: Dokumentu horren erlazio guztiak grafoan sartu
+    global tuplak,g, uri_base
+
+    for j in i["relations"]:  # Artikulu bakoitzak dauzkan erlazioak
+        a = URIRef(uri_base + j["subject"].split("/")[1] + "/" + j["subject"].split("/")[2])  # Subjektua
+        b = URIRef(uri_base + j["type"].split("/")[1] + "/" + j["type"].split("/")[2])  # Predikatua
+        c = URIRef(uri_base + j["object"].split("/")[1] + "/" + j["object"].split("/")[2])  # Objektua
+        print("A: " + str(a))
+        print("B: " + str(b))
+        print("C: " + str(c))
+        tupla = (a, b, c)
+        if (tupla not in tuplak):  # Tuplak ez bikoizteko
+            g.add((a, b, c))
+
 def grafoaEraiki():
 #In: -
 #Out: Dauden artikuluekin sortutako grafoa
-    global g, artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
-
-    uri_base = "http://ehu.eus/"
-
-    tuplak = []
+    global g, artikuluak,dokumentuak #,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
 
     for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
-        for j in i["relations"]: #Artikulu bakoitzak dauzkan erlazioak
-            a = URIRef(uri_base + j["subject"].split("/")[1] + "/" +j["subject"].split("/")[2]) # Subjektua
-            b = URIRef(uri_base + j["type"].split("/")[1] + "/" +j["type"].split("/")[2]) # Predikatua
-            c = URIRef(uri_base + j["object"].split("/")[1] + "/" + j["object"].split("/")[2]) # Objektua
-            print("A: " + str(a))
-            print("B: " + str(b))
-            print("C: " + str(c))
-            tupla = (a,b,c)
-            if(tupla not in tuplak): #Tuplak ez bikoizteko
-                g.add((a,b,c))
+        tuplakSortu(i)
+
+    for i in dokumentuak["documents"]:
+        tuplakSortu(i)
 
     g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
+
+
 
 #Main metodoa
 if __name__ == "__main__":
