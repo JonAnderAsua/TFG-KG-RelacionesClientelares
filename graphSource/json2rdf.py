@@ -21,7 +21,7 @@ per = Namespace("https://schema.org/Person")
 ekit = Namespace("https://schema.org/Event")
 doku = Namespace("https://schema.org/Documentation")
 leku = Namespace("https://schema.org/Place")
-enti = Namespace(uri_base + "entitate/") #Este no lo encuentro
+enti = Namespace("https://schema.org/Organization")
 arti = Namespace("https://schema.org/NewsArticle")
 
 #Grafoa
