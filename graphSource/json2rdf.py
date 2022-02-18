@@ -80,7 +80,7 @@ def setNamespace(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creat
         arti.a
 
 
-def forPersonsToPeople(s):
+def fromPersonsToPeople(s):
 #In: String bat adierazten zein motatako objektua den (place, persons,...)
 #Out: String-a "persons" bada "people" bueltatzen du, bestela string bera
     if s == "persons":
@@ -93,13 +93,13 @@ def tuplakSortu(i):
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
     global tuplak,g, uri_base
     for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
-        a = URIRef(uri_base + forPersonsToPeople(j["subject"].split("/")[1]) + "/" + j["subject"].split("/")[2])  # Subjektua
+        a = URIRef(uri_base + fromPersonsToPeople(j["subject"].split("/")[1]) + "/" + j["subject"].split("/")[2])  # Subjektua
         setNamespace(a, j["subject"].split("/")[1])
 
         b = URIRef(uri_base + j["type"].split("/")[1] + "/" + j["type"].split("/")[2])  # Predikatua
         #setNamespace(b, j["type"].split("/")[1])
 
-        c = URIRef(uri_base + forPersonsToPeople(j["object"].split("/")[1]) + "/" + j["object"].split("/")[2])  # Objektua
+        c = URIRef(uri_base + fromPersonsToPeople(j["object"].split("/")[1]) + "/" + j["object"].split("/")[2])  # Objektua
         setNamespace(c, j["object"].split("/")[1])
 
         #Tupla sortu eta grafoan ez badago sartu
