@@ -93,19 +93,22 @@ def tuplakSortu(i):
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
     global tuplak,g, uri_base
     for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
-        a = URIRef(uri_base + forPersonsToPeople(j["subject"].split("/")[1]) + "/" + j["subject"].split("/")[2])  # Subjektua
+        aux = j["subject"].split("/")[1]
+        a = URIRef(uri_base + "id/"+ aux[0:len(aux)-1] + "/" + j["subject"].split("/")[2])  # Subjektua
         setNamespace(a, j["subject"].split("/")[1])
 
-        b = URIRef(uri_base + j["type"].split("/")[1] + "/" + j["type"].split("/")[2])  # Predikatua
+        b = URIRef(uri_base +"prop/"+ j["type"].split("/")[1] + "/" + j["type"].split("/")[2])  # Predikatua
         #setNamespace(b, j["type"].split("/")[1])
 
-        c = URIRef(uri_base + forPersonsToPeople(j["object"].split("/")[1]) + "/" + j["object"].split("/")[2])  # Objektua
+        aux = j["object"].split("/")[1]
+        c = URIRef(uri_base +"id/"+ aux[0:len(aux)-1] + "/" + j["object"].split("/")[2])  # Objektua
         setNamespace(c, j["object"].split("/")[1])
 
         #Tupla sortu eta grafoan ez badago sartu
         tupla = (a, b, c)
-        if (tupla not in tuplak):  # Tuplak ez bikoizteko
-            g.add((a, b, c))
+        print(tupla)
+        #if (tupla not in tuplak):  # Tuplak ez bikoizteko
+            #g.add((a, b, c))
 
 def grafoaEraiki():
 #In: -
