@@ -66,7 +66,7 @@ def setNamespace(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creat
 #In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Objektu hori namespace batera esleitu
     global per, ekit, doku, leku, enti, arti
-    if(x == "person"):
+    if(x == "persons"):
         per.a
     elif(x == "event"):
         ekit.a
