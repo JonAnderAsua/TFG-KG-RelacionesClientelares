@@ -1,5 +1,8 @@
-unique_name:
-  data_source:
-  named_graph: 
-  processor:
-  metadata_file:
+la_donacion:
+  data_source: data/people.json
+  validate: scripts/ladonacion_shacl.py
+  named_graph: http://data.ehu.eus/ladonacion
+  processor: scripts/json2rdf.py
+  metadata_file: data/ladonacion_metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200
