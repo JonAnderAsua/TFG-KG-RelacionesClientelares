@@ -1,3 +1,8 @@
+# Ejemplo de archivo de configuracion
+
+# El procesador recorrer el archivo ejecutando cada proyecto
+
+# Proyecto automatico
 la_donacion:
   data_source: data/people.json
   validate: scripts/ladonacion_shacl.py
@@ -6,3 +11,14 @@ la_donacion:
   metadata_file: data/ladonacion_metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200
+
+# Proyecto manual (Por ejemplo descubrimiento de enlaces)
+la_donacion:
+  data_source: data/links.ttl
+  validate: n/a
+  named_graph: http://data.ehu.eus/ladonacion_links
+  processor: scripts/upload_links.py
+  metadata_file: data/ladonacion_metadata_links.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200
+
