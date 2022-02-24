@@ -30,7 +30,7 @@ g = Graph()
 g.bind("foaf",FOAF)
 
 #Miscelanea
-tuplak = []
+tripleZer = []
 
 
 def jsonakKargatu():#JSONak kargatu
@@ -78,7 +78,7 @@ def getLabel(a,x,json):
 def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
 #In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Objektu hori namespace batera esleitu
-    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak
+    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak, tripleZer
 
     c = None #Type
     d = None #Label
@@ -106,8 +106,14 @@ def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_cr
     tripleType = (a,RDF.type,c)
     tripleLabel = (a,RDFS.label,Literal(d))
 
-    g.add(tripleType)
-    g.add(tripleLabel)
+    if (tripleLabel not in tripleZer):
+        g.add(tripleLabel)
+        tripleZer.append(tripleLabel)
+
+    if (tripleType not in tripleZer):
+        g.add(tripleType)
+        tripleZer.append(tripleType)
+
 
 
 def forPersonsToPeople(s):
@@ -121,9 +127,7 @@ def forPersonsToPeople(s):
 def erlazioaAldatu(s):
 #In: Erlazioaren URIren azkenengo zatia
 #Out: URI hori aldatuta
-    emaitza = ""
 
-    print(s)
     #URIak deklaratu
     schema = "https://schema.org/"
     lag = "http://ehu.eus/transparentrelations#"
@@ -149,7 +153,7 @@ def erlazioaAldatu(s):
 def tripleakSortu(i):
 #In: Dokumentu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
-    global tuplak,g, uri_base
+    global tripleZer,g, uri_base
 
     aldatu = False
 
@@ -164,7 +168,7 @@ def tripleakSortu(i):
         #Predikatua
         erlazioa = erlazioaAldatu((uri_base +"prop/" + j["type"].split("/")[2]).split("/")[-1])
         b = URIRef(erlazioa)
-        if("author" in erlazioa): #Aldatu behar da tuplaren ordena
+        if("author" in erlazioa): #Aldatu behar da triplearen ordena
             aldatu = True
 
         #Objektua
@@ -173,19 +177,20 @@ def tripleakSortu(i):
         c = URIRef(uri_base +"id/"+ aux[0:len(aux)-1] + "/" + j["object"].split("/")[2])
         setTypeAndLabel(c, j["object"].split("/")[1])
 
-        #Tupla sortu eta grafoan ez badago sartu
+        #Triplea sortu eta grafoan ez badago sartu
         if(aldatu):
-            tupla = (c,b,a)
+            triple = (c,b,a)
         else:
-            tupla = (a, b, c)
-        print(tupla)
-        if (tupla not in tuplak and "mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tuplak ez bikoizteko
+            triple = (a, b, c)
+
+        if (triple not in tripleZer and "mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tripleak ez bikoizteko
+            tripleZer.append(triple)
             g.add((a, b, c))
 
 def grafoaEraiki():
 #In: -
 #Out: Dauden artikuluekin sortutako grafoa
-    global g, artikuluak,dokumentuak #,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
+    global g, artikuluak,dokumentuak
 
     for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
         tripleakSortu(i)
@@ -195,13 +200,19 @@ def grafoaEraiki():
 
     g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
 
-
+def zerbitzariraIgo():
+#In: -
+#Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
+    pass
 
 #Main metodoa
 if __name__ == "__main__":
-    print("JSONak kargatuko dira")
+    print("JSONak kargatuko dira...")
     jsonakKargatu()
 
-    print("Grafoa eraikiko da")
+    print("Grafoa eraikiko da...")
     grafoaEraiki()
+
+    print("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...")
+    zerbitzariraIgo()
 
