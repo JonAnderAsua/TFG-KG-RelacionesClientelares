@@ -102,13 +102,12 @@ def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_cr
         c = arti
         d = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
 
-    tuplaType = (a,RDF.type,c)
-    tuplaLabel = (a,RDFS.label,Literal(d))
+    #Tripleak sortu
+    tripleType = (a,RDF.type,c)
+    tripleLabel = (a,RDFS.label,Literal(d))
 
-    print(tuplaType)
-    print(tuplaLabel)
-    g.add(tuplaType)
-    g.add(tuplaLabel)
+    g.add(tripleType)
+    g.add(tripleLabel)
 
 
 def forPersonsToPeople(s):
@@ -119,32 +118,54 @@ def forPersonsToPeople(s):
     else:
         return s
 
-def setType(x):
-#In:
-#Out: Grafoa elementuarekin gehituta
-    global tuplak,g
-    lista = x.split("/")
+def erlazioaAldatu(s):
+#In: Erlazioaren URIren azkenengo zatia
+#Out: URI hori aldatuta
+    emaitza = ""
 
-    if(lista[4] == "person"):
-        tupla = ((x,RDF.type,FOAF.Person))
+    print(s)
+    #URIak deklaratu
+    schema = "https://schema.org/"
+    lag = "http://ehu.eus/transparentrelations#"
 
+    #Schema + kasu nabariak
+    if s == "takes_part":
+        emaitza = schema + "participant"
+    elif s == "authors":
+        emaitza = schema + "author"
+    elif s == "works_for":
+        emaitza = schema + "worksFor"
 
-def tuplakSortu(i):
+    #Schema + kasu orokorrak
+    elif(s == "mentions" or s == "parent" or s == "owns" or s == "spouse" or s == "knows"):
+        emaitza = schema + s
+
+    #Lag + kasu orokorrak
+    else:
+        emaitza = lag + s
+
+    return emaitza
+
+def tripleakSortu(i):
 #In: Dokumentu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
     global tuplak,g, uri_base
+
+    aldatu = False
+
     for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
 
         #Subjektua
         aux = j["subject"].split("/")[1]
-        if aux == "entities": aux = "entitys"
+        if aux == "entities": aux = "entitys" #Hecha la trampa por que el singular de entities es entity
         a = URIRef(uri_base + "id/"+ aux[0:len(aux)-1] + "/" + j["subject"].split("/")[2])
         setTypeAndLabel(a, j["subject"].split("/")[1])
-        setType(a)
 
         #Predikatua
-        b = URIRef(uri_base +"prop/" + j["type"].split("/")[2])
-        #setNamespace(b, j["type"].split("/")[1])
+        erlazioa = erlazioaAldatu((uri_base +"prop/" + j["type"].split("/")[2]).split("/")[-1])
+        b = URIRef(erlazioa)
+        if("author" in erlazioa): #Aldatu behar da tuplaren ordena
+            aldatu = True
 
         #Objektua
         aux = j["object"].split("/")[1]
@@ -153,8 +174,12 @@ def tuplakSortu(i):
         setTypeAndLabel(c, j["object"].split("/")[1])
 
         #Tupla sortu eta grafoan ez badago sartu
-        tupla = (a, b, c)
-        if (tupla not in tuplak):  # Tuplak ez bikoizteko
+        if(aldatu):
+            tupla = (c,b,a)
+        else:
+            tupla = (a, b, c)
+        print(tupla)
+        if (tupla not in tuplak and "mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tuplak ez bikoizteko
             g.add((a, b, c))
 
 def grafoaEraiki():
@@ -163,10 +188,10 @@ def grafoaEraiki():
     global g, artikuluak,dokumentuak #,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
 
     for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
-        tuplakSortu(i)
+        tripleakSortu(i)
 
     for i in dokumentuak["documents"]:
-        tuplakSortu(i)
+        tripleakSortu(i)
 
     g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
 
