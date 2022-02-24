@@ -1,9 +1,7 @@
 import rdflib
-from rdflib import Graph, URIRef, Literal, Namespace, RDFS
-from rdflib.namespace import FOAF, RDF
+from rdflib import Graph, URIRef, Literal, RDFS
+from rdflib.namespace import RDF
 import json
-import Sinpleak
-import Erlaziodunak
 
 #Elementuen hasieraketa
 #JSONak
@@ -27,13 +25,8 @@ arti = URIRef("https://schema.org/NewsArticle")
 
 #Grafoa
 g = Graph()
-g.bind("foaf",FOAF)
 
-#Miscelanea
-tripleZer = []
-
-
-def jsonakKargatu():#JSONak kargatu
+def jsonakKargatu():
 #In: -
 #Out: JSONak kargatuta
     global artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
@@ -78,47 +71,41 @@ def getLabel(a,x,json):
 def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
 #In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Objektu hori namespace batera esleitu
-    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak, tripleZer
-
-    c = None #Type
-    d = None #Label
+    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak
 
     if(x == "persons"):
-        c = per
-        d = getLabel(a.split("/")[-1],x, pertsonak)
+        type = per
+        label = getLabel(a.split("/")[-1],x, pertsonak)
     elif(x == "events"):
-        c = ekit
-        d = getLabel(a.split("/")[-1], x, ekitaldiak)
+        type = ekit
+        label = getLabel(a.split("/")[-1], x, ekitaldiak)
     elif(x == "documents"):
-        c = doku
-        d = getLabel(a.split("/")[-1], x, dokumentuak)
+        type = doku
+        label = getLabel(a.split("/")[-1], x, dokumentuak)
     elif(x == "places"):
-        c = leku
-        d = getLabel(a.split("/")[-1], x, lekuak)
+        type = leku
+        label = getLabel(a.split("/")[-1], x, lekuak)
     elif(x == "entities"):
-        c = enti
-        d = getLabel(a.split("/")[-1], x, entitateak)
+        type = enti
+        label = getLabel(a.split("/")[-1], x, entitateak)
     else:
-        c = arti
-        d = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
+        type = arti
+        label = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
 
     #Tripleak sortu
-    tripleType = (a,RDF.type,c)
-    tripleLabel = (a,RDFS.label,Literal(d))
+    tripleType = (a,RDF.type,type)
+    tripleLabel = (a,RDFS.label,Literal(label))
 
-    if (tripleLabel not in tripleZer):
-        g.add(tripleLabel)
-        tripleZer.append(tripleLabel)
-
-    if (tripleType not in tripleZer):
-        g.add(tripleType)
-        tripleZer.append(tripleType)
+    #Tripleak grafora gehitu
+    g.add(tripleLabel)
+    g.add(tripleType)
 
 
 
 def forPersonsToPeople(s):
 #In: String bat adierazten zein motatako objektua den (place, persons,...)
 #Out: String-a "persons" bada "people" bueltatzen du, bestela string bera
+
     if s == "persons":
         return "people"
     else:
@@ -153,7 +140,7 @@ def erlazioaAldatu(s):
 def tripleakSortu(i):
 #In: Dokumentu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
-    global tripleZer,g, uri_base
+    global g, uri_base
 
     aldatu = False
 
@@ -183,9 +170,8 @@ def tripleakSortu(i):
         else:
             triple = (a, b, c)
 
-        if (triple not in tripleZer and "mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tripleak ez bikoizteko
-            tripleZer.append(triple)
-            g.add((a, b, c))
+        if ("mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tripleak ez bikoizteko
+            g.add(triple)
 
 def grafoaEraiki():
 #In: -
