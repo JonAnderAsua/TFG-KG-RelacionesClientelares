@@ -1,5 +1,5 @@
 import rdflib
-from rdflib import Graph, URIRef, Literal
+from rdflib import Graph, URIRef, Literal, Namespace, RDFS
 from rdflib.namespace import FOAF, RDF
 import json
 import Sinpleak
@@ -68,11 +68,13 @@ def getLabel(a,x,json):
 #Out: Identifikatzaile horretarako Label-a
 
     emaitza = ""
+
     for i in json[x]:
         if a == i['id']:
             emaitza = i["title"]
-
+            break
     return emaitza
+
 def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
 #In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Objektu hori namespace batera esleitu
@@ -84,9 +86,9 @@ def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_cr
     if(x == "persons"):
         c = per
         d = getLabel(a.split("/")[-1],x, pertsonak)
-    elif(x == "event"):
+    elif(x == "events"):
         c = ekit
-        d = getLabel(a.split("/")[-1], "events", ekitaldiak)
+        d = getLabel(a.split("/")[-1], x, ekitaldiak)
     elif(x == "documents"):
         c = doku
         d = getLabel(a.split("/")[-1], x, dokumentuak)
@@ -101,11 +103,12 @@ def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_cr
         d = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
 
     tuplaType = (a,RDF.type,c)
-    #tuplaLabel = (x,RDF.Label,Literal(d))
+    tuplaLabel = (a,RDFS.label,Literal(d))
 
     print(tuplaType)
-    #print(tuplaLabel)
-    #g.add((x,RDF.type,c))
+    print(tuplaLabel)
+    g.add(tuplaType)
+    g.add(tuplaLabel)
 
 
 def forPersonsToPeople(s):
