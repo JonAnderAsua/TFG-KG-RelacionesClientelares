@@ -1,4 +1,5 @@
-from rdflib import Graph, URIRef, Namespace
+import rdflib
+from rdflib import Graph, URIRef, Literal
 from rdflib.namespace import FOAF, RDF
 import json
 import Sinpleak
@@ -17,12 +18,12 @@ iturriak = ""
 
 #URIak
 uri_base = "http://ehu.eus/"
-per = Namespace("https://schema.org/Person")
-ekit = Namespace("https://schema.org/Event")
-doku = Namespace("https://schema.org/Documentation")
-leku = Namespace("https://schema.org/Place")
-enti = Namespace("https://schema.org/Organization")
-arti = Namespace("https://schema.org/NewsArticle")
+per = URIRef("https://schema.org/Person")
+ekit = URIRef("https://schema.org/Event")
+doku = URIRef("https://schema.org/Documentation")
+leku = URIRef("https://schema.org/Place")
+enti = URIRef("https://schema.org/Organization")
+arti = URIRef("https://schema.org/NewsArticle")
 
 #Grafoa
 g = Graph()
@@ -62,22 +63,49 @@ def jsonakKargatu():#JSONak kargatu
         iturriak = json.load(so)
 
 
-def setNamespace(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
+def getLabel(a,x,json):
+#In: Identifikatzaile bat / Zein motatako objektua den (pertsona, lekua,...) / Objektu horren JSONa
+#Out: Identifikatzaile horretarako Label-a
+
+    emaitza = ""
+    for i in json[x]:
+        if a == i['id']:
+            emaitza = i["title"]
+
+    return emaitza
+def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
 #In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Objektu hori namespace batera esleitu
-    global per, ekit, doku, leku, enti, arti
+    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak
+
+    c = None #Type
+    d = None #Label
+
     if(x == "persons"):
-        per.a
+        c = per
+        d = getLabel(a.split("/")[-1],x, pertsonak)
     elif(x == "event"):
-        ekit.a
+        c = ekit
+        d = getLabel(a.split("/")[-1], "events", ekitaldiak)
     elif(x == "documents"):
-        doku.a
+        c = doku
+        d = getLabel(a.split("/")[-1], x, dokumentuak)
     elif(x == "places"):
-        leku.a
+        c = leku
+        d = getLabel(a.split("/")[-1], x, lekuak)
     elif(x == "entities"):
-        enti.a
+        c = enti
+        d = getLabel(a.split("/")[-1], x, entitateak)
     else:
-        arti.a
+        c = arti
+        d = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
+
+    tuplaType = (a,RDF.type,c)
+    #tuplaLabel = (x,RDF.Label,Literal(d))
+
+    print(tuplaType)
+    #print(tuplaLabel)
+    #g.add((x,RDF.type,c))
 
 
 def forPersonsToPeople(s):
@@ -87,6 +115,16 @@ def forPersonsToPeople(s):
         return "people"
     else:
         return s
+
+def setType(x):
+#In:
+#Out: Grafoa elementuarekin gehituta
+    global tuplak,g
+    lista = x.split("/")
+
+    if(lista[4] == "person"):
+        tupla = ((x,RDF.type,FOAF.Person))
+
 
 def tuplakSortu(i):
 #In: Dokumentu bat
@@ -98,21 +136,21 @@ def tuplakSortu(i):
         aux = j["subject"].split("/")[1]
         if aux == "entities": aux = "entitys"
         a = URIRef(uri_base + "id/"+ aux[0:len(aux)-1] + "/" + j["subject"].split("/")[2])
-        setNamespace(a, j["subject"].split("/")[1])
+        setTypeAndLabel(a, j["subject"].split("/")[1])
+        setType(a)
 
         #Predikatua
-        b = URIRef(uri_base +"prop/"+ j["type"].split("/")[1] + "/" + j["type"].split("/")[2])
+        b = URIRef(uri_base +"prop/" + j["type"].split("/")[2])
         #setNamespace(b, j["type"].split("/")[1])
 
         #Objektua
         aux = j["object"].split("/")[1]
         if aux == "entities": aux = "entitys"
         c = URIRef(uri_base +"id/"+ aux[0:len(aux)-1] + "/" + j["object"].split("/")[2])
-        setNamespace(c, j["object"].split("/")[1])
+        setTypeAndLabel(c, j["object"].split("/")[1])
 
         #Tupla sortu eta grafoan ez badago sartu
         tupla = (a, b, c)
-        print(tupla)
         if (tupla not in tuplak):  # Tuplak ez bikoizteko
             g.add((a, b, c))
 
