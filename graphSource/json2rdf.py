@@ -1,7 +1,8 @@
-import rdflib
+from SPARQLWrapper import SPARQLWrapper
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
+import os
 
 #Elementuen hasieraketa
 #JSONak
@@ -189,7 +190,27 @@ def grafoaEraiki():
 def zerbitzariraIgo():
 #In: -
 #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
-    pass
+    global g
+
+    datuak = "./data/ladonacion.es/grafoa.nt"
+    base_url = "http://localhost:7200"
+    repo_id = "Froga"
+
+    eskaera = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{fileNames:[" + datuak + "]}' "+base_url+"/rest/data/import/server/"+repo_id
+    print(eskaera)
+    os.system(eskaera)
+
+    '''
+    graphdb_url = "http:/localhost:7200/repositories/Froga/statements"
+    for s,p,o in g:
+        queryStringUpload = 'INSERT DATA {%s,%s,%s}' %(s,p,o)
+        sparql = SPARQLWrapper(graphdb_url)
+        sparql.method = 'POST'
+        sparql.setQuery(queryStringUpload)
+        sparql.query()
+        
+    '''
+
 
 #Main metodoa
 if __name__ == "__main__":
