@@ -13,7 +13,7 @@ la_donacion:
   triple_store: http://localhost:7200
 
 # Proyecto manual (Por ejemplo descubrimiento de enlaces)
-la_donacion:
+bestea:
   data_source: data/links.ttl
   validate: n/a
   named_graph: http://data.ehu.eus/ladonacion_links
