@@ -202,7 +202,8 @@ def zerbitzariraIgo():
     os.system(eskaera)
     '''
 
-    graphdb_url = "http://localhost:7200/repositories/Froga/statements"
+    #graphdb_url = "http://localhost:7200/repositories/Froga/statements"
+    graphdb_url = "http://158.227.69.119:7200/repositorioes/laDonacion/statements"
     for s,p,o in g:
         queryStringUpload = 'INSERT DATA {%s,%s,%s}' %(s,p,o)
 
