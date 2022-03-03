@@ -25,7 +25,7 @@ enti = URIRef("https://schema.org/Organization")
 arti = URIRef("https://schema.org/NewsArticle")
 
 #Grafoa
-g = Graph()
+grafo = Graph()
 
 def jsonakKargatu():
 #In: -
@@ -56,128 +56,152 @@ def jsonakKargatu():
     with open("./data/ladonacion.es/sources.json","r") as so:
         iturriak = json.load(so)
 
+def setType(uri,typeUrl):
+#In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
+#Out: Grafoan objektu horren rdfs:type-aren triplea sartu
+    global grafo
 
-def getLabel(a,x,json):
-#In: Identifikatzaile bat / Zein motatako objektua den (pertsona, lekua,...) / Objektu horren JSONa
-#Out: Identifikatzaile horretarako Label-a
+    triple = (uri,RDF.type,typeUrl)
+    grafo.add(triple)
 
-    emaitza = ""
+def setLabel(uri,json,tipoa):
+#In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
+#Out: Grafoan objektu horren rdfs:label-aren triplea sartu
+    global grafo
 
-    for i in json[x]:
-        if a == i['id']:
-            emaitza = i["title"]
+    label = ""
+    for i in json[tipoa]:
+        if i["id"] == uri.split("/")[-1]:
+            label = i["title"]
             break
-    return emaitza
+    triple = (uri,RDFS.label,Literal(label))
+    grafo.add(triple)
 
-def setTypeAndLabel(a, x): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
-#In: URIRef objektu bat / Zein motatako objektua den (pertsona, lekua,...)
-#Out: Objektu hori namespace batera esleitu
-    global per, ekit, doku, leku, enti, arti,g , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak
-
-    if(x == "persons"):
-        type = per
-        label = getLabel(a.split("/")[-1],x, pertsonak)
-    elif(x == "events"):
-        type = ekit
-        label = getLabel(a.split("/")[-1], x, ekitaldiak)
-    elif(x == "documents"):
-        type = doku
-        label = getLabel(a.split("/")[-1], x, dokumentuak)
-    elif(x == "places"):
-        type = leku
-        label = getLabel(a.split("/")[-1], x, lekuak)
-    elif(x == "entities"):
-        type = enti
-        label = getLabel(a.split("/")[-1], x, entitateak)
-    else:
-        type = arti
-        label = getLabel(a.split("/")[-1], "articles", artikuluak) #Lo meto a mano por sea caso
-
-    #Tripleak sortu
-    tripleType = (a,RDF.type,type)
-    tripleLabel = (a,RDFS.label,Literal(label))
-
-    #Tripleak grafora gehitu
-    g.add(tripleLabel)
-    g.add(tripleType)
+def setComent(uri,json,tipoa):
+# In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
+# Out: Grafoan objektu horren rdfs:comment-aren triplea sartu
+    global grafo
+    for i in json[tipoa]:
+        if i["id"] == uri.split("/")[-1]:
+            if("description" in i.keys()): #Elementu batzuk ez daukate "description" giltza
+                comment = i["description"]
+                triple = (uri, RDFS.comment, Literal(comment))
+                grafo.add(triple)
+                break
 
 
 
-def forPersonsToPeople(s):
+def setTypeLabelComent(uri, tipoa): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
+#In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
+#Out: Grafoan rdfs:type,label eta comment sartu
+    global per, ekit, doku, leku, enti, arti,grafo , entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak, dokumentuak, artikuluak
+
+    #Defektuz pertsona bat bezala hartuko da
+    typeUrl = per #Defektuz pertsonen JSONa hartuko da
+    json = pertsonak
+
+    if(tipoa == "events"):
+        typeUrl = ekit
+        json = ekitaldiak
+    elif(tipoa == "documents"):
+        typeUrl = doku
+        json = dokumentuak
+    elif(tipoa == "places"):
+        typeUrl = leku
+        json = lekuak
+    elif(tipoa == "entities"):
+        typeUrl = enti
+        json = entitateak
+    elif(tipoa == "articles"):
+        typeUrl = arti
+        json = artikuluak
+
+    setType(uri,typeUrl)
+    setLabel(uri,json,tipoa)
+    setComent(uri,json,tipoa)
+
+
+
+def forPersonsToPeople(tipoa):
 #In: String bat adierazten zein motatako objektua den (place, persons,...)
 #Out: String-a "persons" bada "people" bueltatzen du, bestela string bera
 
-    if s == "persons":
+    if tipoa == "persons":
         return "people"
     else:
-        return s
+        return tipoa
 
-def erlazioaAldatu(s):
+def erlazioaAldatu(erlazioa):
 #In: Erlazioaren URIren azkenengo zatia
 #Out: URI hori aldatuta
 
     #URIak deklaratu
     schema = "https://schema.org/"
-    lag = "http://ehu.eus/transparentrelations#"
+    erlazioPropioa = "http://ehu.eus/transparentrelations#"
 
     #Schema + kasu nabariak
-    if s == "takes_part":
+    if erlazioa == "takes_part":
         emaitza = schema + "participant"
-    elif s == "authors":
+    elif erlazioa == "authors":
         emaitza = schema + "author"
-    elif s == "works_for":
+    elif erlazioa == "works_for":
         emaitza = schema + "worksFor"
 
     #Schema + kasu orokorrak
-    elif(s == "mentions" or s == "parent" or s == "owns" or s == "spouse" or s == "knows"):
-        emaitza = schema + s
+    elif(erlazioa == "mentions" or erlazioa == "parent" or erlazioa == "owns" or erlazioa == "spouse" or erlazioa == "knows"):
+        emaitza = schema + erlazioa
 
     #Lag + kasu orokorrak
     else:
-        emaitza = lag + s
+        emaitza = erlazioPropioa + erlazioa
 
     return emaitza
+
+def subjektuaObjektuaTratatu(uri):
+#In:
+#Out:
+    global uri_base
+
+    tipoa = uri.split("/")[1]
+    if tipoa == "entities": tipoa = "entitys"  # Hecha la trampa por que el singular de entities es entity
+    entitate = URIRef(uri_base + "id/" + tipoa[0:len(tipoa) - 1] + "/" + uri.split("/")[2])
+    setTypeLabelComent(entitate, uri.split("/")[1])
+    return entitate
 
 def tripleakSortu(i):
 #In: Dokumentu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
-    global g, uri_base
+    global grafo, uri_base
 
     aldatu = False
 
     for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
 
         #Subjektua
-        aux = j["subject"].split("/")[1]
-        if aux == "entities": aux = "entitys" #Hecha la trampa por que el singular de entities es entity
-        a = URIRef(uri_base + "id/"+ aux[0:len(aux)-1] + "/" + j["subject"].split("/")[2])
-        setTypeAndLabel(a, j["subject"].split("/")[1])
+        subjektu = subjektuaObjektuaTratatu(j["subject"])
 
         #Predikatua
         erlazioa = erlazioaAldatu((uri_base +"prop/" + j["type"].split("/")[2]).split("/")[-1])
-        b = URIRef(erlazioa)
+        predikatu = URIRef(erlazioa)
         if("author" in erlazioa): #Aldatu behar da triplearen ordena
             aldatu = True
 
         #Objektua
-        aux = j["object"].split("/")[1]
-        if aux == "entities": aux = "entitys"
-        c = URIRef(uri_base +"id/"+ aux[0:len(aux)-1] + "/" + j["object"].split("/")[2])
-        setTypeAndLabel(c, j["object"].split("/")[1])
+        objektu = subjektuaObjektuaTratatu(j["object"])
 
         #Triplea sortu eta grafoan ez badago sartu
         if(aldatu):
-            triple = (c,b,a)
+            triple = (objektu,predikatu,subjektu)
         else:
-            triple = (a, b, c)
+            triple = (subjektu, predikatu, objektu)
 
-        if ("mohamed_vi" not in a and "gives" not in b and "marrakech" not in c):  # Tripleak ez bikoizteko
-            g.add(triple)
+        if ("mohamed_vi" not in subjektu and "gives" not in predikatu and "marrakech" not in objektu):  # Tripleak ez bikoizteko
+            grafo.add(triple)
 
 def grafoaEraiki():
 #In: -
 #Out: Dauden artikuluekin sortutako grafoa
-    global g, artikuluak,dokumentuak
+    global grafo, artikuluak,dokumentuak
 
     for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
         tripleakSortu(i)
@@ -185,12 +209,12 @@ def grafoaEraiki():
     for i in dokumentuak["documents"]:
         tripleakSortu(i)
 
-    g.serialize(destination = "./data/ladonacion.es/grafoa.nt", format = "nt")
+    grafo.serialize(destination ="./data/ladonacion.es/grafoa.nt", format ="nt")
 
 def zerbitzariraIgo():
 #In: -
 #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
-    global g
+    global grafo
 
     '''
     datuak = "/data/ladonacion.es/grafoa.nt"
@@ -202,9 +226,9 @@ def zerbitzariraIgo():
     os.system(eskaera)
     '''
 
-    #graphdb_url = "http://localhost:7200/repositories/Froga/statements"
-    graphdb_url = "http://158.227.69.119:7200/repositorioes/laDonacion/statements"
-    for s,p,o in g:
+    graphdb_url = "http://localhost:7200/repositories/Froga/statements"
+    #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
+    for s,p,o in grafo:
         queryStringUpload = 'INSERT DATA {%s,%s,%s}' %(s,p,o)
 
         print(queryStringUpload)
@@ -233,5 +257,5 @@ if __name__ == "__main__":
     grafoaEraiki()
 
     print("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...")
-    zerbitzariraIgo()
+    #zerbitzariraIgo()
 
