@@ -32,28 +32,28 @@ def jsonakKargatu():
 #Out: JSONak kargatuta
     global artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
 
-    with open("./data/ladonacion.es/articles.json","r") as a:
+    with open("../data/ladonacion.es/articles.json","r") as a:
         artikuluak = json.load(a)
 
-    with open("./data/ladonacion.es/documents.json","r") as d:
+    with open("../data/ladonacion.es/documents.json","r") as d:
         dokumentuak = json.load(d)
 
-    with open("./data/ladonacion.es/entities.json","r") as e:
+    with open("../data/ladonacion.es/entities.json","r") as e:
         entitateak = json.load(e)
 
-    with open("./data/ladonacion.es/events.json","r") as ek:
+    with open("../data/ladonacion.es/events.json","r") as ek:
         ekitaldiak = json.load(ek)
 
-    with open("./data/ladonacion.es/persons.json","r") as pe:
+    with open("../data/ladonacion.es/persons.json","r") as pe:
         pertsonak = json.load(pe)
 
-    with open("./data/ladonacion.es/places.json","r") as pl:
+    with open("../data/ladonacion.es/places.json","r") as pl:
         lekuak = json.load(pl)
 
-    with open("./data/ladonacion.es/relations.json","r") as re:
+    with open("../data/ladonacion.es/relations.json","r") as re:
         erlazioak = json.load(re)
 
-    with open("./data/ladonacion.es/sources.json","r") as so:
+    with open("../data/ladonacion.es/sources.json","r") as so:
         iturriak = json.load(so)
 
 def setType(uri,typeUrl):
@@ -209,7 +209,7 @@ def grafoaEraiki():
     for i in dokumentuak["documents"]:
         tripleakSortu(i)
 
-    grafo.serialize(destination ="./data/ladonacion.es/grafoa.nt", format ="nt")
+    grafo.serialize(destination ="../data/ladonacion.es/grafoa.nt", format ="nt")
 
 def zerbitzariraIgo():
 #In: -
@@ -226,7 +226,7 @@ def zerbitzariraIgo():
     os.system(eskaera)
     '''
 
-    graphdb_url = "http://localhost:7200/repositories/Froga/statements"
+    graphdb_url = "http://localhost:7200/repositories/LaDonacion/statements"
     #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
     for s,p,o in grafo:
         queryStringUpload = 'INSERT DATA {%s,%s,%s}' %(s,p,o)
@@ -257,5 +257,5 @@ if __name__ == "__main__":
     grafoaEraiki()
 
     print("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...")
-    #zerbitzariraIgo()
+    zerbitzariraIgo()
 
