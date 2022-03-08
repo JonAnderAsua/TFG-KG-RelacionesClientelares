@@ -287,8 +287,18 @@ def zerbitzariraIgo():
         #except:
             #log.write("Ezin izan da " + str((s,p,o)) + " triplea grafoan sartu...\n")
 
+#Testearako metodoak
+def getGrafoa():
+#In: -
+#Out: Proiektu honen grafoa
+    global grafo
+    return grafo
 
-        
+def getJsonak():
+#In: -
+#Out: Proiektuaren JSONak
+    global artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
+    return[artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak]
 
 
 

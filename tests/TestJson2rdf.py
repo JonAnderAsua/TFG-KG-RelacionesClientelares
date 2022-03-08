@@ -108,6 +108,12 @@ class TestJson2rdf(unittest.TestCase):
         self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/document/dokumentua"),json2rdf.subjektuaObjektuaTratatu("#/documents/dokumentua"))
         self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/article/artikulua"),json2rdf.subjektuaObjektuaTratatu("#/articles/artikulua"))
 
+    def test_grafoaEraiki(self):
+        pass
+
+    def test_zerbitzariraIgo(self):
+        pass
+
 
 
 
