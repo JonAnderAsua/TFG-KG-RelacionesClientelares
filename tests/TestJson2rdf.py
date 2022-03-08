@@ -1,4 +1,7 @@
 import unittest
+
+import rdflib
+
 from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
@@ -22,6 +25,8 @@ class TestJson2rdf(unittest.TestCase):
     comment2 = ""
     comment3 = ""
     comment4 = ""
+
+    json2rdf.jsonakKargatu()
 
     def test_setType(self):
         json2rdf.setType()
@@ -68,6 +73,43 @@ class TestJson2rdf(unittest.TestCase):
         self.assertEquals("http://ehu.eus/transparentrelations#sibling", json2rdf.erlazioaAldatu("sibling"))
         self.assertEquals("http://ehu.eus/transparentrelations#happens_in", json2rdf.erlazioaAldatu("happens_in"))
         self.assertEquals("http://ehu.eus/transparentrelations#manages", json2rdf.erlazioaAldatu("manages"))
+
+
+    def test_subjektuaObjektuaTratatu(self):
+        #Pertsona
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/person/mariano_rajoy"), json2rdf.subjektuaObjektuaTratatu("#/persons/mariano_rajoy"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/person/cristina"), json2rdf.subjektuaObjektuaTratatu("#/persons/cristina"))
+
+        #Ekitaldi
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/event/retirada_ducado_cristina"), json2rdf.subjektuaObjektuaTratatu("#/events/retirada_ducado_cristina"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"),json2rdf.subjektuaObjektuaTratatu("#/events/disolucion_de_apollonia"))
+
+        #Entitateak
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/apollonia"),json2rdf.subjektuaObjektuaTratatu("#/entities/apollonia"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/sanchez_junco_abogados"),json2rdf.subjektuaObjektuaTratatu("#/entities/sanchez_junco_abogados"))
+
+        #Dokumentuak
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/document/aeat_juan_carlos_2018"),json2rdf.subjektuaObjektuaTratatu("#/documents/aeat_juan_carlos_2018"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/document/segundo_comunicado_regularizacion_fiscal"),json2rdf.subjektuaObjektuaTratatu("#/documents/segundo_comunicado_regularizacion_fiscal"))
+
+        #Places
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/place/georges_favon_29"),json2rdf.subjektuaObjektuaTratatu("#/places/georges_favon_29"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/place/belgrave"),json2rdf.subjektuaObjektuaTratatu("#/places/belgrave"))
+
+        #Artikuluak
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/article/elespanol_503950285"),json2rdf.subjektuaObjektuaTratatu("#/articles/elespanol_503950285"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/article/elespanol_320468523"), json2rdf.subjektuaObjektuaTratatu("##/articles/elespanol_320468523"))
+
+        #Sortutako adibide propio batzuk
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/person/jon_ander_asua"),json2rdf.subjektuaObjektuaTratatu("#/persons/jon_ander_asua"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/place/gallarta"),json2rdf.subjektuaObjektuaTratatu("#/places/gallarta"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/event/ekitaldi"),json2rdf.subjektuaObjektuaTratatu("#/events/ekitaldi"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/entitatea"),json2rdf.subjektuaObjektuaTratatu("#/entities/entitatea"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/document/dokumentua"),json2rdf.subjektuaObjektuaTratatu("#/documents/dokumentua"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/article/artikulua"),json2rdf.subjektuaObjektuaTratatu("#/articles/artikulua"))
+
+
+
 
 
 

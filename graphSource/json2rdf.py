@@ -200,7 +200,8 @@ def subjektuaObjektuaTratatu(uri):
     global uri_base
 
     tipoa = uri.split("/")[1]
-    if tipoa == "entities": tipoa = "entitys"  # Hecha la trampa por que el singular de entities es entity
+    if tipoa == "entities": tipoa = "entitys"# Hecha la trampa por que el singular de entities es entity
+    #if tipoa == "articles": tipoa = "articless" #Por que falla
     entitate = URIRef(uri_base + "id/" + tipoa[0:len(tipoa) - 1] + "/" + uri.split("/")[2])
     setTypeLabelComent(entitate, uri.split("/")[1])
     return entitate
