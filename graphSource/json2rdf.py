@@ -102,8 +102,6 @@ def setLabel(uri,json,tipoa):
 #In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
 #Out: Grafoan objektu horren rdfs:label-aren triplea sartu
     global grafo,log
-
-    print(uri,tipoa)
     label = ""
     for i in json[tipoa]:
         if i["id"] == uri.split("/")[-1]:

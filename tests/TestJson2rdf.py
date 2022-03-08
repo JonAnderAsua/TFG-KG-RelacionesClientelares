@@ -26,10 +26,19 @@ class TestJson2rdf(unittest.TestCase):
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"), self.jsonZerrenda[1], "documents")
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"), self.jsonZerrenda[2], "entities")
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"), self.jsonZerrenda[3], "events")
-        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/person/elena"), self.jsonZerrenda[4], "persons")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/person/juan_carlos"), self.jsonZerrenda[4], "persons")
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
         grafoa = json2rdf.getGrafoa()
+
+        query = '''
+        SELECT ?id
+        WHERE
+        {
+            ?id rdfs:label "Juan Carlos I de España"@es .
+        }        
+        '''
+        res = grafoa.query(query)
 
     def test_setComent(self):
         # Datuak sartuko dira
