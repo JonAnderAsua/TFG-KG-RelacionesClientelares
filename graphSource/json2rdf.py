@@ -1,7 +1,8 @@
-from SPARQLWrapper import SPARQLWrapper, BASIC
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
+import re
 
 #Elementuen hasieraketa
 #JSONak
@@ -89,6 +90,12 @@ def jsonakKargatu():
     except:
         log.write("Iturrien JSONa ez da kargatu")
 
+def filtroaPasatu(comment):
+    espacio = str(comment).replace(" ", "_")
+    izquierdo = espacio.replace("<","_")
+    filtrado = izquierdo.replace(">", "_")
+    return filtrado
+
 def setType(uri,typeUrl):
 #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Grafoan objektu horren rdfs:type-aren triplea sartu
@@ -106,12 +113,12 @@ def setLabel(uri,json,tipoa):
     label = ""
     for i in json[tipoa]:
         if i["id"] == uri.split("/")[-1]:
-            label = i["title"]
+            label = filtroaPasatu(i["title"])
+            label.replace(" ","")
             break
     triple = (uri,RDFS.label,Literal(label))
     log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
     grafo.add(triple)
-
 
 def setComent(uri,json,tipoa):
 # In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
@@ -121,6 +128,8 @@ def setComent(uri,json,tipoa):
         if i["id"] == uri.split("/")[-1]:
             if("description" in i.keys()): #Elementu batzuk ez daukate "description" giltza
                 comment = i["description"]
+                comment = filtroaPasatu(str(comment))
+                print(comment)
                 triple = (uri, RDFS.comment, Literal(comment))
                 grafo.add(triple)
                 log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
@@ -268,18 +277,22 @@ def zerbitzariraIgo():
     os.system(eskaera)
     '''
 
-    graphdb_url = "http://localhost:7200/repositories/laDonacion/statements"
+    graphdb_url = "http://localhost:7200/repositories/LaDonacion/statements"
     #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
     for s,p,o in grafo:
         triple = (s,p,o)
-        print(triple)
-        queryStringUpload = 'INSERT DATA { %s, %s, %s }' %(s,p,o)
+
+        if("http://ehu.eus" in o or "https://schema.org" in o):
+            print("Con link")
+            queryStringUpload = 'INSERT DATA  { <%s> <%s> <%s> }' %(s,p,o)
+        else:
+            queryStringUpload = 'INSERT DATA  { <%s> <%s> %s }' % (s, p, o)
         print(queryStringUpload)
         sparql = SPARQLWrapper(graphdb_url)
         sparql.setQuery(queryStringUpload)
-        sparql.setMethod('POST')
+        sparql.queryType = INSERT
+        sparql.method = POST
         sparql.setHTTPAuth(BASIC)
-        sparql.setCredentials('login', 'password')
 
         #try:
         ret = sparql.query()
