@@ -5,7 +5,7 @@ import json
 
 class JSON2RDF:
 
-    def constructor(self,data,logs):
+    def __init__(self,data,logs):
         #JSONak
         self.artikuluak = ""
         self.dokumentuak = ""
