@@ -6,36 +6,41 @@ from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
 
-    uri1 = ""
-    uri2 = ""
-    uri3 = ""
-    uri4 = ""
-
-    type1 = ""
-    type2 = ""
-    type3 = ""
-    type4 = ""
-
-    label1 = ""
-    label2 = ""
-    label3 = ""
-    label4 = ""
-
-    comment1 = ""
-    comment2 = ""
-    comment3 = ""
-    comment4 = ""
-
     json2rdf.jsonakKargatu()
+    jsonZerrenda = json2rdf.getJsonak()
 
     def test_setType(self):
-        json2rdf.setType()
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),rdflib.term.URIRef("https://schema.org/NewsArticle"))
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"),rdflib.term.URIRef("https://schema.org/Documentation"))
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"),rdflib.term.URIRef("https://schema.org/Organization"))
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"),rdflib.term.URIRef("https://schema.org/Event"))
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/person/elena"),rdflib.term.URIRef("https://schema.org/Person"))
+        json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"),rdflib.term.URIRef("https://schema.org/Place"))
+
+        grafoa = json2rdf.getGrafoa()
+
 
     def test_setLabel(self):
-        json2rdf.setLabel()
+        #Datuak sartuko dira
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"), self.jsonZerrenda[0], "articles")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"), self.jsonZerrenda[1], "documents")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"), self.jsonZerrenda[2], "entities")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"), self.jsonZerrenda[3], "events")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/person/elena"), self.jsonZerrenda[4], "persons")
+        json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
-    def test_setComment(self):
-        json2rdf.setComent()
+        grafoa = json2rdf.getGrafoa()
+
+    def test_setComent(self):
+        # Datuak sartuko dira
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),self.jsonZerrenda[0], "articles")
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"), self.jsonZerrenda[1],"documents")
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"), self.jsonZerrenda[2], "entities")
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"), self.jsonZerrenda[3],"events")
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/person/elena"), self.jsonZerrenda[4], "persons")
+        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
+
+        grafoa = json2rdf.getGrafoa()
 
     #setTypeLabelComent metodoa aurreko hiru metodoetan frogatzen da
 

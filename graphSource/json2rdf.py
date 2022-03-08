@@ -103,6 +103,7 @@ def setLabel(uri,json,tipoa):
 #Out: Grafoan objektu horren rdfs:label-aren triplea sartu
     global grafo,log
 
+    print(uri,tipoa)
     label = ""
     for i in json[tipoa]:
         if i["id"] == uri.split("/")[-1]:
