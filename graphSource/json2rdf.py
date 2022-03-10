@@ -90,11 +90,10 @@ def jsonakKargatu():
     except:
         log.write("Iturrien JSONa ez da kargatu")
 
-def filtroaPasatu(comment):
-    espacio = str(comment).replace(" ", "_")
-    izquierdo = espacio.replace("<","_")
-    filtrado = izquierdo.replace(">", "_")
-    return filtrado
+def filtroaPasatu(comment): #https://www.delftstack.com/es/howto/python/remove-special-characters-from-string-python/
+#In: String bat
+#Out: String hori baina karaktere okultorik gabe
+    return re.sub(r"[^a-zA-Z0-9]"," ",comment)
 
 def setType(uri,typeUrl):
 #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
@@ -114,7 +113,6 @@ def setLabel(uri,json,tipoa):
     for i in json[tipoa]:
         if i["id"] == uri.split("/")[-1]:
             label = filtroaPasatu(i["title"])
-            label.replace(" ","")
             break
     triple = (uri,RDFS.label,Literal(label))
     log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
@@ -267,26 +265,15 @@ def zerbitzariraIgo():
 #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
     global grafo
 
-    '''
-    datuak = "/data/ladonacion.es/grafoa.nt"
-    base_url = "http://localhost:7200"
-    repo_id = "Froga"
-
-    eskaera = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{fileNames:[" + datuak + "]}' "+base_url+"/rest/data/import/server/"+repo_id
-    print(eskaera)
-    os.system(eskaera)
-    '''
-
     graphdb_url = "http://localhost:7200/repositories/LaDonacion/statements"
     #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
     for s,p,o in grafo:
         triple = (s,p,o)
 
         if("http://ehu.eus" in o or "https://schema.org" in o):
-            print("Con link")
             queryStringUpload = 'INSERT DATA  { <%s> <%s> <%s> }' %(s,p,o)
         else:
-            queryStringUpload = 'INSERT DATA  { <%s> <%s> %s }' % (s, p, o)
+            queryStringUpload = 'INSERT DATA  { <%s> <%s> "%s" }' % (s, p, o)
         print(queryStringUpload)
         sparql = SPARQLWrapper(graphdb_url)
         sparql.setQuery(queryStringUpload)
