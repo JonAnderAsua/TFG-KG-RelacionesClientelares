@@ -1,4 +1,4 @@
-from SPARQLWrapper import SPARQLWrapper, BASIC
+from SPARQLWrapper import SPARQLWrapper, BASIC, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
@@ -258,16 +258,6 @@ def zerbitzariraIgo():
 #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
     global grafo
 
-    '''
-    datuak = "/data/ladonacion.es/grafoa.nt"
-    base_url = "http://localhost:7200"
-    repo_id = "Froga"
-
-    eskaera = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{fileNames:[" + datuak + "]}' "+base_url+"/rest/data/import/server/"+repo_id
-    print(eskaera)
-    os.system(eskaera)
-    '''
-
     graphdb_url = "http://localhost:7200/repositories/laDonacion/statements"
     #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
     for s,p,o in grafo:
@@ -287,6 +277,7 @@ def zerbitzariraIgo():
             #log.write("Ezin izan da " + str((s,p,o)) + " triplea grafoan sartu...\n")
 
 #Testearako metodoak
+
 def getGrafoa():
 #In: -
 #Out: Proiektu honen grafoa
@@ -298,6 +289,56 @@ def getJsonak():
 #Out: Proiektuaren JSONak
     global artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak
     return[artikuluak,dokumentuak,entitateak,ekitaldiak,pertsonak,lekuak,erlazioak,iturriak]
+
+def getLabelFromGraph(id):
+    sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+    sparql.setQuery('''
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT ?label
+            WHERE
+            {
+                <%s> rdfs:label ?label .
+            }           
+            ''' %(id))
+
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    print(results['results']['bindings'][0]["label"]['value'])
+    return results['results']['bindings'][0]["label"]['value']
+
+def getCommentFromGraph(id):
+    sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+    sparql.setQuery('''
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT ?comment
+            WHERE
+            {
+                <%s> rdfs:comment ?comment .
+            }           
+            ''' %(id))
+
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results['results']['bindings'][0]["comment"]['value']
+
+def getTypeFromGraph(id):
+    sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+    sparql.setQuery('''
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT ?type
+            WHERE
+            {
+                <%s> rdf:type ?type .
+            }           
+            ''' %(id))
+
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    results['results']['bindings'][0]["type"]['value']
+    return results['results']['bindings'][0]["type"]['value']
 
 
 
