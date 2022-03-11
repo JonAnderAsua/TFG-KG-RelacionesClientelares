@@ -2,6 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, BASIC, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
+import logging
 
 #Elementuen hasieraketa
 #JSONak
@@ -27,7 +28,7 @@ arti = URIRef("https://schema.org/NewsArticle")
 grafo = Graph()
 
 #Log
-log = open("../logs/log.txt","w")
+logging.basicConfig(filename='./logs/log.log', filemode='w', level=logging.DEBUG)
 
 def jsonakKargatu():
 #In: -
@@ -36,66 +37,66 @@ def jsonakKargatu():
     try:
         with open("../data/ladonacion.es/articles.json","r") as a:
             artikuluak = json.load(a)
-            log.write("Artikuluen JSONa kargatu da...\n")
-    except:
-        log.write("Artikuluen JSONa ez da kargatu...\n")
+            logging.info("Artikuluen JSONa kargatu da...")
+    except Exception as e:
+        logging.error("Artikuluen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/documents.json","r") as d:
             dokumentuak = json.load(d)
-            log.write("Dokumentuen JSONa kargatu da...\n")
+            logging.info("Dokumentuen JSONa kargatu da...")
     except:
-        log.write("Dokumentuen JSONa ez da kargatu...\n")
+        logging.error("Dokumentuen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/entities.json","r") as e:
             entitateak = json.load(e)
-            log.write("Entitateen JSONa kargatu da...\n")
+            logging.info("Entitateen JSONa kargatu da...")
     except:
-        log.write("Entitateen JSONa ez da kargatu...\n")
+        logging.error("Entitateen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/events.json","r") as ek:
             ekitaldiak = json.load(ek)
-            log.write("Ekitaldien JSONa kargatu da...\n")
+            logging.info("Ekitaldien JSONa kargatu da...")
     except:
-        log.write("Ekitaldien JSONa ez da kargatu...\n")
+        logging.error("Ekitaldien JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/persons.json","r") as pe:
             pertsonak = json.load(pe)
-            log.write("Pertsonen JSONa kargatu da...\n")
+            logging.info("Pertsonen JSONa kargatu da...")
     except:
-        log.write("Pertsonen JSONa ez da kargatu...\n")
+        logging.error("Pertsonen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/places.json","r") as pl:
             lekuak = json.load(pl)
-            log.write("Lekuen JSONa kargatu da...\n")
+            logging.info("Lekuen JSONa kargatu da...")
     except:
-        log.write("Lekuen JSONa ez da kargatu...\n")
+        logging.error("Lekuen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/relations.json","r") as re:
             erlazioak = json.load(re)
-            log.write("Erlazioen JSONa kargatu da...\n")
+            logging.info("Erlazioen JSONa kargatu da...")
     except:
-        log.write("Erlazioen JSONa ez da kargatu...\n")
+        logging.error("Erlazioen JSONa ez da kargatu...",exc_info=True)
 
     try:
         with open("../data/ladonacion.es/sources.json","r") as so:
             iturriak = json.load(so)
-            log.write("Iturrien JSONa kargatu da")
+            logging.info("Iturrien JSONa kargatu da")
     except:
-        log.write("Iturrien JSONa ez da kargatu")
+        logging.error("Iturrien JSONa ez da kargatu",exc_info=True)
 
 def setType(uri,typeUrl):
 #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
 #Out: Grafoan objektu horren rdfs:type-aren triplea sartu
-    global grafo,log
+    global grafo
 
     triple = (uri,RDF.type,typeUrl)
-    log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+    logging.info("Sartuko den triplea hurrengoa da..." + str(triple) + "")
     grafo.add(triple)
 
 def setLabel(uri,json,tipoa):
@@ -108,21 +109,21 @@ def setLabel(uri,json,tipoa):
             label = i["title"]
             break
     triple = (uri,RDFS.label,Literal(label))
-    log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+    logging.info("Sartuko den triplea hurrengoa da..." + str(triple) + "")
     grafo.add(triple)
 
 
 def setComent(uri,json,tipoa):
 # In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
 # Out: Grafoan objektu horren rdfs:comment-aren triplea sartu
-    global grafo,log
+    global grafo
     for i in json[tipoa]:
         if i["id"] == uri.split("/")[-1]:
             if("description" in i.keys()): #Elementu batzuk ez daukate "description" giltza
                 comment = i["description"]
                 triple = (uri, RDFS.comment, Literal(comment))
                 grafo.add(triple)
-                log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+                logging.info("Sartuko den triplea hurrengoa da..." + str(triple) + "")
                 break
 
 
@@ -200,19 +201,18 @@ def subjektuaObjektuaTratatu(uri):
 
     tipoa = uri.split("/")[1]
     if tipoa == "entities": tipoa = "entitys"# Hecha la trampa por que el singular de entities es entity
-    #if tipoa == "articles": tipoa = "articless" #Por que falla
     entitate = URIRef(uri_base + "id/" + tipoa[0:len(tipoa) - 1] + "/" + uri.split("/")[2])
     setTypeLabelComent(entitate, uri.split("/")[1])
     return entitate
 
-def tripleakSortu(i):
-#In: Dokumentu bat
+def tripleakSortu(artiDoku):
+#In: Dokumentu/Artikulu bat
 #Out: Dokumentu horren erlazio guztiak grafoan sartu
-    global grafo, uri_base, log
+    global grafo, uri_base
 
     aldatu = False
 
-    for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
+    for j in artiDoku["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
 
         #Subjektua
         subjektu = subjektuaObjektuaTratatu(j["subject"])
@@ -233,22 +233,23 @@ def tripleakSortu(i):
             triple = (subjektu, predikatu, objektu)
 
         if ("mohamed_vi" not in subjektu and "gives" not in predikatu and "marrakech" not in objektu):  # Tripleak ez bikoizteko
-            log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+            logging.info("Sartuko den triplea hurrengoa da..." + str(triple) + "")
             grafo.add(triple)
 
 def grafoaEraiki():
 #In: -
 #Out: Dauden artikuluekin sortutako grafoa
-    global grafo, artikuluak,dokumentuak,log
+    global grafo, artikuluak,dokumentuak
 
-    log.write("Artikuluen tripleak sortuko dira...\n")
+    logging.info("Artikuluen tripleak sortuko dira...")
     for i in artikuluak["articles"]: #Artikuluen artean iteratzeko
-        log.write("Hurrengo artikulua kudeatujo da...\n" + str(i) + "\n")
+        logging.info("Hurrengo artikulua kudeatuko da..." + str(i) + "")
         tripleakSortu(i)
 
 
-    log.write("Dokumentuen tripleak sortuko dira...\n")
+    logging.info("Dokumentuen tripleak sortuko dira...")
     for i in dokumentuak["documents"]:
+        logging.info("Hurrengo dokumentua kudeatuko da..." + str(i) + "")
         tripleakSortu(i)
 
     grafo.serialize(destination ="../data/ladonacion.es/grafoa.nt", format ="nt")
@@ -271,10 +272,10 @@ def zerbitzariraIgo():
         sparql.setHTTPAuth(BASIC)
         sparql.setCredentials('login', 'password')
 
-        #try:
-        ret = sparql.query()
-        #except:
-            #log.write("Ezin izan da " + str((s,p,o)) + " triplea grafoan sartu...\n")
+        try:
+            ret = sparql.query()
+        except:
+            logging.error("Ezin izan da " + str((s,p,o)) + " triplea grafoan sartu...",exc_info=True)
 
 #Testearako metodoak
 
@@ -304,7 +305,6 @@ def getLabelFromGraph(id):
 
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
-    print(results['results']['bindings'][0]["label"]['value'])
     return results['results']['bindings'][0]["label"]['value']
 
 def getCommentFromGraph(id):
@@ -337,7 +337,6 @@ def getTypeFromGraph(id):
 
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
-    results['results']['bindings'][0]["type"]['value']
     return results['results']['bindings'][0]["type"]['value']
 
 
@@ -345,12 +344,12 @@ def getTypeFromGraph(id):
 #Main metodoa
 if __name__ == "__main__":
 
-    log.write("JSONak kargatuko dira...\n")
+    logging.info("JSONak kargatuko dira...")
     jsonakKargatu()
 
-    log.write("Grafoa eraikiko da...\n")
+    logging.info("Grafoa eraikiko da...")
     grafoaEraiki()
 
-    log.write("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...\n")
+    logging.info("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...")
     zerbitzariraIgo()
 
