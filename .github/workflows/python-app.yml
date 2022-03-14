@@ -3,11 +3,7 @@
 
 name: Python application
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push] #Con esto se ejecuta cada vez que se pushea cualquier rama
 
 jobs:
   build:
@@ -32,5 +28,4 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
-      run: |
-        pytest
+      run: coverage run --source=./graphSource/tests TestJson2rdf.py #Runear los test propios
