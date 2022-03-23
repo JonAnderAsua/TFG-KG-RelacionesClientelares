@@ -1,7 +1,11 @@
 import unittest
 import rdflib
+import sys
+import os
 
-import graphSource.json2rdf as json2rdf
+sys.path.append(os.path.abspath("../"))
+from json2rdf import * as json2rdf
+#import graphSource.json2rdf as json2rdf
 
 
 class TestJson2rdf(unittest.TestCase):
