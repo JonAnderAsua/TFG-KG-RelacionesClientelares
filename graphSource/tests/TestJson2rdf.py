@@ -1,19 +1,21 @@
 import unittest
 import rdflib
-import sys
-import os
 
-sys.path.append(os.path.abspath("../"))
-from json2rdf import * as json2rdf
-#import graphSource.json2rdf as json2rdf
-
+from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
+
 
     json2rdf.jsonakKargatu()
     jsonZerrenda = json2rdf.getJsonak()
 
+    for i in jsonZerrenda:
+        if not i:
+            print("Está vacío")
+
+
     def test_setType(self):
+
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),rdflib.term.URIRef("https://schema.org/NewsArticle"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"),rdflib.term.URIRef("https://schema.org/Documentation"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"),rdflib.term.URIRef("https://schema.org/Organization"))
@@ -21,12 +23,12 @@ class TestJson2rdf(unittest.TestCase):
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/person/elena"),rdflib.term.URIRef("https://schema.org/Person"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"),rdflib.term.URIRef("https://schema.org/Place"))
 
-        self.assertEquals('https://schema.org/NewsArticle',json2rdf.getTypeFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
-        self.assertEquals('https://schema.org/Documentation',json2rdf.getTypeFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
-        self.assertEquals('https://schema.org/Organization', json2rdf.getTypeFromGraph("http://ehu.eus/id/entity/ohl"))
-        self.assertEquals('https://schema.org/Event',json2rdf.getTypeFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
-        self.assertEquals('https://schema.org/Person',json2rdf.getTypeFromGraph("http://ehu.eus/id/person/juan_carlos"))
-        self.assertEquals('https://schema.org/Place',json2rdf.getTypeFromGraph("http://ehu.eus/id/place/princes_gate_5"))
+        self.assertEqual('https://schema.org/NewsArticle',json2rdf.getTypeFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
+        self.assertEqual('https://schema.org/Documentation',json2rdf.getTypeFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
+        self.assertEqual('https://schema.org/Organization', json2rdf.getTypeFromGraph("http://ehu.eus/id/entity/ohl"))
+        self.assertEqual('https://schema.org/Event',json2rdf.getTypeFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEqual('https://schema.org/Person',json2rdf.getTypeFromGraph("http://ehu.eus/id/person/juan_carlos"))
+        self.assertEqual('https://schema.org/Place',json2rdf.getTypeFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
 
     def test_setLabel(self):
