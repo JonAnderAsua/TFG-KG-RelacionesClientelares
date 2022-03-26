@@ -23,8 +23,5 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Should Pass
       run: echo "Pasa"
-
-    - name: pruebas
-      run : ls
     - name: Test with pytest
       run: python ./graphSource/tests/TestJson2rdf.py #Runear los test propios
