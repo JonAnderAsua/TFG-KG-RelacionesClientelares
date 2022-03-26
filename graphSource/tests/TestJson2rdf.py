@@ -2,6 +2,7 @@ import os
 import unittest
 import rdflib
 print(os.getcwd())
+print(os.system("ls"))
 # os.chdir("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/tests/")
 import graphSource.json2rdf as json2rdf
 
