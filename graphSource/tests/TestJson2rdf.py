@@ -1,10 +1,9 @@
-import os
 import unittest
 import rdflib
-print(os.getcwd())
-print(os.system("ls"))
-# os.chdir("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/tests/")
 
+import sys
+
+sys.path.append("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource")
 from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
