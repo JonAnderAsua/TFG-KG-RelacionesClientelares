@@ -4,7 +4,7 @@ import rdflib
 
 print(os.getcwd())
 
-from graphSource import json2rdf
+import graphSource.json2rdf as json2rdf
 
 class TestJson2rdf(unittest.TestCase):
     json2rdf.jsonakKargatu()
