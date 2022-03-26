@@ -4,7 +4,8 @@ import rdflib
 print(os.getcwd())
 print(os.system("ls"))
 # os.chdir("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/tests/")
-import graphSource.json2rdf as json2rdf
+
+from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
     json2rdf.jsonakKargatu()
