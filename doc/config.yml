@@ -1,9 +1,9 @@
 la_donacion:
-  data_source: ../data/ladonacion.es
-  validate: ../tests/TestJson2rdf.py
+  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es
+  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py
   named_graph: http://data.ehu.eus/ladonacion #Este hay que cambiarlo
   processor: ../graphSource/json2rdf.py
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200
-  logs: ../logs/logGraph.txt
+  logs: ../logs/logLaDonacion.log

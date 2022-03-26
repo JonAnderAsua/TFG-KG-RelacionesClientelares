@@ -1,11 +1,13 @@
+import termios
+
 import yaml
 
 class Procesador:
 
     def __init__(self, izena): #Eraikitzailea
-
         #Yaml fitxategia kargatu
-        fichero = open("../doc/config.yaml")
+        fichero = open("../doc/config.yml")
+
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         #Klasearen objektuak sortu
@@ -16,3 +18,4 @@ class Procesador:
         self.metadata_file = fitxategia[izena]["metadata_file"]
         self.delete_graph = fitxategia[izena]["delete_graph"]
         self.triple_store = fitxategia[izena]["triple_store"]
+        self.logs = fitxategia[izena]["logs"]

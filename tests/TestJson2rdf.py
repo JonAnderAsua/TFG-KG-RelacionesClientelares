@@ -1,11 +1,14 @@
+import os
 import unittest
-
 import rdflib
 
-from graphSource import json2rdf
+print(os.getcwd())
+
+import graphSource.json2rdf as json2rdf
 
 class TestJson2rdf(unittest.TestCase):
 
+    json2rdf = json2rdf.Json2rdf("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es","../logs/logLaDonacion.log")
     json2rdf.jsonakKargatu()
     jsonZerrenda = json2rdf.getJsonak()
 
@@ -17,7 +20,12 @@ class TestJson2rdf(unittest.TestCase):
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/person/elena"),rdflib.term.URIRef("https://schema.org/Person"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"),rdflib.term.URIRef("https://schema.org/Place"))
 
-        grafoa = json2rdf.getGrafoa()
+        self.assertEqual('https://schema.org/NewsArticle',json2rdf.getTypeFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
+        self.assertEqual('https://schema.org/Documentation',json2rdf.getTypeFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
+        self.assertEqual('https://schema.org/Organization', json2rdf.getTypeFromGraph("http://ehu.eus/id/entity/ohl"))
+        self.assertEqual('https://schema.org/Event',json2rdf.getTypeFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEqual('https://schema.org/Person',json2rdf.getTypeFromGraph("http://ehu.eus/id/person/juan_carlos"))
+        self.assertEqual('https://schema.org/Place',json2rdf.getTypeFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
 
     def test_setLabel(self):
@@ -29,27 +37,31 @@ class TestJson2rdf(unittest.TestCase):
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/person/juan_carlos"), self.jsonZerrenda[4], "persons")
         json2rdf.setLabel(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
-        grafoa = json2rdf.getGrafoa()
+        self.assertEquals('Corinna y Zanganeh  Dos versiones contradictorias de la supuesta comisi n del Rey', json2rdf.getLabelFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
+        self.assertEquals('Primera carta a Zarzuela de los abogados de Corinna', json2rdf.getLabelFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
+        self.assertEquals('OHL', json2rdf.getLabelFromGraph("http://ehu.eus/id/entity/ohl"))
+        self.assertEquals('Corinna disuelve Apollonia Associates', json2rdf.getLabelFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEquals('S M  el Rey Don Juan Carlos', json2rdf.getLabelFromGraph("http://ehu.eus/id/person/juan_carlos"))
+        self.assertEquals('Princes Gate  5', json2rdf.getLabelFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
-        query = '''
-        SELECT ?id
-        WHERE
-        {
-            ?id rdfs:label "Juan Carlos I de España"@es .
-        }        
-        '''
-        res = grafoa.query(query)
+
 
     def test_setComent(self):
-        # Datuak sartuko dira
-        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),self.jsonZerrenda[0], "articles")
-        json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"), self.jsonZerrenda[1],"documents")
+        self.maxDiff = None
+
+        # Datuak sartuko dira (Artikuluak eta dokumentuak ez daukate komentariorik)
         json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"), self.jsonZerrenda[2], "entities")
         json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/event/disolucion_de_apollonia"), self.jsonZerrenda[3],"events")
         json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/person/elena"), self.jsonZerrenda[4], "persons")
         json2rdf.setComent(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
-        grafoa = json2rdf.getGrafoa()
+        self.assertEquals('Empresa constructora multinacional espa ola  fundada y presidida por  a href    persons villar mir  Juan Miguel Villar Mir  a  y cotizada en el IBEX 35  OHL es una de las compa  as adjudicatarias del  a href    events anuncio adjudicacion ave  hist rico contrato para construir el AVE a La Meca  a   un acuerdo comercial para el que se vali  del asesoramiento de la saud   a href    persons zanganeh  Shahphari Zanganeh  a  ', json2rdf.getCommentFromGraph("http://ehu.eus/id/entity/ohl"))
+        self.assertEquals('Tan solo unas semanas de la adjudicaci n del  em megacontrato  em  para la  a href    events anuncio adjudicacion ave  construcci n del AVE a La Meca  a    a href    persons corinna  Corinna zu Sayn Wittgenstein  a  disuelve sus sociedad  a href    entities apollonia  Apollonia Ventures  a   que hab a constituido en noviembre de 2005 ', json2rdf.getCommentFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEquals('La hija mayor de los reyes de Espa a   a href    persons juan carlos  Juan Carlos  a  y  a href    persons sofia de grecia  Sof a  a   figura junto con su padre y sus hermanos  a href    persons felipe vi  el rey Felipe VI  a  y  a href    persons cristina  Cristina de Borb n  a   como beneficiaria de la  a href    entities zagatka  fundaci n Zagatka  a   una entidad dada de alta en  a href    places liechtenstein  Liechtenstein  a  bajo el control de un pariente lejano   a href    persons alvaro de orleans   lvaro de Orleans Borb n  a  ', json2rdf.getCommentFromGraph("http://ehu.eus/id/person/elena"))
+        self.assertEquals('Exclusivo  tico en el barrio de Knightsbride  que el  a href    persons qabus bin said  sult n de Om n  a  adquiri  por 50 millones de libras  62 7 millones de euros  un r cord del momento  para ponerlo a disposici n del  a href    persons juan carlos  rey Juan Carlos  a   quien  a href    events viaje a oman  hab a visitado el pa s  rabe  a  apenas dos meses antes ', json2rdf.getCommentFromGraph("http://ehu.eus/id/place/princes_gate_5"))
+
+
+
 
     #setTypeLabelComent metodoa aurreko hiru metodoetan frogatzen da
 
@@ -125,19 +137,4 @@ class TestJson2rdf(unittest.TestCase):
     def test_grafoaEraiki(self):
         pass
 
-    def test_zerbitzariraIgo(self):
-        pass
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
+# test_zerbitzariraIgo(self) beste metodoen barnean frogatzen da eskaerak zerbitzariaren kontra egiten direlako

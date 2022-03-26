@@ -1,6 +1,11 @@
 import Procesador
+from graphSource import json2rdf
 
 if __name__ == "__main__":
-    procesador = Procesador("la_donacion")
+    procesador = Procesador.Procesador("la_donacion")
 
-    print(procesador)
+    if "json2rdf" in procesador.processor:
+        programa = json2rdf.Json2rdf(procesador.data_source,procesador.logs)
+        programa.main()
+
+        exec(open(procesador.validate).read())

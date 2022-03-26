@@ -1,12 +1,16 @@
-from SPARQLWrapper import SPARQLWrapper, BASIC
+import logging
+
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
+import re
+import os
 
-class JSON2RDF:
+class Json2rdf:
 
-    def __init__(self,data,logs):
-        #JSONak
+    def __init__(self, data, logs):
+        # JSONak
         self.artikuluak = ""
         self.dokumentuak = ""
         self.entitateak = ""
@@ -16,7 +20,7 @@ class JSON2RDF:
         self.erlazioak = ""
         self.iturriak = ""
 
-        #URIak
+        # URIak
         self.uri_base = "http://ehu.eus/"
         self.per = URIRef("https://schema.org/Person")
         self.ekit = URIRef("https://schema.org/Event")
@@ -25,92 +29,113 @@ class JSON2RDF:
         self.enti = URIRef("https://schema.org/Organization")
         self.arti = URIRef("https://schema.org/NewsArticle")
 
-        #Grafoa
+        # Grafoa
         self.grafo = Graph()
 
-        #Miscelanea
-        self.log = open(logs,"w")
+        # Log
+        logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
         self.data = data
+
+    def getPath(self):
+    #In: -
+    #Out: Fitxategian dauden path-a
+        cwd = os.getcwd()
+        if "test" in cwd: #Test
+            cwd = cwd.split("/")[0:-2]
+        else:
+            cwd = cwd.split("/")[0:-2]
+
+        path = ""
+        for i in cwd:
+            path += "/" + i
+        return path
 
     def jsonakKargatu(self):
     #In: -
     #Out: JSONak kargatuta
+
+        print(self.data)
         try:
             with open(self.data + "/articles.json","r") as a:
                 self.artikuluak = json.load(a)
-                self.log.write("Artikuluen JSONa kargatu da...\n")
+                logging.info("Artikuluen JSONa kargatu da...\n")
         except:
-            self.log.write("Artikuluen JSONa ez da kargatu...\n")
+            logging.error("Artikuluen JSONa ez da kargatu...\n")
 
         try:
-            with open( self.data + "/documents.json","r") as d:
+            with open(self.data + "/documents.json","r") as d:
                 self.dokumentuak = json.load(d)
-                self.log.write("Dokumentuen JSONa kargatu da...\n")
+                logging.info("Dokumentuen JSONa kargatu da...\n")
         except:
-            self.log.write("Dokumentuen JSONa ez da kargatu...\n")
+            logging.error("Dokumentuen JSONa ez da kargatu...\n")
 
         try:
             with open(self.data + "/entities.json","r") as e:
                 self.entitateak = json.load(e)
-                self.log.write("Entitateen JSONa kargatu da...\n")
+                logging.info("Entitateen JSONa kargatu da...\n")
         except:
-            self.log.write("Entitateen JSONa ez da kargatu...\n")
+            logging.error("Entitateen JSONa ez da kargatu...\n")
 
         try:
-            with open( self.data + "/events.json","r") as ek:
+            with open(self.data + "/events.json","r") as ek:
                 self.ekitaldiak = json.load(ek)
-                self.log.write("Ekitaldien JSONa kargatu da...\n")
+                logging.info("Ekitaldien JSONa kargatu da...\n")
         except:
-            self.log.write("Ekitaldien JSONa ez da kargatu...\n")
+            logging.error("Ekitaldien JSONa ez da kargatu...\n")
 
         try:
-            with open("../data/ladonacion.es/persons.json","r") as pe:
+            with open(self.data + "/persons.json","r") as pe:
                 self.pertsonak = json.load(pe)
-                self.log.write("Pertsonen JSONa kargatu da...\n")
+                logging.info("Pertsonen JSONa kargatu da...\n")
         except:
-            self.log.write("Pertsonen JSONa ez da kargatu...\n")
+            logging.error("Pertsonen JSONa ez da kargatu...\n")
 
         try:
             with open(self.data + "/places.json","r") as pl:
                 self.lekuak = json.load(pl)
-                self.log.write("Lekuen JSONa kargatu da...\n")
+                logging.info("Lekuen JSONa kargatu da...\n")
         except:
-            self.log.write("Lekuen JSONa ez da kargatu...\n")
+            logging.error("Lekuen JSONa ez da kargatu...\n")
 
         try:
             with open(self.data + "/relations.json","r") as re:
                 self.erlazioak = json.load(re)
-                self.log.write("Erlazioen JSONa kargatu da...\n")
+                logging.info("Erlazioen JSONa kargatu da...\n")
         except:
-            self.log.write("Erlazioen JSONa ez da kargatu...\n")
+            logging.error("Erlazioen JSONa ez da kargatu...\n")
 
         try:
             with open(self.data + "/sources.json","r") as so:
                 self.iturriak = json.load(so)
-                self.log.write("Iturrien JSONa kargatu da")
+                logging.info("Iturrien JSONa kargatu da")
         except:
-            self.log.write("Iturrien JSONa ez da kargatu")
+            logging.error("Iturrien JSONa ez da kargatu")
+
+    def filtroaPasatu(self,comment): #https://www.delftstack.com/es/howto/python/remove-special-characters-from-string-python/
+    #In: String bat
+    #Out: String hori baina karaktere okultorik gabe
+        return re.sub(r"[^a-zA-Z0-9]"," ",comment)
 
     def setType(self,uri,typeUrl):
     #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
     #Out: Grafoan objektu horren rdfs:type-aren triplea sartu
 
         triple = (uri,RDF.type,typeUrl)
-        self.log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+        logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
         self.grafo.add(triple)
 
     def setLabel(self,uri,json,tipoa):
     #In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
     #Out: Grafoan objektu horren rdfs:label-aren triplea sartu
+
         label = ""
         for i in json[tipoa]:
             if i["id"] == uri.split("/")[-1]:
-                label = i["title"]
+                label = self.filtroaPasatu(i["title"])
                 break
         triple = (uri,RDFS.label,Literal(label))
-        self.log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+        logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
         self.grafo.add(triple)
-
 
     def setComent(self,uri,json,tipoa):
     # In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
@@ -119,10 +144,13 @@ class JSON2RDF:
             if i["id"] == uri.split("/")[-1]:
                 if("description" in i.keys()): #Elementu batzuk ez daukate "description" giltza
                     comment = i["description"]
+                    comment = self.filtroaPasatu(str(comment))
                     triple = (uri, RDFS.comment, Literal(comment))
                     self.grafo.add(triple)
-                    self.log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+                    logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
                     break
+
+
 
     def setTypeLabelComent(self,uri, tipoa): # https://rdflib.readthedocs.io/en/stable/intro_to_creating_rdf.html
     #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
@@ -188,11 +216,10 @@ class JSON2RDF:
         return emaitza
 
     def subjektuaObjektuaTratatu(self,uri):
-    #In: Objektu batekin erlazionatutako URI bat
-    #Out: URIRef objektu bat zuzendutako elementuekin
+    #In:
+    #Out:
         tipoa = uri.split("/")[1]
-        if tipoa == "entities": tipoa = "entitys"# Hecha la trampa por que el singular de entities es entity
-        #if tipoa == "articles": tipoa = "articless" #Por que falla
+        if tipoa == "entities": tipoa = "entitys"  # Hecha la trampa por que el singular de entities es entity
         entitate = URIRef(self.uri_base + "id/" + tipoa[0:len(tipoa) - 1] + "/" + uri.split("/")[2])
         self.setTypeLabelComent(entitate, uri.split("/")[1])
         return entitate
@@ -204,6 +231,7 @@ class JSON2RDF:
         aldatu = False
 
         for j in i["relations"]:  # Artikulu/dokumentu bakoitzak dauzkan erlazioak atera
+
             #Subjektua
             subjektu = self.subjektuaObjektuaTratatu(j["subject"])
 
@@ -223,20 +251,20 @@ class JSON2RDF:
                 triple = (subjektu, predikatu, objektu)
 
             if ("mohamed_vi" not in subjektu and "gives" not in predikatu and "marrakech" not in objektu):  # Tripleak ez bikoizteko
-                self.log.write("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
+                logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
                 self.grafo.add(triple)
 
     def grafoaEraiki(self):
     #In: -
     #Out: Dauden artikuluekin sortutako grafoa
 
-        self.log.write("Artikuluen tripleak sortuko dira...\n")
+        logging.info("Artikuluen tripleak sortuko dira...\n")
         for i in self.artikuluak["articles"]: #Artikuluen artean iteratzeko
-            self.log.write("Hurrengo artikulua kudeatujo da...\n" + str(i) + "\n")
+            logging.info("Hurrengo artikulua kudeatujo da...\n" + str(i) + "\n")
             self.tripleakSortu(i)
 
 
-        self.log.write("Dokumentuen tripleak sortuko dira...\n")
+        logging.info("Dokumentuen tripleak sortuko dira...\n")
         for i in self.dokumentuak["documents"]:
             self.tripleakSortu(i)
 
@@ -246,55 +274,98 @@ class JSON2RDF:
     #In: -
     #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
 
-        '''
-        datuak = "/data/ladonacion.es/grafoa.nt"
-        base_url = "http://localhost:7200"
-        repo_id = "Froga"
-
-        eskaera = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{fileNames:[" + datuak + "]}' "+base_url+"/rest/data/import/server/"+repo_id
-        print(eskaera)
-        os.system(eskaera)
-        '''
-
-        graphdb_url = "http://localhost:7200/repositories/laDonacion/statements"
+        graphdb_url = "http://localhost:7200/repositories/LaDonacion/statements"
         #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
         for s,p,o in self.grafo:
-            triple = (s,p,o)
-            print(triple)
-            queryStringUpload = 'INSERT DATA { %s, %s, %s }' %(s,p,o)
-            print(queryStringUpload)
+            if("http://ehu.eus" in o or "https://schema.org" in o):
+                queryStringUpload = 'INSERT DATA  { <%s> <%s> <%s> }' %(s,p,o)
+            else:
+                queryStringUpload = 'INSERT DATA  { <%s> <%s> "%s" }' % (s, p, o)
             sparql = SPARQLWrapper(graphdb_url)
             sparql.setQuery(queryStringUpload)
-            sparql.setMethod('POST')
+            sparql.queryType = INSERT
+            sparql.method = POST
             sparql.setHTTPAuth(BASIC)
-            sparql.setCredentials('login', 'password')
 
-            #try:
-            ret = sparql.query()
-            #except:
-                #log.write("Ezin izan da " + str((s,p,o)) + " triplea grafoan sartu...\n")
+            try:
+                ret = sparql.query()
+            except:
+                logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
 
-    #Testearako metodoak
+
+    # Testearako metodoak
+
     def getGrafoa(self):
-    #In: -
-    #Out: Proiektu honen grafoa
+        # In: -
+        # Out: Proiektu honen grafoa
         return self.grafo
 
-    def getJsonak(self):
-    #In: -
-    #Out: Proiektuaren JSONak
-        return[self.artikuluak,self.dokumentuak,self.entitateak,self.ekitaldiak,self.pertsonak,self.lekuak,self.erlazioak,self.iturriak]
 
+    def getJsonak(self):
+        # In: -
+        # Out: Proiektuaren JSONak
+        return [self.artikuluak, self.dokumentuak, self.entitateak, self.ekitaldiak, self.pertsonak, self.lekuak, self.erlazioak, self.iturriak]
+
+
+    def getLabelFromGraph(self, id):
+        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+        sparql.setQuery('''
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    SELECT ?label
+                    WHERE
+                    {
+                        <%s> rdfs:label ?label .
+                    }           
+                    ''' % (id))
+
+        sparql.setReturnFormat(JSON)
+        results = sparql.query().convert()
+        return results['results']['bindings'][0]["label"]['value']
+
+
+    def getCommentFromGraph(self, id):
+        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+        sparql.setQuery('''
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    SELECT ?comment
+                    WHERE
+                    {
+                        <%s> rdfs:comment ?comment .
+                    }           
+                    ''' % (id))
+
+        sparql.setReturnFormat(JSON)
+        results = sparql.query().convert()
+        return results['results']['bindings'][0]["comment"]['value']
+
+
+    def getTypeFromGraph(self,id):
+        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+        sparql.setQuery('''
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    SELECT ?type
+                    WHERE
+                    {
+                        <%s> rdf:type ?type .
+                    }           
+                    ''' % (id))
+
+        sparql.setReturnFormat(JSON)
+        results = sparql.query().convert()
+        return results['results']['bindings'][0]["type"]['value']
 
 
     #Main metodoa
     def main(self):
-        self.log.write("JSONak kargatuko dira...\n")
+
+        logging.info("JSONak kargatuko dira...\n")
         self.jsonakKargatu()
 
-        self.log.write("Grafoa eraikiko da...\n")
+        logging.info("Grafoa eraikiko da...\n")
         self.grafoaEraiki()
 
-        self.log.write("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...\n")
+        logging.info("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...\n")
         self.zerbitzariraIgo()
-
