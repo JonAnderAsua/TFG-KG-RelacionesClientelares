@@ -3,8 +3,8 @@ import rdflib
 
 import sys
 
-sys.path.append("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/")
-from graphSource import json2rdf
+sys.path.append("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/json2rdf.py")
+import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
     json2rdf.jsonakKargatu()
