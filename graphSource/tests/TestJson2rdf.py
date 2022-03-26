@@ -1,21 +1,17 @@
+import os
 import unittest
 import rdflib
+
+print(os.getcwd())
 
 from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
-
-
     json2rdf.jsonakKargatu()
     jsonZerrenda = json2rdf.getJsonak()
 
-    for i in jsonZerrenda:
-        if not i:
-            print("Está vacío")
-
 
     def test_setType(self):
-
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),rdflib.term.URIRef("https://schema.org/NewsArticle"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/document/carta_kobre_kim_3"),rdflib.term.URIRef("https://schema.org/Documentation"))
         json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/entity/ohl"),rdflib.term.URIRef("https://schema.org/Organization"))
