@@ -1,8 +1,8 @@
 import os
 import unittest
 import rdflib
-
-os.chdir("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/tests/")
+print(os.getcwd())
+# os.chdir("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/tests/")
 import graphSource.json2rdf as json2rdf
 
 class TestJson2rdf(unittest.TestCase):
