@@ -3,7 +3,7 @@ import rdflib
 
 import sys
 
-sys.path.append("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource")
+sys.path.append("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/")
 from graphSource import json2rdf
 
 class TestJson2rdf(unittest.TestCase):
