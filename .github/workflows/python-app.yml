@@ -27,4 +27,4 @@ jobs:
     - name: Froga
       run: ls graphSource/tests/
     - name: Test with pytest
-      run: python3 ./graphSource/tests/TestJson2rdf.py #Runear los test propios
+      run: python3 from graphSource import json2rdf & python3 ./graphSource/tests/TestJson2rdf.py #Runear los test propios
