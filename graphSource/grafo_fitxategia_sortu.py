@@ -7,7 +7,7 @@ import json
 import re
 import os
 
-class Json2rdf:
+class Grafo_fitxategia_sortu:
 
     def __init__(self, data, logs,rdf_output):
         # JSONak
@@ -270,32 +270,6 @@ class Json2rdf:
             self.tripleakSortu(i)
 
         self.grafo.serialize(destination = self.rdf_output, format ="nt")
-
-    def zerbitzariraIgo(self):
-    #In: -
-    #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
-
-        graphdb_url = "http://localhost:7200/repositories/LaDonacion/statements"
-        #graphdb_url = "http://158.227.69.119:7200/repositories/laDonacion/statements"
-        for s,p,o in self.grafo:
-            if("http://ehu.eus" in o or "https://schema.org" in o):
-                queryStringUpload = 'INSERT DATA  { <%s> <%s> <%s> }' %(s,p,o)
-            else:
-                queryStringUpload = 'INSERT DATA  { <%s> <%s> "%s" }' % (s, p, o)
-            sparql = SPARQLWrapper(graphdb_url)
-            sparql.setQuery(queryStringUpload)
-            sparql.queryType = INSERT
-            sparql.method = POST
-            sparql.setHTTPAuth(BASIC)
-
-            try:
-                ret = sparql.query()
-            except:
-                logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
-
-
-    # Testearako metodoak
-
     def getGrafoa(self):
         # In: -
         # Out: Proiektu honen grafoa
@@ -367,6 +341,3 @@ class Json2rdf:
 
         logging.info("Grafoa eraikiko da...\n")
         self.grafoaEraiki()
-
-        logging.info("Sortutako fitxategia zerbitzariaren graphdb instantziara igoko da...\n")
-        self.zerbitzariraIgo()
