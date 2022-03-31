@@ -3,6 +3,7 @@ from graphSource import grafo_fitxategia_sortu,json2rdf,zerbitzarira_igo
 from graphSource.tests import TestJson2rdf
 
 if __name__ == "__main__":
+
     procesador = Procesador.Procesador("la_donacion")
 
     programa = grafo_fitxategia_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.rdf_output)

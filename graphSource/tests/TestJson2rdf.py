@@ -5,9 +5,9 @@ import graphSource.json2rdf as json2rdf
 
 class TestJson2rdf(unittest.TestCase):
 
-    def __init__(self):
+    def __init__(self,json2rdf):
         super(TestJson2rdf,self).__init__() #https://stackoverflow.com/questions/52369509/attributeerror-object-has-no-attribute-type-equality-funcs
-        self.json2rdf = json2rdf.Json2rdf("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es","../logs/logLaDonacion.log")
+        self.json2rdf = json2rdf
         self.json2rdf.jsonakKargatu()
         self.jsonZerrenda = self.json2rdf.getJsonak()
         self.exekutatuTestak()
