@@ -1,10 +1,11 @@
-import os
-import yaml
-
-import Procesador
+import os,sys,yaml,Procesador
 
 if __name__ == "__main__":
-    proiektu_izena = input("Sartu proiektuaren izena \n")
+    proiektu_izena = ""
+    if len(sys.argv) > 1:
+        proiektua_izena = sys.argv[1]
+    else:
+        proiektu_izena = input("Sartu proiektuaren izena \n")
 
     try:
 

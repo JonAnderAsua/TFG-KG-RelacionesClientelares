@@ -6,5 +6,5 @@ la_donacion:
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/graphSource/logs/laDonacion.log
+  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log
   rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/graphLaDonacion.nt
