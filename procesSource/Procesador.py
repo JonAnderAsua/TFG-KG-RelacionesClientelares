@@ -6,7 +6,7 @@ class Procesador:
 
     def __init__(self, izena): #Eraikitzailea
         #Yaml fitxategia kargatu
-        fichero = open("../doc/config.yml")
+        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
 
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
@@ -20,3 +20,4 @@ class Procesador:
         self.triple_store = self.fitxategia[izena]["triple_store"]
         self.logs = self.fitxategia[izena]["logs"]
         self.rdf_output = self.fitxategia[izena]["rdf_output"]
+

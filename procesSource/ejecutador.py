@@ -1,9 +1,12 @@
-import os,sys,yaml,Procesador
+import os
+import sys
+import yaml
+import Procesador
 
 if __name__ == "__main__":
     proiektu_izena = ""
     if len(sys.argv) > 1:
-        proiektua_izena = sys.argv[1]
+        proiektu_izena = sys.argv[1]
     else:
         proiektu_izena = input("Sartu proiektuaren izena \n")
 
@@ -18,13 +21,15 @@ if __name__ == "__main__":
             print("Perdon seño, no hemos hecho más tarea \n")
 
         #Programa exekutatu
-        os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
-
+        try:
+            os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
+        except:
+            print("Sartutako programa ezin da exekutatu")
     except:
         print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
 
         # Yaml fitxategia kargatu
-        fichero = open("../doc/config.yml")
+        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         for proiektuIzena in fitxategia:
