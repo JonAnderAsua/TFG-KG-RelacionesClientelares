@@ -8,15 +8,15 @@ class Procesador:
         #Yaml fitxategia kargatu
         fichero = open("../doc/config.yml")
 
-        fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
+        self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         #Klasearen objektuak sortu
-        self.data_source = fitxategia[izena]["data_source"]
-        self.validate = fitxategia[izena]["validate"]
-        self.named_graph = fitxategia[izena]["named_graph"]
-        self.run = fitxategia[izena]["run"]
-        self.metadata_file = fitxategia[izena]["metadata_file"]
-        self.delete_graph = fitxategia[izena]["delete_graph"]
-        self.triple_store = fitxategia[izena]["triple_store"]
-        self.logs = fitxategia[izena]["logs"]
-        self.rdf_output = fitxategia[izena]["rdf_output"]
+        self.data_source = self.fitxategia[izena]["data_source"]
+        self.validate = self.fitxategia[izena]["validate"]
+        self.named_graph = self.fitxategia[izena]["named_graph"]
+        self.run = self.fitxategia[izena]["run"]
+        self.metadata_file = self.fitxategia[izena]["metadata_file"]
+        self.delete_graph = self.fitxategia[izena]["delete_graph"]
+        self.triple_store = self.fitxategia[izena]["triple_store"]
+        self.logs = self.fitxategia[izena]["logs"]
+        self.rdf_output = self.fitxategia[izena]["rdf_output"]

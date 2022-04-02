@@ -1,10 +1,10 @@
 import Procesador
-from graphSource import grafo_fitxategia_sortu,json2rdf,zerbitzarira_igo
+import sys
+from graphSource import grafo_fitxategia_sortu,zerbitzarira_igo
 from graphSource.tests import TestJson2rdf
 
 if __name__ == "__main__":
-    proiektua = input("Mesedez, sartu proiektuaren izena \n")
-    procesador = Procesador.Procesador(proiektua)
+    procesador = Procesador.Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
 
     print("Grafo fitxategia sortuko da...")
     programa = grafo_fitxategia_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.rdf_output)

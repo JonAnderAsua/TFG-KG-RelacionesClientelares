@@ -1,8 +1,6 @@
 import unittest
 import rdflib
 
-import graphSource.json2rdf as json2rdf
-
 class TestJson2rdf(unittest.TestCase):
 
     def __init__(self,json2rdf):
