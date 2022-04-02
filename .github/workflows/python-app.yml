@@ -3,7 +3,9 @@
 
 name: Python application
 
-on: [push] #Con esto se ejecuta cada vez que se pushea cualquier rama
+on:
+  push:
+    branches: [develop] #Antes lo tenía en main pero mi tutor me ha dicho que no toque esa rama
 
 jobs:
   build:
