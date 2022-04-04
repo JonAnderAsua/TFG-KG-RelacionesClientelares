@@ -1,10 +1,19 @@
-import Procesador
 import sys
+import os
+pathLag = os.getcwd().split("/")[1:len(os.getcwd().split("/"))-2]
+path = ""
+for i in pathLag:
+    path += "/"+i
+
+sys.path.append(path)
+sys.path.append(path+"/source")
+
+import procesSource.source.Procesador as Procesador
 from graphSource import grafo_fitxategia_sortu,zerbitzarira_igo
 from graphSource.tests import TestJson2rdf
 
 if __name__ == "__main__":
-    procesador = Procesador.Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
+    procesador = Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
 
     print("Grafo fitxategia sortuko da...")
     programa = grafo_fitxategia_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.rdf_output)

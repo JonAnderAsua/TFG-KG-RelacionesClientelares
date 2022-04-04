@@ -1,5 +1,3 @@
-import termios
-
 import yaml
 
 class Procesador:

@@ -1,8 +1,16 @@
 import os
 import sys
 import yaml
-import Procesador
 
+pathLag = os.getcwd().split("/")[1:len(os.getcwd().split("/"))-2]
+path = ""
+for i in pathLag:
+    path += "/"+i
+
+sys.path.append(path)
+sys.path.append(path+"/source")
+
+import procesSource
 if __name__ == "__main__":
     proiektu_izena = ""
     if len(sys.argv) > 1:
@@ -12,7 +20,7 @@ if __name__ == "__main__":
 
     try:
 
-        procesador = Procesador.Procesador(proiektu_izena)
+        procesador = procesSource.source.Procesador(proiektu_izena)
         interpretatzaile = ""
 
         if (".py" in procesador.run):
