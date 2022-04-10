@@ -9,7 +9,7 @@ import os
 
 class Grafo_fitxategia_sortu:
 
-    def __init__(self, data, logs,rdf_output):
+    def __init__(self, data, logs,rdf_output,uri_base,triple_store):
         # JSONak
         self.artikuluak = ""
         self.dokumentuak = ""
@@ -21,7 +21,7 @@ class Grafo_fitxategia_sortu:
         self.iturriak = ""
 
         # URIak
-        self.uri_base = "http://ehu.eus/"
+        self.uri_base = uri_base
         self.per = URIRef("https://schema.org/Person")
         self.ekit = URIRef("https://schema.org/Event")
         self.doku = URIRef("https://schema.org/Documentation")
@@ -36,6 +36,14 @@ class Grafo_fitxategia_sortu:
         # Log
         logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
         self.data = data
+
+        self.triple_store = triple_store
+
+        uriTest = self.triple_store.split("/")[:len(self.triple_store.split("/"))-1]
+        self.testTripleStore = ""
+        for i in uriTest:
+            self.testTripleStore += i + "/"
+        self.testTripleStore = self.testTripleStore[:len(self.testTripleStore)-1]
 
     def getPath(self):
     #In: -
@@ -283,7 +291,7 @@ class Grafo_fitxategia_sortu:
 
 
     def getLabelFromGraph(self, id):
-        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+        sparql = SPARQLWrapper(self.testTripleStore)
 
         sparql.setQuery('''
                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -300,7 +308,7 @@ class Grafo_fitxategia_sortu:
 
 
     def getCommentFromGraph(self, id):
-        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+        sparql = SPARQLWrapper(self.testTripleStore)
 
         sparql.setQuery('''
                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -317,7 +325,8 @@ class Grafo_fitxategia_sortu:
 
 
     def getTypeFromGraph(self,id):
-        sparql = SPARQLWrapper("http://localhost:7200/repositories/LaDonacion")
+
+        sparql = SPARQLWrapper(self.testTripleStore)
 
         sparql.setQuery('''
                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -327,6 +336,7 @@ class Grafo_fitxategia_sortu:
                         <%s> rdf:type ?type .
                     }           
                     ''' % (id))
+
 
         sparql.setReturnFormat(JSON)
         results = sparql.query().convert()

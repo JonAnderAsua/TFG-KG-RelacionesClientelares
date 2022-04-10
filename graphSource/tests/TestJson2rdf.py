@@ -18,10 +18,10 @@ class TestJson2rdf(unittest.TestCase):
         self.json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/person/elena"),rdflib.term.URIRef("https://schema.org/Person"))
         self.json2rdf.setType(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"),rdflib.term.URIRef("https://schema.org/Place"))
 
-        self.assertEqual('https://schema.org/NewsArticle',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
-        self.assertEqual('https://schema.org/Documentation',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
-        self.assertEqual('https://schema.org/Organization', self.json2rdf.getTypeFromGraph("http://ehu.eus/id/entity/ohl"))
-        self.assertEqual('https://schema.org/Event',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEqual('https://schema.org/NewsArticle',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/article/20minutos_1382624"))
+        self.assertEqual('https://schema.org/Documentation',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/document/2_reglamento_zagatka"))
+        self.assertEqual('https://schema.org/Organization', self.json2rdf.getTypeFromGraph("http://ehu.eus/id/entity/aeat"))
+        self.assertEqual('https://schema.org/Event',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/event/abdicacion_anuncio"))
         self.assertEqual('https://schema.org/Person',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/person/juan_carlos"))
         self.assertEqual('https://schema.org/Place',self.json2rdf.getTypeFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
