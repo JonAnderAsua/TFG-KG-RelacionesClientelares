@@ -15,8 +15,5 @@ if __name__ == "__main__":
     zerbitzariraIgo = zerbitzarira_igo.Zerbitzarira_igo(procesador.rdf_output,procesador.triple_store,procesador.logs)
     zerbitzariraIgo.zerbitzariraIgo()
     print("Grafoa " + procesador.triple_store + " helbidera igo da...")
-
-    print("Grafoaren egitura bermatzeko testak exekutatuko dira...")
-    test = TestJson2rdf.TestJson2rdf(programa)
-    test.exekutatuTestak()
-    print("Grafoaren testak exekutatu dira... Todo OK Jose Luis")
+    
+    #Aquí habría que añadir lo de SHACL (No es prioritario)
