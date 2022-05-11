@@ -25,7 +25,7 @@ jobs:
         pip install PyYAML
         python3 setup.py build
         python3 setup.py install
-        python3 -c "import processSource"
+        python3 -c "import procesSource"
         python3 -c "import graphSource"
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Should Pass
