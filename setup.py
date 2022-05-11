@@ -10,7 +10,7 @@ setup(
     license = "",
     keywords = "",
     packages=['procesSource','graphSource'],
-    package_dir={"": ""},
+    package_dir={"": "./"},
     long_description="Imagine a long description",
     classifiers=[
         "Development Status :: 3 - Alpha",
