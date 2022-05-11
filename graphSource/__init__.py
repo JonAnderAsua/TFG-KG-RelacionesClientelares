@@ -1,2 +1,1 @@
-from .zerbitzarira_igo import *
-from .grafo_fitxategia_sortu import *
+from . import source,tests
