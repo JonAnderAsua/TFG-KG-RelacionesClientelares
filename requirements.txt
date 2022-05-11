@@ -3,4 +3,4 @@ pytest
 PyYAML
 SPARQLWrapper
 rdflib
-os
+os-sys
