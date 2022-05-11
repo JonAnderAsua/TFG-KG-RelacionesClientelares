@@ -11,9 +11,9 @@ import unittest
 import yaml
 import os
 # import procesSource
+from ..source import Procesador
 
-
-from procesSource.source import Procesador
+# from procesSource.source import Procesador
 
 
 class TestProcesador(unittest.TestCase):
