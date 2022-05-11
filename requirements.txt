@@ -3,3 +3,5 @@ pytest
 PyYAML
 SPARQLWrapper
 rdflib
+subprocess
+os
