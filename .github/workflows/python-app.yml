@@ -24,6 +24,7 @@ jobs:
         pip install flake8 pytest
         pip install PyYAML
         pip install SPARQLWrapper
+        pip install rdflib
         python3 setup.py build
         python3 setup.py install
         python3 -c "import procesSource"
