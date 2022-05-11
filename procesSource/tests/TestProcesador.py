@@ -11,10 +11,8 @@ import unittest
 import yaml
 import os
 # import procesSource
-from ..source import Procesador
-
+from source import Procesaor
 # from procesSource.source import Procesador
-
 
 class TestProcesador(unittest.TestCase):
     def __init__(self,json):
