@@ -23,6 +23,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         pip install PyYAML
+        python3 setup.py build
+        python3 setup.py install
+        python3 -c "import processSource"
+        python3 -c "import graphSource"
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Should Pass
       run: echo "Pasa"
