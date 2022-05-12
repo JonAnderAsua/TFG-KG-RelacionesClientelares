@@ -10,8 +10,8 @@ sys.path.append(path)
 import unittest
 import yaml
 import os
-# from procesSource.source import Procesador
-import procesSource
+from procesSource.source import Procesador
+# import procesSource
 
 class TestProcesador(unittest.TestCase):
     def __init__(self,json):
