@@ -27,7 +27,6 @@ class TestProcesador(unittest.TestCase):
                 break
             ROOT_DIR += i + "/"
 
-
         # Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
