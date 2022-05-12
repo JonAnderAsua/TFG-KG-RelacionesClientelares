@@ -38,7 +38,7 @@ class TestProcesador(unittest.TestCase):
             return False
 
     def test_proiektuaDago(self):
-        proiektua = procesSource.source.Procesador("la_donacion")
+        proiektua = Procesador.Procesador("la_donacion")
 
 
     def test_fitxategiaDago(self):
