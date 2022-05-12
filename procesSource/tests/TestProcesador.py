@@ -20,7 +20,7 @@ class TestProcesador(unittest.TestCase):
         path_nagusia = path_nagusia[0:len(path_nagusia)-2]
         ROOT_DIR = ""
         for i in path_nagusia:
-            ROOT_DIR += i
+            ROOT_DIR += i + "/"
 
         print(ROOT_DIR)
 
