@@ -28,4 +28,4 @@ jobs:
       run: echo "Pasa"
 
     - name: Test with pytest
-      run: python3 -c "import os; os.system('python3 procesSource/tests/TestProcesador.py')" #La_donacion proiektua sortzen eta testeatzen du
+      run: python3 procesSource/tests/TestProcesador.py #La_donacion proiektua sortzen eta testeatzen du

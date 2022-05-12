@@ -3,8 +3,14 @@ import yaml
 class Procesador:
 
     def __init__(self, izena): #Eraikitzailea
+        #Root path-a ezarri
+        for i in path_nagusia:
+            if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
+                ROOT_DIR += i + "/"
+                break
+
         #Yaml fitxategia kargatu
-        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
+        fichero = open(ROOT_DIR + "/doc/config.yml")
 
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
