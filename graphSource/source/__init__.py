@@ -1,1 +1,1 @@
-from . import grafo_fitxategia_sortu,zerbitzarira_igo
+from . import grafo_objektua_sortu,zerbitzarira_igo,fitxategia_sortu

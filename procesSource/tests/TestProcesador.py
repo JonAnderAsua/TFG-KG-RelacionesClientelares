@@ -10,9 +10,7 @@ sys.path.append(path)
 import unittest
 import yaml
 import os
-# import procesSource
-from source import Procesaor
-# from procesSource.source import Procesador
+from procesSource.source import Procesador
 
 class TestProcesador(unittest.TestCase):
     def __init__(self,json):
@@ -39,5 +37,5 @@ class TestProcesador(unittest.TestCase):
         self.assertTrue(self.fitxategiaKonprobatu(self.fitxategiaKonprobatu(output_path)))
 
 if __name__=="__main__":
-    TestProcesador("Holi")
+    TestProcesador(" ")
 

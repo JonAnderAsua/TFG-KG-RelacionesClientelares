@@ -9,7 +9,7 @@ import os
 
 class Grafo_fitxategia_sortu:
 
-    def __init__(self, data, logs,rdf_output,uri_base,triple_store):
+    def __init__(self, data, logs,uri_base,triple_store):
         # JSONak
         self.artikuluak = ""
         self.dokumentuak = ""
@@ -31,7 +31,6 @@ class Grafo_fitxategia_sortu:
 
         # Grafoa
         self.grafo = Graph()
-        self.rdf_output = rdf_output
 
         # Log
         logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
@@ -277,7 +276,7 @@ class Grafo_fitxategia_sortu:
         for i in self.dokumentuak["documents"]:
             self.tripleakSortu(i)
 
-        self.grafo.serialize(destination = self.rdf_output, format ="nt")
+        # self.grafo.serialize(destination = self.rdf_output, format ="nt")
     def getGrafoa(self):
         # In: -
         # Out: Proiektu honen grafoa
