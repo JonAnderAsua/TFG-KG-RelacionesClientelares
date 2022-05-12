@@ -17,7 +17,7 @@ class TestProcesador(unittest.TestCase):
         super(TestProcesador, self).__init__()
 
         path_nagusia = os.path.dirname(os.path.abspath(__file__)).split('/') #https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure
-        path_nagusia = path_nagusia[0:path_nagusia-2]
+        path_nagusia = path_nagusia[0:len(path_nagusia)-2]
         ROOT_DIR = ""
         for i in path_nagusia:
             ROOT_DIR += i
