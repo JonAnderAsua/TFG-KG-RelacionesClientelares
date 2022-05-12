@@ -28,7 +28,7 @@ class TestProcesador(unittest.TestCase):
         # Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-        proiektua = procesSource.source.Procesador("la_donacion")
+        proiektua = Procesador.Procesador("la_donacion")
 
     def fitxategiaKonprobatu(self,path):
         try:
