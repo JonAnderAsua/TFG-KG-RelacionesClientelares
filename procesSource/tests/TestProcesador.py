@@ -16,7 +16,13 @@ class TestProcesador(unittest.TestCase):
     def __init__(self,json):
         super(TestProcesador, self).__init__()
 
-        ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+        path_nagusia = os.path.dirname(os.path.abspath(__file__)).split('/') #https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure
+        path_nagusia = path_nagusia[0:path_nagusia-2]
+        ROOT_DIR = ""
+        for i in path_nagusia:
+            ROOT_DIR += i
+
+        print(ROOT_DIR)
 
         # Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
