@@ -6,8 +6,9 @@ class Procesador:
         #Root path-a ezarri
         for i in path_nagusia:
             if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
-                ROOT_DIR += i + "/"
+                ROOT_DIR += i
                 break
+            ROOT_DIR += i + "/"
 
         #Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
