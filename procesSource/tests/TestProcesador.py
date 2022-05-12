@@ -10,7 +10,7 @@ sys.path.append(path)
 import unittest
 import yaml
 import os
-from procesSource.source import Procesador
+# from procesSource.source import Procesador
 
 class TestProcesador(unittest.TestCase):
     def __init__(self,json):
@@ -19,12 +19,6 @@ class TestProcesador(unittest.TestCase):
         # Yaml fitxategia kargatu
         fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-        for proiektuIzena in fitxategia:
-            output_path = procesSource.source.Procesador(proiektuIzena).rdf_output
-            os.system("python3 ../source/ejecutador.py "+proiektuIzena)
-
-            #Testak exekutatu
-            self.test_fitxategiaDago(output_path)
 
     def fitxategiaKonprobatu(self,path):
         try:
@@ -33,8 +27,16 @@ class TestProcesador(unittest.TestCase):
         except FileNotFoundError:
             return False
 
-    def test_fitxategiaDago(self,output_path):
+    def test_proiektuaDago(self):
+        proiektua = procesSource.source.Procesador("la_donacion")
+
+
+    def test_fitxategiaDago(self):
         self.assertTrue(self.fitxategiaKonprobatu(self.fitxategiaKonprobatu(output_path)))
+
+    def test_proiektuaExistitzenDa(self,):
+        pass
+
 
 if __name__=="__main__":
     TestProcesador(" ")
