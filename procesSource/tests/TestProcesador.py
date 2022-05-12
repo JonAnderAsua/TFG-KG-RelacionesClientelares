@@ -17,15 +17,16 @@ class TestProcesador(unittest.TestCase):
     def __init__(self,json):
         super(TestProcesador, self).__init__()
 
-        # path_nagusia = os.path.dirname(os.path.abspath(__file__)).split('/') #https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure
-        # path_nagusia = path_nagusia[0:len(path_nagusia)-2]
-        ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+        path_nagusia = os.path.dirname(os.path.abspath(__file__)).split('/') #https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure
+        path_nagusia = path_nagusia[0:len(path_nagusia)-2]
+        ROOT_DIR = ""
 
-        # for i in path_nagusia:
-        #     if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
-        #         ROOT_DIR += i + "/"
-        #         break
-        #     ROOT_DIR += i + "/"
+        for i in path_nagusia:
+            if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
+                ROOT_DIR += i + "/"
+                ROOT_DIR += i + "/"
+                break
+            ROOT_DIR += i + "/"
 
 
         # Yaml fitxategia kargatu
