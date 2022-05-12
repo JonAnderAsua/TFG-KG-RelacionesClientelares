@@ -16,9 +16,12 @@ class TestProcesador(unittest.TestCase):
     def __init__(self,json):
         super(TestProcesador, self).__init__()
 
+        ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
         # Yaml fitxategia kargatu
-        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
+        fichero = open(ROOT_DIR + "/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
+        proiektua = procesSource.source.Procesador("la_donacion")
 
     def fitxategiaKonprobatu(self,path):
         try:
