@@ -8,7 +8,7 @@ for i in pathLag:
 sys.path.append(path)
 
 import unittest
-import yaml
+import yaml 
 import os
 from procesSource.source import Procesador
 
@@ -29,7 +29,7 @@ class TestProcesador(unittest.TestCase):
         # Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-        proiektua = Procesador.Procesador("la_donacion")
+        proiektua = Procesador("la_donacion")
 
     def fitxategiaKonprobatu(self,path):
         try:
@@ -39,7 +39,7 @@ class TestProcesador(unittest.TestCase):
             return False
 
     def test_proiektuaDago(self):
-        proiektua = Procesador.Procesador("la_donacion")
+        pass
 
 
     def test_fitxategiaDago(self):
