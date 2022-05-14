@@ -9,11 +9,13 @@ class Procesador:
         path_nagusia = path_nagusia[0:len(path_nagusia) - 2]
         ROOT_DIR = ""
         for i in path_nagusia:
-            if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
-                ROOT_DIR += i + "/"
-                # ROOT_DIR += i + "/"
-                break
+            # if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
+            #     ROOT_DIR += i + "/"
+            #     # ROOT_DIR += i + "/"
+            #     break
             ROOT_DIR += i + "/"
+
+        print(ROOT_DIR)
 
         #Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "/doc/config.yml")
