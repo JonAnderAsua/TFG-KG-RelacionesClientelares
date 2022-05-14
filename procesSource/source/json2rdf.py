@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
 
     grafoa = programa.getGrafoa()
-    fitxategia_programa = grafo_objektua_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)
+    fitxategia_programa = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)
     print("Grafo fitxategia sortu da hurrengo helbidean: " + procesador.rdf_output)
 
     print("Grafoa zerbitzarira igoko da...")
