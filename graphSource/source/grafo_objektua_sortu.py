@@ -1,11 +1,11 @@
 import logging
-
-from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, JSON
+import re
+from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
 import json
-import re
 import os
+import unidecode
 
 class Grafo_fitxategia_sortu:
 
@@ -61,8 +61,6 @@ class Grafo_fitxategia_sortu:
     def jsonakKargatu(self):
     #In: -
     #Out: JSONak kargatuta
-
-        print(self.data)
         try:
             with open(self.data + "/articles.json","r") as a:
                 self.artikuluak = json.load(a)
@@ -119,10 +117,10 @@ class Grafo_fitxategia_sortu:
         except:
             logging.error("Iturrien JSONa ez da kargatu")
 
-    def filtroaPasatu(self,comment): #https://www.delftstack.com/es/howto/python/remove-special-characters-from-string-python/
-    #In: String bat
-    #Out: String hori baina karaktere okultorik gabe
-        return re.sub(r"[^a-zA-Z0-9]"," ",comment)
+    def cambiarTildes(self,string):
+    #In: Tildeak eduki ahal ditzakeen string-a
+    #Out: Tilderik gabeko String-a
+        pass
 
     def setType(self,uri,typeUrl):
     #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
@@ -139,11 +137,21 @@ class Grafo_fitxategia_sortu:
         label = ""
         for i in json[tipoa]:
             if i["id"] == uri.split("/")[-1]:
-                label = self.filtroaPasatu(i["title"])
+                label = unidecode.unidecode(i["title"])
                 break
         triple = (uri,RDFS.label,Literal(label))
         logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
         self.grafo.add(triple)
+
+    def ezabatuLinka(self,string):
+        zerrenda = string.split("<")
+        emaitza = ""
+        for i in zerrenda:
+            if ">" in i:
+                emaitza += i.split(">")[1]
+            else:
+                emaitza += i
+        return emaitza
 
     def setComent(self,uri,json,tipoa):
     # In: Objektu bati esleitutako URIa / Zein JSONean bilatu behar da informazioa /Zein motatako objektua den (pertsona, lekua,...)
@@ -151,8 +159,9 @@ class Grafo_fitxategia_sortu:
         for i in json[tipoa]:
             if i["id"] == uri.split("/")[-1]:
                 if("description" in i.keys()): #Elementu batzuk ez daukate "description" giltza
-                    comment = i["description"]
-                    comment = self.filtroaPasatu(str(comment))
+                    comment = unidecode.unidecode(i["description"])
+                    comment = re.sub('</a>','',comment)
+                    comment = self.ezabatuLinka(comment)
                     triple = (uri, RDFS.comment, Literal(comment))
                     self.grafo.add(triple)
                     logging.info("Sartuko den triplea hurrengoa da...\n" + str(triple) + "\n")
