@@ -6,6 +6,7 @@ from rdflib.namespace import RDF
 import json
 import os
 import unidecode
+import sys
 
 class Grafo_fitxategia_sortu:
 
@@ -66,62 +67,64 @@ class Grafo_fitxategia_sortu:
                 self.artikuluak = json.load(a)
                 logging.info("Artikuluen JSONa kargatu da...\n")
         except:
-            logging.error("Artikuluen JSONa ez da kargatu...\n")
+            logging.error("Artikuluen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0) #https://pythonguides.com/python-exit-command/
 
         try:
             with open(self.data + "/documents.json","r") as d:
                 self.dokumentuak = json.load(d)
                 logging.info("Dokumentuen JSONa kargatu da...\n")
         except:
-            logging.error("Dokumentuen JSONa ez da kargatu...\n")
+            logging.error("Dokumentuen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/entities.json","r") as e:
                 self.entitateak = json.load(e)
                 logging.info("Entitateen JSONa kargatu da...\n")
         except:
-            logging.error("Entitateen JSONa ez da kargatu...\n")
+            logging.error("Entitateen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/events.json","r") as ek:
                 self.ekitaldiak = json.load(ek)
                 logging.info("Ekitaldien JSONa kargatu da...\n")
         except:
-            logging.error("Ekitaldien JSONa ez da kargatu...\n")
+            logging.error("Ekitaldien JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/persons.json","r") as pe:
                 self.pertsonak = json.load(pe)
                 logging.info("Pertsonen JSONa kargatu da...\n")
         except:
-            logging.error("Pertsonen JSONa ez da kargatu...\n")
+            logging.error("Pertsonen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/places.json","r") as pl:
                 self.lekuak = json.load(pl)
                 logging.info("Lekuen JSONa kargatu da...\n")
         except:
-            logging.error("Lekuen JSONa ez da kargatu...\n")
+            logging.error("Lekuen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/relations.json","r") as re:
                 self.erlazioak = json.load(re)
                 logging.info("Erlazioen JSONa kargatu da...\n")
         except:
-            logging.error("Erlazioen JSONa ez da kargatu...\n")
+            logging.error("Erlazioen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
+            sys.exit(0)
 
         try:
             with open(self.data + "/sources.json","r") as so:
                 self.iturriak = json.load(so)
                 logging.info("Iturrien JSONa kargatu da")
         except:
-            logging.error("Iturrien JSONa ez da kargatu")
-
-    def cambiarTildes(self,string):
-    #In: Tildeak eduki ahal ditzakeen string-a
-    #Out: Tilderik gabeko String-a
-        pass
-
+            logging.error("Iturrien JSONa ez da kargatu, programaren exekuzioa bukatuko da...")
+            sys.exit(0)
     def setType(self,uri,typeUrl):
     #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
     #Out: Grafoan objektu horren rdfs:type-aren triplea sartu
@@ -144,6 +147,9 @@ class Grafo_fitxategia_sortu:
         self.grafo.add(triple)
 
     def ezabatuLinka(self,string):
+    #In: HTML etiketak izan ahal dituen string-a
+    #Out: String bera HTML etiketa gabe
+
         zerrenda = string.split("<")
         emaitza = ""
         for i in zerrenda:

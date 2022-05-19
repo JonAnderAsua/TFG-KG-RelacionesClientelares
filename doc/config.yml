@@ -1,6 +1,30 @@
-la_donacion:
+la_donacion_local_JonAnder:
   data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
   validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py #Donde están los test
+  named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
+  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/procesSource/source/json2rdf.py #Exekutatuko den programa
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
+  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
+  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+
+
+#Testak egiteko proiektuak
+falla_data_source:
+  data_source: /errores/
+  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py #Donde están los test
+  named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
+  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/procesSource/source/json2rdf.py #Exekutatuko den programa
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
+  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
+  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+
+falla_validate:
+  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
+  validate: /error/
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
   run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl

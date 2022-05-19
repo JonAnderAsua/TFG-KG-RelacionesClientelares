@@ -26,20 +26,13 @@ class TestProcesador(unittest.TestCase):
                 break
             ROOT_DIR += i + "/"
 
-        # Yaml fitxategia kargatu
-        fichero = open(ROOT_DIR + "/doc/config.yml")
-        fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-        proiektua = Procesador("la_donacion")
+        self.proiektuOna = Procesador("la_donacion_local_JonAnder")
+        self.fallaDataSource = Procesador("falla_data_source")
 
-    def fitxategiaKonprobatu(self,path):
-        try:
-            with open(path):
-                return True
-        except FileNotFoundError:
-            return False
+    def test_data_source_dago(self):
+        with self.assertRaises(SystemExit) as fallaDatSource:
+            pass
 
-    def test_proiektuaDago(self):
-        pass
 
 
     def test_fitxategiaDago(self):

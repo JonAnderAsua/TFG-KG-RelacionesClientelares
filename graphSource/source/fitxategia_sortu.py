@@ -1,3 +1,5 @@
+import sys
+
 class Grafo_fitxategia_sortu:
 
     def __init__(self, rdf_output,grafoa):
@@ -13,6 +15,8 @@ class Grafo_fitxategia_sortu:
 
     #Main metodoa
     def main(self):
-
         self.ezabatuAurrekoTestua()
-        self.grafo.serialize(destination=self.rdf_output, format="nt")
+        try:
+            self.grafo.serialize(destination=self.rdf_output, format="nt")
+        except:
+            sys.exit(0)
