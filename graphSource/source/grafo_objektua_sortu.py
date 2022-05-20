@@ -34,14 +34,11 @@ class Grafo_fitxategia_sortu:
         self.grafo = Graph()
 
         # Log
-
         try:
             with open(logs):
                 print("log fitxategia existitzen da...")
                 logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
-        except FileNotFoundError:
-            # print("Log fitxategia ez da existitzen, sortuko da")
-            # f = open(logs, "x")
+        except FileNotFoundError: #Log-a ez bada existitzen sortzen du
             logging.basicConfig(filename=logs, filemode='x', level=logging.DEBUG)
 
         self.data = data
