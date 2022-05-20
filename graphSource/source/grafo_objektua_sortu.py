@@ -68,7 +68,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Artikuluen JSONa kargatu da...\n")
         except:
             logging.error("Artikuluen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0) #https://pythonguides.com/python-exit-command/
+            sys.exit(1) #https://pythonguides.com/python-exit-command/
 
         try:
             with open(self.data + "/documents.json","r") as d:
@@ -76,7 +76,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Dokumentuen JSONa kargatu da...\n")
         except:
             logging.error("Dokumentuen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/entities.json","r") as e:
@@ -84,7 +84,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Entitateen JSONa kargatu da...\n")
         except:
             logging.error("Entitateen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/events.json","r") as ek:
@@ -92,7 +92,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Ekitaldien JSONa kargatu da...\n")
         except:
             logging.error("Ekitaldien JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/persons.json","r") as pe:
@@ -100,7 +100,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Pertsonen JSONa kargatu da...\n")
         except:
             logging.error("Pertsonen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/places.json","r") as pl:
@@ -108,7 +108,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Lekuen JSONa kargatu da...\n")
         except:
             logging.error("Lekuen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/relations.json","r") as re:
@@ -116,7 +116,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Erlazioen JSONa kargatu da...\n")
         except:
             logging.error("Erlazioen JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
-            sys.exit(0)
+            sys.exit(1)
 
         try:
             with open(self.data + "/sources.json","r") as so:
@@ -124,7 +124,7 @@ class Grafo_fitxategia_sortu:
                 logging.info("Iturrien JSONa kargatu da")
         except:
             logging.error("Iturrien JSONa ez da kargatu, programaren exekuzioa bukatuko da...")
-            sys.exit(0)
+            sys.exit(1)
     def setType(self,uri,typeUrl):
     #In: Objektu bati esleitutako URIa / Zein motatako objektua den (pertsona, lekua,...)
     #Out: Grafoan objektu horren rdfs:type-aren triplea sartu

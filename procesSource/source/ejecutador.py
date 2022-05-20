@@ -42,5 +42,6 @@ if __name__ == "__main__":
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         for proiektuIzena in fitxategia:
-            print(proiektuIzena)
+            if "test" not in proiektuIzena:
+                print(proiektuIzena)
 

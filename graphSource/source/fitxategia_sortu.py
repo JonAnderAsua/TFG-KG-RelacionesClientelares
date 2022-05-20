@@ -15,8 +15,11 @@ class Grafo_fitxategia_sortu:
 
     #Main metodoa
     def main(self):
-        self.ezabatuAurrekoTestua()
         try:
+            with open(self.rdf_output):
+                print("Fitxategia existitzen da...")
+                self.ezabatuAurrekoTestua()
             self.grafo.serialize(destination=self.rdf_output, format="nt")
-        except:
-            sys.exit(0)
+        except FileNotFoundError:
+            print("Grafoaren fitxategia ez da existitzen...")
+            exit()

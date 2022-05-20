@@ -6,8 +6,11 @@ from procesSource.source import Procesador
 
 class TestJson2rdf(unittest.TestCase):
 
-    def __init__(self):
-        procesador = Procesador.Procesador("la_donacion")
+    def setUp(self) :
+
+        super(TestJson2rdf, self).__init__()
+
+        procesador = Procesador("la_donacion_local_JonAnder")
 
         self.grafo_objektua = grafo_objektua_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.named_graph,procesador.triple_store)
 
@@ -40,12 +43,12 @@ class TestJson2rdf(unittest.TestCase):
         self.grafo_objektua.setLabel(rdflib.term.URIRef("http://ehu.eus/id/person/juan_carlos"), self.jsonZerrenda[4], "persons")
         self.grafo_objektua.setLabel(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
-        self.assertEquals('Corinna y Zanganeh  Dos versiones contradictorias de la supuesta comisi n del Rey', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
+        self.assertEquals('Corinna y Zanganeh: Dos versiones contradictorias de la supuesta comision del Rey', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"))
         self.assertEquals('Primera carta a Zarzuela de los abogados de Corinna', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/document/carta_kobre_kim_3"))
         self.assertEquals('OHL', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/entity/ohl"))
         self.assertEquals('Corinna disuelve Apollonia Associates', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
-        self.assertEquals('S M  el Rey Don Juan Carlos', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/person/juan_carlos"))
-        self.assertEquals('Princes Gate  5', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/place/princes_gate_5"))
+        self.assertEquals('S.M. el Rey Don Juan Carlos', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/person/juan_carlos"))
+        self.assertEquals('Princes Gate, 5', self.grafo_objektua.getLabelFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
 
 
@@ -58,10 +61,10 @@ class TestJson2rdf(unittest.TestCase):
         self.grafo_objektua.setComent(rdflib.term.URIRef("http://ehu.eus/id/person/elena"), self.jsonZerrenda[4], "persons")
         self.grafo_objektua.setComent(rdflib.term.URIRef("http://ehu.eus/id/place/princes_gate_5"), self.jsonZerrenda[5], "places")
 
-        self.assertEquals('Empresa constructora multinacional espa ola  fundada y presidida por  a href    persons villar mir  Juan Miguel Villar Mir  a  y cotizada en el IBEX 35  OHL es una de las compa  as adjudicatarias del  a href    events anuncio adjudicacion ave  hist rico contrato para construir el AVE a La Meca  a   un acuerdo comercial para el que se vali  del asesoramiento de la saud   a href    persons zanganeh  Shahphari Zanganeh  a  ', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/entity/ohl"))
-        self.assertEquals('Tan solo unas semanas de la adjudicaci n del  em megacontrato  em  para la  a href    events anuncio adjudicacion ave  construcci n del AVE a La Meca  a    a href    persons corinna  Corinna zu Sayn Wittgenstein  a  disuelve sus sociedad  a href    entities apollonia  Apollonia Ventures  a   que hab a constituido en noviembre de 2005 ', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
-        self.assertEquals('La hija mayor de los reyes de Espa a   a href    persons juan carlos  Juan Carlos  a  y  a href    persons sofia de grecia  Sof a  a   figura junto con su padre y sus hermanos  a href    persons felipe vi  el rey Felipe VI  a  y  a href    persons cristina  Cristina de Borb n  a   como beneficiaria de la  a href    entities zagatka  fundaci n Zagatka  a   una entidad dada de alta en  a href    places liechtenstein  Liechtenstein  a  bajo el control de un pariente lejano   a href    persons alvaro de orleans   lvaro de Orleans Borb n  a  ', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/person/elena"))
-        self.assertEquals('Exclusivo  tico en el barrio de Knightsbride  que el  a href    persons qabus bin said  sult n de Om n  a  adquiri  por 50 millones de libras  62 7 millones de euros  un r cord del momento  para ponerlo a disposici n del  a href    persons juan carlos  rey Juan Carlos  a   quien  a href    events viaje a oman  hab a visitado el pa s  rabe  a  apenas dos meses antes ', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/place/princes_gate_5"))
+        self.assertEquals('Empresa constructora multinacional espanola, fundada y presidida por Juan Miguel Villar Mir y cotizada en el IBEX 35. OHL es una de las companias adjudicatarias del historico contrato para construir el AVE a La Meca, un acuerdo comercial para el que se valio del asesoramiento de la saudi Shahphari Zanganeh.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/entity/ohl"))
+        self.assertEquals('Tan solo unas semanas de la adjudicacion del megacontrato para la construccion del AVE a La Meca, Corinna zu Sayn-Wittgenstein disuelve sus sociedad Apollonia Ventures, que habia constituido en noviembre de 2005.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
+        self.assertEquals('La hija mayor de los reyes de Espana, Juan Carlos y Sofia, figura junto con su padre y sus hermanos el rey Felipe VI y Cristina de Borbon, como beneficiaria de la fundacion Zagatka, una entidad dada de alta en Liechtenstein bajo el control de un pariente lejano: Alvaro de Orleans-Borbon.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/person/elena"))
+        self.assertEquals('Exclusivo atico en el barrio de Knightsbride, que el sultan de Oman adquirio por 50 millones de libras (62,7 millones de euros, un record del momento) para ponerlo a disposicion del rey Juan Carlos, quien habia visitado el pais arabe apenas dos meses antes.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/place/princes_gate_5"))
 
 
 
@@ -115,7 +118,7 @@ class TestJson2rdf(unittest.TestCase):
 
         #Entitateak
         self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/apollonia"),self.grafo_objektua.subjektuaObjektuaTratatu("#/entities/apollonia"))
-        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/sanchez_junco_abogados"),self.grafo_objektuaf.subjektuaObjektuaTratatu("#/entities/sanchez_junco_abogados"))
+        self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/entity/sanchez_junco_abogados"),self.grafo_objektua.subjektuaObjektuaTratatu("#/entities/sanchez_junco_abogados"))
 
         #Dokumentuak
         self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/document/aeat_juan_carlos_2018"),self.grafo_objektua.subjektuaObjektuaTratatu("#/documents/aeat_juan_carlos_2018"))
@@ -138,17 +141,6 @@ class TestJson2rdf(unittest.TestCase):
         self.assertEqual(rdflib.term.URIRef("http://ehu.eus/id/article/artikulua"),self.grafo_objektua.subjektuaObjektuaTratatu("#/articles/artikulua"))
 
 # test_zerbitzariraIgo(self) beste metodoen barnean frogatzen da eskaerak zerbitzariaren kontra egiten direlako
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     unittest.main()

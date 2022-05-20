@@ -11,7 +11,7 @@ la_donacion_local_JonAnder:
 
 
 #Testak egiteko proiektuak
-falla_data_source:
+test_data_source:
   data_source: /errores/
   validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
@@ -22,7 +22,7 @@ falla_data_source:
   logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
   rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
-falla_validate:
+test_validate:
   data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
   validate: /error/
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
