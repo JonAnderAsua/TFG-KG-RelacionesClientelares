@@ -33,6 +33,8 @@ class Grafo_fitxategia_sortu:
         # Grafoa
         self.grafo = Graph()
 
+        logs = '/home/runner/work/TFG-KG-RelacionesClientelares/logs/laDonacion.log'
+
         # Log
         try:
             with open(logs):

@@ -9,7 +9,6 @@ la_donacion_local_JonAnder:
   logs: ./logs/laDonacion.log #Logaren path-a
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
-
 #Testak egiteko proiektuak
 test_data_source:
   data_source: /errores/
