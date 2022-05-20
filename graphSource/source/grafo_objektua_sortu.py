@@ -33,15 +33,13 @@ class Grafo_fitxategia_sortu:
         # Grafoa
         self.grafo = Graph()
 
-        logs = '/home/runner/work/TFG-KG-RelacionesClientelares/logs/laDonacion.log'
-
         # Log
         try:
             with open(logs):
                 print("log fitxategia existitzen da...")
                 logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
         except FileNotFoundError: #Log-a ez bada existitzen sortzen du
-            logging.basicConfig(filename=logs, filemode='x', level=logging.DEBUG)
+            logging.basicConfig(filename='./logs/logActions.txt', filemode='x', level=logging.DEBUG)
 
         self.data = data
 
