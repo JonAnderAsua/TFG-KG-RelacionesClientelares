@@ -12,7 +12,6 @@ for i in pathLag:
 sys.path.append(path)
 sys.path.append(path+"/source")
 
-import procesSource
 if __name__ == "__main__":
     proiektu_izena = ""
     if len(sys.argv) > 1:
