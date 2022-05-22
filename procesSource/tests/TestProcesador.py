@@ -38,22 +38,35 @@ class TestProcesador(unittest.TestCase):
         self.grafoOna = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.proiektuOna.data_source,self.proiektuOna.logs,self.proiektuOna.named_graph,self.proiektuOna.triple_store)
 
     def test_data_source_dago(self):
-
-        #Atal honek errorea emango luke
+        #Programak ez baditu fitxategiak aurkitzen exekuzioa bukatzen du eta errore kodea 1 bueltatzen du,
+        #horregatik hurrengo tresnarekin frogatzen da ea errore kode hori bueltatzen duen
         with self.assertRaises(SystemExit) as fallaDataSource:
             grafo_data_source = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaDataSource.data_source,self.fallaDataSource.logs,self.fallaDataSource.named_graph,self.fallaDataSource.triple_store)
             grafo_data_source.jsonakKargatu()
         self.assertEqual(fallaDataSource.exception.code, 1)
 
     def test_named_graph(self):
-        grafo_named_graph = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaNamedGraph.data_source,self.fallaNamedGraph.logs,self.fallaNamedGraph.named_graph,self.fallaNamedGraph.triple_store)
-        grafo_named_graph.main()
+        #Tripleak izendatzeko uria txarto sartzen bada (ez bada URI bat) eraikitzaile berak
+        # 'http://defaultUri.es' uria ezartzen du, konprobatu behar da uri hori duela
+
+        self.assertEqual(self.fallaNamedGraph.named_graph,'http://defaultUri.es/')
+        self.assertEqual(self.proiektuOna.named_graph,'http://ehu.eus/')
 
     def test_run(self):
-        grafo_run = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaRun.data_source,self.fallaRun.logs,self.fallaRun.named_graph,self.fallaRun.triple_store)
+        # with self.assertRaises(SystemExit) as fallaRun:
+        self.assertRaises(SystemExit,os.system('python3 ../source/ejecutador.py ' + str(self.fallaRun.proiektuIzena)))
+        # self.assertEqual(fallaRun.exception.code, 1)
 
     def test_triple_store(self):
         grafo_triple_store = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaTripleStore.data_source,self.fallaTripleStore.logs,self.fallaTripleStore.named_graph,self.fallaTripleStore.triple_store)
+        grafo_triple_store.main()
+        grafoTSObjektua = grafo_triple_store.getGrafoa()
+
+        fitxategi_triple_store = fitxategia_sortu.Grafo_fitxategia_sortu(self.fallaTripleStore.rdf_output,grafoTSObjektua)
+        fitxategi_triple_store.main()
+
+        zerbitzaria_triple_store = zerbitzarira_igo.Zerbitzarira_igo(self.fallaTripleStore.rdf_output,self.fallaTripleStore.triple_store,self.fallaTripleStore.logs,self.fallaTripleStore.delete_graph)
+        self.assertRaises(SystemExit,zerbitzaria_triple_store.zerbitzariraIgo())
 
     def test_logs(self):
         grafo_logs = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaLogs.data_source,self.fallaLogs.logs,self.fallaLogs.named_graph,self.fallaLogs.triple_store)

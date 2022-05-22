@@ -27,20 +27,22 @@ if __name__ == "__main__":
             interpretatzaile = "python3"
         else:
             print("Perdon seño, no hemos hecho más tarea \n")
+            exit(1)
 
         #Programa exekutatu
-        try:
-            os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
-        except:
-            print("Sartutako programa ezin da exekutatu")
+        os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
+
     except:
-        print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
+        # print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
+        #
+        # # Yaml fitxategia kargatu
+        # fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
+        # fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
+        #
+        # for proiektuIzena in fitxategia:
+        #     if "test" not in proiektuIzena:
+        #         print(proiektuIzena)
+        #         exit(1)
 
-        # Yaml fitxategia kargatu
-        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
-        fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-
-        for proiektuIzena in fitxategia:
-            if "test" not in proiektuIzena:
-                print(proiektuIzena)
-
+        print("Errore bat egon da exekuzioan")
+        exit(1)

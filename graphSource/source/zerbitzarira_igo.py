@@ -33,11 +33,17 @@ class Zerbitzarira_igo:
         sparql.queryType = INSERT
         sparql.method = POST
         sparql.setHTTPAuth(BASIC)
-        sparql.query()
+        try:
+            sparql.query()
+        except:
+            print("Triple Storea txarto sartu da")
+            exit(1)
 
     def zerbitzariraIgo(self):
     #In: -
     #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
+
+        zerbaitSartuDa = False
 
         if(self.delete_graph):
             logging.info("Repoan zegoen grafoa ezabatuko da...")
@@ -56,5 +62,10 @@ class Zerbitzarira_igo:
 
             try:
                 sparql.query()
+                zerbaitSartuDa = True
             except:
                 logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
+
+        if not zerbaitSartuDa:
+            print("Triple Storea txarto sartu da")
+            exit(1)

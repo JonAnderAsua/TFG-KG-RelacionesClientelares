@@ -1,5 +1,6 @@
 import yaml
 import os
+import validators
 
 class Procesador:
 
@@ -23,9 +24,15 @@ class Procesador:
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         #Klasearen objektuak sortu
+        self.proiektuIzena = self.fitxategia[izena]["project_name"]
         self.data_source = self.fitxategia[izena]["data_source"]
         self.validate = self.fitxategia[izena]["validate"]
-        self.named_graph = self.fitxategia[izena]["named_graph"]
+
+        if validators.url(self.fitxategia[izena]["named_graph"]): #https://www.codespeedy.com/check-if-a-string-is-a-valid-url-or-not-in-python/
+            self.named_graph = self.fitxategia[izena]["named_graph"]
+        else:
+            self.named_graph = 'http://defaultUri.es/'
+
         self.run = self.fitxategia[izena]["run"]
         self.metadata_file = self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]

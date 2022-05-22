@@ -10,7 +10,6 @@ sys.path.append(path+"/source")
 
 import procesSource.source.Procesador as Procesador
 from graphSource.source import grafo_objektua_sortu, fitxategia_sortu, zerbitzarira_igo
-from graphSource.tests import TestJson2rdf
 
 if __name__ == "__main__":
     procesador = Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
