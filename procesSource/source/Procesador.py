@@ -19,7 +19,7 @@ class Procesador:
         print(ROOT_DIR)
 
         #Yaml fitxategia kargatu
-        fichero = open(ROOT_DIR + "/doc/config.yml")
+        fichero = open(ROOT_DIR + "./doc/config.yml")
 
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
