@@ -12,68 +12,68 @@ la_donacion_local_JonAnder:
 #Testak egiteko proiektuak
 test_data_source:
   data_source: /errores/
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py #Donde están los test
+  validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/procesSource/source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
-  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_named_graph:
-  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
+  data_source: ./data/ladonacion.es #Donde están los datos
+  validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: uriMal
-  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/procesSource/source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/logs/laDonacion.log #Logaren path-a
-  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_run:
-  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/tests/TestJson2rdf.py #Donde están los test
+  data_source: ./data/ladonacion.es #Donde están los datos
+  validate: graphSource/ #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
   run: error
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
-  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_triple_store:
-  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es #Donde están los datos
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
+  data_source: ./data/ladonacion.es #Donde están los datos
+  validate: ./data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/procesSource/source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: tripleStoreError
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/laDonacion.log #Logaren path-a
-  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_logs:
-  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es #Donde están los datos
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
+  data_source: ./data/ladonacion.es #Donde están los datos
+  validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/procesSource/source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
   logs: noExiste.txt
-  rdf_output: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_rdf_output:
-  data_source: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/data/ladonacion.es #Donde están los datos
-  validate: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
+  data_source: ./data/ladonacion.es/data/ladonacion.es #Donde están los datos
+  validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/procesSource/source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
-  logs: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/ladonacion.es/logs/laDonacion.log #Logaren path-a
+  logs: ./logs/laDonacion.log #Logaren path-a
   rdf_output: grafoError.nt
 
 
