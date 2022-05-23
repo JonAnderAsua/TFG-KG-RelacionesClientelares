@@ -1,8 +1,8 @@
 import sys
-
 import yaml
 import os
 import validators
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 
 class Procesador:
 
@@ -44,7 +44,20 @@ class Procesador:
 
         self.metadata_file = self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
-        self.triple_store = self.fitxategia[izena]["triple_store"]
+        self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
         self.logs = self.fitxategia[izena]["logs"]
         self.rdf_output = self.fitxategia[izena]["rdf_output"]
 
+    def konprobatuTripleStore(self,tripleStoreUri):
+        eskaera = ""
+        sparql = SPARQLWrapper(tripleStoreUri)
+        sparql.setQuery(eskaera)
+        sparql.queryType = INSERT
+        sparql.method = POST
+        sparql.setHTTPAuth(BASIC)
+        try:
+            sparql.query()
+            return tripleStoreUri
+        except:
+            print("Sartutako triplestorea ez da zuzena...")
+            sys.exit(1)

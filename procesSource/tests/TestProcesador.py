@@ -29,7 +29,6 @@ class TestProcesador(unittest.TestCase):
         self.proiektuOna = Procesador("test_la_donacion")
         self.fallaDataSource = Procesador("test_data_source")
         self.fallaNamedGraph = Procesador('test_named_graph')
-        self.fallaTripleStore = Procesador('test_triple_store')
         self.fallaLogs = Procesador('test_logs')
         self.fallaRdfOutput = Procesador('test_rdf_output')
 
@@ -58,15 +57,9 @@ class TestProcesador(unittest.TestCase):
 
 
     def test_triple_store(self):
-        grafo_triple_store = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaTripleStore.data_source,self.fallaTripleStore.logs,self.fallaTripleStore.named_graph,self.fallaTripleStore.triple_store)
-        grafo_triple_store.main()
-        grafoTSObjektua = grafo_triple_store.getGrafoa()
-
-        fitxategi_triple_store = fitxategia_sortu.Grafo_fitxategia_sortu(self.fallaTripleStore.rdf_output,grafoTSObjektua)
-        fitxategi_triple_store.main()
-
-        zerbitzaria_triple_store = zerbitzarira_igo.Zerbitzarira_igo(self.fallaTripleStore.rdf_output,self.fallaTripleStore.triple_store,self.fallaTripleStore.logs,self.fallaTripleStore.delete_graph)
-        self.assertRaises(SystemExit,zerbitzaria_triple_store.zerbitzariraIgo())
+        with self.assertRaises(SystemExit) as fallaTSExc:
+            fallaTripleStore = Procesador('test_triple_store')
+        self.assertEqual(fallaTSExc.exception.code, 1)
 
     def test_logs(self):
         grafo_logs = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaLogs.data_source,self.fallaLogs.logs,self.fallaLogs.named_graph,self.fallaLogs.triple_store)

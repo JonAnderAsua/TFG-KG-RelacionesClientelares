@@ -33,16 +33,13 @@ if __name__ == "__main__":
         os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
 
     except:
-        # print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
-        #
-        # # Yaml fitxategia kargatu
-        # fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
-        # fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
-        #
-        # for proiektuIzena in fitxategia:
-        #     if "test" not in proiektuIzena:
-        #         print(proiektuIzena)
-        #         exit(1)
+        print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
 
-        print("Errore bat egon da exekuzioan")
-        exit(1)
+        # Yaml fitxategia kargatu
+        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
+        fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
+
+        for proiektuIzena in fitxategia:
+            if "test" not in proiektuIzena:
+                print(proiektuIzena)
+

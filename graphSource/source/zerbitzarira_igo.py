@@ -1,12 +1,7 @@
 import logging
 import sys
-
-from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, JSON
-from rdflib import Graph, URIRef, Literal, RDFS
-from rdflib.namespace import RDF
-import json
-import re
-import os
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
+from rdflib import Graph
 
 class Zerbitzarira_igo:
     def __init__(self,rdf_output,triple_store,logs,delete_graph):
@@ -38,7 +33,7 @@ class Zerbitzarira_igo:
         try:
             sparql.query()
         except:
-            print("Triple Storea txarto sartu da")
+            logging.error("Ezin izan dira ezabatu aurretik zeuden tripleak...")
             exit(1)
 
     def zerbitzariraIgo(self):
