@@ -35,12 +35,7 @@ class Grafo_fitxategia_sortu:
 
         # Log
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
-            try:
-                with open(logs):
-                    print("log fitxategia existitzen da...")
-                    logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
-            except FileNotFoundError: #Log-a ez bada existitzen sortzen du
-                logging.basicConfig(filename='./logs/logActions.txt', filemode='x', level=logging.DEBUG)
+            logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
 
         self.data = data
         self.triple_store = triple_store

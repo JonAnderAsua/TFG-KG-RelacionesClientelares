@@ -26,18 +26,10 @@ class TestProcesador(unittest.TestCase):
                 break
             ROOT_DIR += i + "/"
 
-        self.proiektuOna = Procesador("test_la_donacion")
-        self.fallaDataSource = Procesador("test_data_source")
-        self.fallaNamedGraph = Procesador('test_named_graph')
-        self.fallaLogs = Procesador('test_logs')
-        self.fallaRdfOutput = Procesador('test_rdf_output')
-
-
-        self.grafoOna = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.proiektuOna.data_source,self.proiektuOna.logs,self.proiektuOna.named_graph,self.proiektuOna.triple_store)
-
     def test_data_source_dago(self):
         #Programak ez baditu fitxategiak aurkitzen exekuzioa bukatzen du eta errore kodea 1 bueltatzen du,
         #horregatik hurrengo tresnarekin frogatzen da ea errore kode hori bueltatzen duen
+        self.fallaDataSource = Procesador("test_data_source")
         with self.assertRaises(SystemExit) as fallaDataSource:
             grafo_data_source = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaDataSource.data_source,self.fallaDataSource.logs,self.fallaDataSource.named_graph,self.fallaDataSource.triple_store)
             grafo_data_source.jsonakKargatu()
@@ -47,8 +39,8 @@ class TestProcesador(unittest.TestCase):
         #Tripleak izendatzeko uria txarto sartzen bada (ez bada URI bat) eraikitzaile berak
         # 'http://defaultUri.es' uria ezartzen du, konprobatu behar da uri hori duela
 
+        self.fallaNamedGraph = Procesador('test_named_graph')
         self.assertEqual(self.fallaNamedGraph.named_graph,'http://defaultUri.es/')
-        self.assertEqual(self.proiektuOna.named_graph,'http://ehu.eus/')
 
     def test_run(self):
         with self.assertRaises(SystemExit) as fallaRunExc:
@@ -62,10 +54,17 @@ class TestProcesador(unittest.TestCase):
         self.assertEqual(fallaTSExc.exception.code, 1)
 
     def test_logs(self):
-        grafo_logs = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaLogs.data_source,self.fallaLogs.logs,self.fallaLogs.named_graph,self.fallaLogs.triple_store)
+        #Kasu honetan existitzen ez den log fitxategi bat pasatzen zaio. Programak ez badu fitxategi
+        #hori aurkitzen berri bat sortzen du log fitxategian. Konprobatu behar da fitxategi hori ondo
+        #sortu duen ala ez
+        self.fallaLogs = Procesador('test_logs')
+        print(self.fallaLogs.logs)
+
 
     def test_rdf_output(self):
-        grafo_rdf_output = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaRdfOutput.data_source,self.fallaRdfOutput.logs,self.fallaRdfOutput.named_graph,self.fallaRdfOutput.triple_store)
+        with self.assertRaises(SystemExit) as fallaRdfExc:
+            fallaRdfOutput = Procesador('test_rdf_output')
+        self.assertEqual(fallaRdfExc.exception.code, 1)
 
 if __name__=="__main__":
     unittest.main()

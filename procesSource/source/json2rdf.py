@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     print("Grafoa zerbitzarira igoko da...")
     zerbitzariraIgo = zerbitzarira_igo.Zerbitzarira_igo(procesador.rdf_output, procesador.triple_store, procesador.logs, procesador.delete_graph)
-    #zerbitzariraIgo.zerbitzariraIgo()
+    zerbitzariraIgo.zerbitzariraIgo()
     print("Grafoa " + procesador.triple_store + " helbidera igo da...")
     
     #Aquí habría que añadir lo de SHACL (No es prioritario)
