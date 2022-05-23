@@ -40,8 +40,6 @@ class Zerbitzarira_igo:
     #In: -
     #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
 
-        zerbaitSartuDa = False
-
         if(self.delete_graph):
             logging.info("Repoan zegoen grafoa ezabatuko da...")
             self.ezabatuZerbitzarikoGrafoa()
@@ -59,10 +57,5 @@ class Zerbitzarira_igo:
 
             try:
                 sparql.query()
-                zerbaitSartuDa = True
             except:
                 logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
-
-        if not zerbaitSartuDa:
-            print("Triple Storea txarto sartu da")
-            sys.exit(1)
