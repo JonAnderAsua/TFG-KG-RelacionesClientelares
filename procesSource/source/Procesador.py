@@ -61,7 +61,7 @@ class Procesador:
                 return './logs/unekoLog.log'
 
             else:
-                print(self.proiektuIzena + " proiektuan sartutako fitxategiren bat ez da existitzen...")
+                print(self.proiektuIzena + " proiektuan sartutako " + fitxategia + " fitxategia ez da existitzen...")
                 sys.exit(1)
 
     def konprobatuUria(self,uria):
