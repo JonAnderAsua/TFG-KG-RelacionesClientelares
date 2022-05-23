@@ -1,3 +1,5 @@
+import sys
+
 import yaml
 import os
 import validators
@@ -33,7 +35,13 @@ class Procesador:
         else:
             self.named_graph = 'http://defaultUri.es/'
 
-        self.run = self.fitxategia[izena]["run"]
+        try:
+            f = open(self.fitxategia[izena]["run"])
+            self.run = self.fitxategia[izena]["run"]
+        except IOError:
+            print(self.proiektuIzena + " proiektuan sartutako exekuzio programa ez da existitzen...")
+            sys.exit(1)
+
         self.metadata_file = self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.fitxategia[izena]["triple_store"]

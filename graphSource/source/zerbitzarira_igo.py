@@ -1,4 +1,6 @@
 import logging
+import sys
+
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
@@ -68,4 +70,4 @@ class Zerbitzarira_igo:
 
         if not zerbaitSartuDa:
             print("Triple Storea txarto sartu da")
-            exit(1)
+            sys.exit(1)

@@ -26,10 +26,9 @@ class TestProcesador(unittest.TestCase):
                 break
             ROOT_DIR += i + "/"
 
-        self.proiektuOna = Procesador("la_donacion_local_JonAnder")
+        self.proiektuOna = Procesador("test_la_donacion")
         self.fallaDataSource = Procesador("test_data_source")
         self.fallaNamedGraph = Procesador('test_named_graph')
-        self.fallaRun = Procesador('test_run')
         self.fallaTripleStore = Procesador('test_triple_store')
         self.fallaLogs = Procesador('test_logs')
         self.fallaRdfOutput = Procesador('test_rdf_output')
@@ -53,9 +52,10 @@ class TestProcesador(unittest.TestCase):
         self.assertEqual(self.proiektuOna.named_graph,'http://ehu.eus/')
 
     def test_run(self):
-        # with self.assertRaises(SystemExit) as fallaRun:
-        self.assertRaises(SystemExit,os.system('python3 ../source/ejecutador.py ' + str(self.fallaRun.proiektuIzena)))
-        # self.assertEqual(fallaRun.exception.code, 1)
+        with self.assertRaises(SystemExit) as fallaRunExc:
+            fallaRun = Procesador('test_run')
+        self.assertEqual(fallaRunExc.exception.code, 1)
+
 
     def test_triple_store(self):
         grafo_triple_store = grafo_objektua_sortu.Grafo_fitxategia_sortu(self.fallaTripleStore.data_source,self.fallaTripleStore.logs,self.fallaTripleStore.named_graph,self.fallaTripleStore.triple_store)

@@ -33,8 +33,6 @@ class Grafo_fitxategia_sortu:
         # Grafoa
         self.grafo = Graph()
 
-        print(os.getcwd())
-        print('-----------')
         # Log
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
             try:
