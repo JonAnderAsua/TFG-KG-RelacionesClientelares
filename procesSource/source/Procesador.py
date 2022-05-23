@@ -18,6 +18,8 @@ class Procesador:
             #     break
             ROOT_DIR += i + "/"
 
+        print(ROOT_DIR)
+
         #Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "./doc/config.yml")
 

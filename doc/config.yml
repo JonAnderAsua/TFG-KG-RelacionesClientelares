@@ -28,7 +28,7 @@ test_data_source:
   data_source: /errores/
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ./source/json2rdf.py #Exekutatuko den programa
+  run: ../source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
