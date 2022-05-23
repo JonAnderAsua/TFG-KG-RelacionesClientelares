@@ -16,7 +16,7 @@ test_la_donacion:
   data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
@@ -28,67 +28,67 @@ test_data_source:
   data_source: /errores/
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
   logs: ./logs/laDonacion.log #Logaren path-a
-  rdf_output: ../../data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_named_graph:
   project_name: 'test_named_graph'
-  data_source: ../../data/ladonacion.es #Donde están los datos
+  data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: uriMal
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
   logs: ./logs/laDonacion.log #Logaren path-a
-  rdf_output: ../../data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_run:
   project_name: 'test_run'
-  data_source: ../../data/ladonacion.es #Donde están los datos
+  data_source: ./data/ladonacion.es #Donde están los datos
   validate: graphSource/ #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
   run: error
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
-  logs: ../../logs/laDonacion.log #Logaren path-a
-  rdf_output: ../../data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_triple_store:
   project_name: 'test_triple_store'
-  data_source: ../../data/ladonacion.es #Donde están los datos
+  data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./data/ladonacion.es/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: tripleStoreError
-  logs: ../../logs/laDonacion.log #Logaren path-a
-  rdf_output: ../../data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  logs: ./logs/laDonacion.log #Logaren path-a
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_logs:
   project_name: 'test_logs'
-  data_source: ../../data/ladonacion.es #Donde están los datos
+  data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa
   logs: noExiste.txt
-  rdf_output: ../../data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt #Grafo fitxategiaren irteera
 
 test_rdf_output:
   project_name: 'test_rdf_output'
-  data_source: ../../data/ladonacion.es/data/ladonacion.es #Donde están los datos
+  data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria
-  run: ../source/json2rdf.py #Exekutatuko den programa
+  run: ./procesSource/source/json2rdf.py #Exekutatuko den programa
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:7200/repositories/LaDonacion/statements #Repoaren URIa

@@ -18,7 +18,9 @@ class Procesador:
             #     break
             ROOT_DIR += i + "/"
 
-        print(ROOT_DIR)
+        self.workflow = ""
+        if '/home/runner/work/TFG-KG-RelacionesClientelares/TFG-KG-RelacionesClientelares/' in ROOT_DIR:
+            self.workflow = '/home/runner/work/TFG-KG-RelacionesClientelares/TFG-KG-RelacionesClientelares/'
 
         #Yaml fitxategia kargatu
         fichero = open(ROOT_DIR + "./doc/config.yml")
@@ -27,15 +29,15 @@ class Procesador:
 
         #Klasearen objektuak sortu
         self.proiektuIzena = self.fitxategia[izena]["project_name"]
-        self.data_source = self.fitxategia[izena]["data_source"]
-        self.validate = self.fitxategia[izena]["validate"]
+        self.data_source = ROOT_DIR + self.fitxategia[izena]["data_source"]
+        self.validate = ROOT_DIR + self.fitxategia[izena]["validate"]
         self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
-        self.run = self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
-        self.metadata_file = self.fitxategia[izena]["metadata_file"]
+        self.run = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["run"], False)
+        self.metadata_file = ROOT_DIR + self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
-        self.logs = self.konprobatuFitxategia(self.fitxategia[izena]["logs"], True)
-        self.rdf_output = self.konprobatuFitxategia(self.fitxategia[izena]["rdf_output"],False)
+        self.logs = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["logs"], True)
+        self.rdf_output = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["rdf_output"],False)
 
     def konprobatuTripleStore(self,tripleStoreUri):
         eskaera = ""
