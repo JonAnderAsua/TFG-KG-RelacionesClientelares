@@ -1,11 +1,14 @@
 import json
 import sys
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
+import requests
+from qwikidata.sparql import (get_subclasses_of_item, return_sparql_query_results)
 
 
 def jsonaKargatu(path):
+
     try:
-        with open(path, "r") as a:
+        with open(path, "r",encoding='utf-8') as a:
             return json.load(a)
     except:
         print("JSONa ez da kargatu, programaren exekuzioa bukatuko da...\n")
@@ -23,21 +26,51 @@ def deskargatuIrudia(label):
     }
     '''%(label)
 
-    sparql = SPARQLWrapper('https://query.wikidata.org/bigdata/namespace/wdq/sparql')
-    sparql.setQuery(eskaera)
-    sparql.queryType = INSERT
-    sparql.method = POST
-    sparql.setHTTPAuth(BASIC)
-    # try:
-    sparql.query()
+    try:
+        res = return_sparql_query_results(eskaera)
+
+        # URIa ateratzeko
+        zerrenda = list(res.values())  # https://stackoverflow.com/questions/16228248/how-can-i-get-list-of-values-from-dict
+        entitatea = zerrenda[0]['vars'][0]
+        link = zerrenda[1]["bindings"][0][entitatea]["value"]
+
+        eskaera = '''
+            SELECT ?pic
+			WHERE
+			{
+			<%s> wdt:P18 ?pic .
+			}
+		`
+        '''%(link)
+
+        print(eskaera)
+
+        # try:
+        res = return_sparql_query_results(eskaera)
+        print("Holi")
+        print(list(res.values()))
+
+        # except:
+        #     pass
+
+    except:
+        print('falla')
+
+    # sparql = SPARQLWrapper('https://query.wikidata.org/bigdata/namespace/wdq/sparql')
+    # sparql.setQuery(eskaera)
+    # sparql.queryType = INSERT
+    # sparql.method = POST
+    # sparql.setHTTPAuth(BASIC)
+    # # try:
+    # sparql.query()
     # except:
     #     print("AAA")
     #     exit(1)
 
     # try:
-    # r = requests.get('https://query.wikidata.org/bigdata/namespace/wdq/sarql', params={'format': 'json', 'query': eskaera})
-    # data = r.json()
-    # print(data['results'])
+    #     r = requests.get('https://query.wikidata.org/bigdata/namespace/wdq/sparql', params={'format': 'json', 'query': eskaera})
+    #     data = r.json()
+    #     print(data)
     # except:
     #     print(label + "aren irudia ezin izan da kargatu")
 
@@ -53,9 +86,12 @@ def jsonaKudeatu(path):
         elementua = 'places'
 
     for i in jsona[elementua]:
-        try:
-            deskargatuIrudia(i['names'][0])
-        except:
+        if len(i['title'].split()) > 2:
+            try:
+                deskargatuIrudia(i['names'][0])
+            except:
+                deskargatuIrudia(i['title'])
+        else:
             deskargatuIrudia(i['title'])
 
 
