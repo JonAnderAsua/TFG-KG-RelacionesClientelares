@@ -45,34 +45,12 @@ def deskargatuIrudia(label):
 
         print(eskaera)
 
-        # try:
-        res = return_sparql_query_results(eskaera)
-        print("Holi")
-        print(list(res.values()))
+        r = requests.get('https://query.wikidata.org/bigdata/namespace/wdq/sparql',params={'format': 'json', 'query': eskaera})
+        data = r.json()
+        print(data)
 
-        # except:
-        #     pass
-
-    except:
-        print('falla')
-
-    # sparql = SPARQLWrapper('https://query.wikidata.org/bigdata/namespace/wdq/sparql')
-    # sparql.setQuery(eskaera)
-    # sparql.queryType = INSERT
-    # sparql.method = POST
-    # sparql.setHTTPAuth(BASIC)
-    # # try:
-    # sparql.query()
-    # except:
-    #     print("AAA")
-    #     exit(1)
-
-    # try:
-    #     r = requests.get('https://query.wikidata.org/bigdata/namespace/wdq/sparql', params={'format': 'json', 'query': eskaera})
-    #     data = r.json()
-    #     print(data)
-    # except:
-    #     print(label + "aren irudia ezin izan da kargatu")
+    except Exception as s:
+        print(s)
 
 
 
