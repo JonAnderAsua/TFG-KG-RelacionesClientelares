@@ -2,14 +2,12 @@
 Readme honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Aurkibidea
-
 - [Aurrebaldintzak](#aurrebaldintzak)
 - [Yaml fitxategiaren konfigurazioa](#yaml-fitxategiaren-konfigurazioa) 
 - [Programaren exekuzioa](#programaren_exekuzioa)
 - [Programaren froga](#programaren-froga)
 
 ## Aurrebaldintzak
-
 Programaren exekuzioarekin hasi baino lehen hurrengo aurrebaldintzak betetzen direla kontuan hartuko da:
 
 - Graphdb instantzia bat martxan edukitzea. Honetarako jarraitu _Graphdb_ berak daukan [tutoriala]().
@@ -20,8 +18,7 @@ git clone https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
 ```
 ## Yaml fitxategiaren konfigurazioa
 Behin aurrebaldintza guztiak bete direnean konfigurazioaren hasi ahal da, horretarako [yaml fitxategi bat](https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares/blob/develop/doc/config.yml) aurkitzen da *doc* karpetaren barnean hurrengo parametroekin:
-
-- _project_name_: Proiektuaren izena.
+- _project_name_: Proiektuaren izena. 
 - _data_source_: Erabili beharreko datuen _path-a_.
 - _validate_: Programaren funtzionamendu egokia bermatzeko testen _path-a_.
 - _named_graph_: Tripleen elementu bakoitzak izango duen URI basea.
