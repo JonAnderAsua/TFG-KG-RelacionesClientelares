@@ -1,12 +1,5 @@
 # TFG-KG-RelacionesClientelares - Tutoriala
-
-
-## Egilea:
-
-Jon Ander Asua \
-![jonan_bateria](https://img.shields.io/twitter/follow/jonan_bateria?style=social)
-![JonAnderAsua](https://img.shields.io/github/followers/JonAnderAsua?style=social)
-
+Readme honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Aurkibidea
 
