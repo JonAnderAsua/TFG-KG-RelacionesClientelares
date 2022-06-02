@@ -54,7 +54,7 @@ _la_donacion_ proiektuaren kasuan hurrengo konfigurazioa jarri da:
     delete_graph: true 
     triple_store: http://localhost:7200/repositories/LaDonacion/statements 
     logs: ./logs/laDonacion.log 
-    rdf_output: ./data/ladonacion.es/graphLaDonacion.nt 
+    rdf_output: ./data/ladonacion.es/graphLaDonacion.nt  
 ```
 
 ## Dependentzien instalazioa
