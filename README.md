@@ -11,7 +11,7 @@ Readme honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. 
 - [Programaren exekuzioa](#programaren-exekuzioa)
 
 ## Informazio orokorra
-README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. Programa honek parametro batzuk pasatu ostean era automatiko batean eta _SPARQL_ eskaeri esker datu multzo bat _triple store_ batera igotzen du. Adibide bezala 'la_donacion' proiektua hartu da.
+README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. Programa honek parametro batzuk pasatu ostean era automatiko batean eta _SPARQL_ eskaerei esker datu multzo bat eraldatu eta _triple store_ batera igotzen du. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Erabilitako teknologiak
 - Python >= 3.7
@@ -33,12 +33,12 @@ Behin aurrebaldintza guztiak bete direnean konfigurazioaren hasi ahal da. Horret
 
 - _project_name_: Proiektuaren izena.
 - _data_source_: Erabili beharreko datuen _path-a_.
-- _validate_: Datuen balioztasuna bermatzen duen testen _path-a_.
+- _validate_: SHACL testen _path-a_.
 - _named_graph_: Datuak GraphDB barnean egongo diren taldea adierazten duen URIa.
 - _run_: Exekutatu nahi den programaren _path-a_. Programa hau _SPARQL_ eskaeren bitartez _triple_store_ aldagaian deklaratutako _triple storean_ datuak igotzeko gaitasuna izan behar du.
 - _metadata_file_: Metadatuen _path-a_.
 - _delete_graph_: Aurretik _triple store-an_ zegoen grafoa ezabatu nahi den ala ez.
-- _triple_store_: Tripleak igo nahi diren _triple storearen_ URIa, ez da beharrezkoa GraphDb instantzia baten URI bat izatea, hau da, SPARQL eskaerak onartzen dituen instantzia baten URIa jarri behar da. 
+- _triple_store_: Tripleak igo nahi diren _triple storearen_ URLa, ez da beharrezkoa GraphDb instantzia baten URL bat izatea, hau da, SPARQL eskaerak onartzen dituen instantzia baten URIa jarri behar da. 
 - _logs_: Programa exekutatzerako orduan sortutako logak non gorde nahi diren _path-a_.
 - _rdf_output_: Tripleekin bete nahi den fitxategiaren _path-a_.
 
