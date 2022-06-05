@@ -1,5 +1,5 @@
-la_donacion_local_JonAnder:
-  project_name: 'la_donacion_local_JonAnder'
+la_donacion:
+  project_name: 'la_donacion'
   data_source: ./data/ladonacion.es #Donde están los datos
   validate: ./graphSource/tests/TestJson2rdf.py #Donde están los test
   named_graph: http://ehu.eus/ #Erabiliko den URI oinarria

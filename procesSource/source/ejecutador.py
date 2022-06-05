@@ -36,7 +36,7 @@ if __name__ == "__main__":
         print("Sartu duzun proiektua ez da existitzen, sartu hurrengo zerrendan agertzen den proiektuaren izen bat mesedez:")
 
         # Yaml fitxategia kargatu
-        fichero = open("/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/doc/config.yml")
+        fichero = open("../../doc/config.yml")
         fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         for proiektuIzena in fitxategia:
