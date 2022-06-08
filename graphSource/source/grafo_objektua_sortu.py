@@ -292,7 +292,6 @@ class Grafo_fitxategia_sortu:
         for i in self.dokumentuak["documents"]:
             self.tripleakSortu(i)
 
-        # self.grafo.serialize(destination = self.rdf_output, format ="nt")
     def getGrafoa(self):
         # In: -
         # Out: Proiektu honen grafoa

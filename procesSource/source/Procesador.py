@@ -37,8 +37,8 @@ class Procesador:
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
         self.logs = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["logs"], True)
-        self.rdf_output = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["rdf_output"],False)
-
+        # self.rdf_output = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["rdf_output"],False)
+        self.rdf_output = self.fitxategia[izena]["rdf_output"]
     def konprobatuTripleStore(self,tripleStoreUri):
         eskaera = ""
         sparql = SPARQLWrapper(tripleStoreUri)
