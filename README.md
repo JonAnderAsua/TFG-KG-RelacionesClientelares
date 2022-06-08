@@ -68,7 +68,7 @@ Lehenengo komandoarekin _requirements.txt_ fitxategiaren barnean adierazitako mo
 
 Programa exekutatu ahal izateko fitxategi nagusian kokatuta hurrengo komandoa exekutatu behar da:
 ```bash
-python3 /procesSource/source/ejecutador.py [sortutako proiektuaren izena]
+python3 procesSource/source/ejecutador.py [sortutako proiektuaren izena]
 ```
 
 Adibidearen kasuan komandoa hurrengoa izango litzateke:
