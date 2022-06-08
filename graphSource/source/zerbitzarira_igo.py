@@ -13,7 +13,7 @@ class Zerbitzarira_igo:
         self.grafo.parse(rdf_output) #https://rdflib.readthedocs.io/en/stable/intro_to_parsing.html
 
         # Log
-        logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
+        # logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
 
     def ezabatuZerbitzarikoGrafoa(self):
     #In: -
@@ -33,7 +33,7 @@ class Zerbitzarira_igo:
         try:
             sparql.query()
         except:
-            logging.error("Ezin izan dira ezabatu aurretik zeuden tripleak...")
+            # logging.error("Ezin izan dira ezabatu aurretik zeuden tripleak...")
             exit(1)
 
     def zerbitzariraIgo(self):
@@ -41,7 +41,7 @@ class Zerbitzarira_igo:
     #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
 
         if(self.delete_graph):
-            logging.info("Repoan zegoen grafoa ezabatuko da...")
+            # logging.info("Repoan zegoen grafoa ezabatuko da...")
             self.ezabatuZerbitzarikoGrafoa()
 
         for s,p,o in self.grafo:
@@ -58,4 +58,5 @@ class Zerbitzarira_igo:
             try:
                 sparql.query()
             except:
-                logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
+                # logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
+                pass
