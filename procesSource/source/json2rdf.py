@@ -24,7 +24,7 @@ if __name__ == "__main__":
     print("Grafo fitxategia sortu da hurrengo helbidean: " + procesador.rdf_output)
 
     print("Grafoa zerbitzarira igoko da...")
-    zerbitzariraIgo = zerbitzarira_igo.Zerbitzarira_igo(procesador.rdf_output, procesador.triple_store, procesador.logs, procesador.delete_graph)
+    zerbitzariraIgo = zerbitzarira_igo.Zerbitzarira_igo(procesador.rdf_output, procesador.triple_store,  procesador.delete_graph)
     zerbitzariraIgo.zerbitzariraIgo()
     print("Grafoa " + procesador.triple_store + " helbidera igo da...")
     

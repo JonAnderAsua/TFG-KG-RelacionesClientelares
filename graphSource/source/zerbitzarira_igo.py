@@ -4,7 +4,7 @@ from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 from rdflib import Graph
 
 class Zerbitzarira_igo:
-    def __init__(self,rdf_output,triple_store,logs,delete_graph):
+    def __init__(self,rdf_output,triple_store,delete_graph):
         self.triple_store = triple_store
         self.delete_graph = delete_graph
 
@@ -26,22 +26,25 @@ class Zerbitzarira_igo:
         }
         '''
         sparql = SPARQLWrapper(self.triple_store)
+
+        if ('stardog' in self.triple_store):
+            sparql.setCredentials('localhost:5820', 'admin')
+
         sparql.setQuery(eskaera)
         sparql.queryType = INSERT
         sparql.method = POST
         sparql.setHTTPAuth(BASIC)
+
         try:
             sparql.query()
         except:
-            # logging.error("Ezin izan dira ezabatu aurretik zeuden tripleak...")
-            exit(1)
+            pass
 
     def zerbitzariraIgo(self):
     #In: -
     #Out: Aurretik sortutako fitxategia zerbitzariaren Graphdb instantziara igo
 
         if(self.delete_graph):
-            # logging.info("Repoan zegoen grafoa ezabatuko da...")
             self.ezabatuZerbitzarikoGrafoa()
 
         for s,p,o in self.grafo:
@@ -50,11 +53,14 @@ class Zerbitzarira_igo:
             else:
                 queryStringUpload = 'INSERT DATA  { <%s> <%s> "%s" }' % (s, p, o)
             sparql = SPARQLWrapper(self.triple_store)
+
+            if('localhost:5820' in self.triple_store):
+                sparql.setCredentials('admin','admin')
+
             sparql.setQuery(queryStringUpload)
             sparql.queryType = INSERT
             sparql.method = POST
             sparql.setHTTPAuth(BASIC)
-
             try:
                 sparql.query()
             except:

@@ -46,12 +46,14 @@ class Procesador:
         sparql.queryType = INSERT
         sparql.method = POST
         sparql.setHTTPAuth(BASIC)
-        try:
-            sparql.query()
-            return tripleStoreUri
-        except:
-            print("Sartutako triplestorea ez da zuzena...")
-            sys.exit(1)
+        # sparql.query()
+        return tripleStoreUri
+        # try:
+        #     sparql.query()
+        #     return tripleStoreUri
+        # except:
+        #     print("Sartutako triplestorea ez da zuzena...")
+        #     sys.exit(1)
 
     def konprobatuFitxategia(self,fitxategia,logBoolean):
         try:

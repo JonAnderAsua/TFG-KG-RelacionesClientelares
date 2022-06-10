@@ -19,6 +19,8 @@ if __name__ == "__main__":
     else:
         proiektu_izena = input("Sartu proiektuaren izena \n")
 
+    procesador = Procesador(proiektu_izena)
+
     try:
         procesador = Procesador(proiektu_izena)
         interpretatzaile = ""
