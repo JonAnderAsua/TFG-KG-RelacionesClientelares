@@ -54,6 +54,7 @@ class Zerbitzarira_igo:
                 queryStringUpload = 'INSERT DATA  { <%s> <%s> "%s" }' % (s, p, o)
             sparql = SPARQLWrapper(self.triple_store)
 
+
             if('localhost:5820' in self.triple_store):
                 sparql.setCredentials('admin','admin')
 
@@ -61,8 +62,10 @@ class Zerbitzarira_igo:
             sparql.queryType = INSERT
             sparql.method = POST
             sparql.setHTTPAuth(BASIC)
+            # sparql.query()
             try:
                 sparql.query()
+                print('Lo hace')
             except:
                 # logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
-                pass
+                print('No lo hace')

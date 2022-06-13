@@ -23,7 +23,7 @@ la_donacion_stardog:
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
 
 la_donacion_virtuoso:
-  project_name: 'la_donacion_stardog'
+  project_name: 'la_donacion_virtuoso'
   data_source: data/ladonacion.es
   validate: ./graphSource/tests/TestJson2rdf.py
   named_graph: http://ehu.eus/
@@ -31,6 +31,18 @@ la_donacion_virtuoso:
   metadata_file: ./metadata.ttl
   delete_graph: true
   triple_store: http://localhost:8890/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+
+la_donacion_apache_jena:
+  project_name: 'la_donacion_apache_jena'
+  data_source: data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:3030/ds/update
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
 
