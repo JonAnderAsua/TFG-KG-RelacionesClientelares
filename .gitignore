@@ -27,3 +27,4 @@ data/ladonacion.es/graphLaDonacion.nt
 graphSource/__pycache__/
 graphSource/tests/__pycache__/
 procesSource/__pycache__/
+/deepl_api/files/key
