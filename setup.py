@@ -9,7 +9,7 @@ setup(
     description = (""),
     license = "",
     keywords = "",
-    packages=['procesSource','graphSource'],
+    packages=['procesSource','graphSource','spacy_server'],
     package_dir={"": "./"},
     long_description="Imagine a long description",
     classifiers=[
