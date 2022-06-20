@@ -1,9 +1,11 @@
 from procesSource.source import Procesador
 import os
 import sys
-from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON
-from rdflib import Graph
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON,RDF
+from rdflib import Graph,URIRef
+from rdflib.namespace import RDF
 from unidecode import unidecode
+import json
 
 class BezeroaSortu(object):
     def __init__(self,tripleStore):
@@ -31,7 +33,7 @@ class BezeroaSortu(object):
             not print('Algo ha ido mal...')
 
 class TextToTriple(object):
-    def __init__(self, tripleStore, testua):
+    def __init__(self, tripleStore, testua, named_graph):
         self.tripleStore = tripleStore
         self.grafoa = Graph()
 
@@ -43,12 +45,32 @@ class TextToTriple(object):
         self.testua = unidecode(self.testua)
         self.testua = self.testua.replace("\"","")
         self.testua = self.testua.replace("\n","")
+        self.uri = named_graph
+
+    def getType(self,erlazioa):
+        base = 'https://schema.org/'
+        emaitza = ""
+
+        if erlazioa == 'Location':
+            emaitza = base + 'Place'
+        else:
+            emaitza = base + erlazioa
+        return emaitza
+
+    def grafoaSortu(self,json):
+        for i in json:
+            if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money'):
+                id = i['annotationText']['value'].replace(' ','_')
+                subjektua = URIRef(self.uri + id)
+                objektua = URIRef(self.getType(i['annotationType']['value']))
+
+                self.grafoa.add((subjektua,RDF.type,objektua))
 
     def eskaeraEgin(self):
         eskaera = '''
             PREFIX txtm: <http://www.ontotext.com/textmining#>
             PREFIX txtm-inst: <http://www.ontotext.com/textmining/instance#>
-            SELECT ?annotationText ?annotationType ?annotationStart ?annotationEnd ?feature ?value
+            SELECT distinct ?annotationText ?annotationType
             WHERE {
                     ?searchDocument a txtm-inst:gateService;
                                        txtm:text \'\'\''''+ self.testua + '''\'\'\'.
@@ -65,20 +87,18 @@ class TextToTriple(object):
             }
                         '''
 
-        print(eskaera)
         sparql = SPARQLWrapper(self.tripleStore)
         sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
-        # sparql.queryType = SELECT
-        # sparql.method = GET
-        # sparql.setHTTPAuth(BASIC)
 
         res = sparql.queryAndConvert()
-        return self.grafoa.parse(res)
+        self.grafoaSortu(res['results']['bindings'])
 
         try:
             res = sparql.queryAndConvert()
-            return self.grafoa.parse(res)
+            self.grafoaSortu(res['results']['bindings'])
+
+            return self.grafoa
         except:
             print('Algo ha ido mal...')
 
@@ -93,7 +113,7 @@ class GateCloud(BezeroaSortu,TextToTriple):
         deklarazioa.sortu()
 
         print('Testua prozesatuko da...')
-        textToTriple = TextToTriple(procesador.triple_store, procesador.data_source)
+        textToTriple = TextToTriple(procesador.triple_store, procesador.data_source,procesador.named_graph)
         grafoa = textToTriple.eskaeraEgin()
         print(grafoa)
 
