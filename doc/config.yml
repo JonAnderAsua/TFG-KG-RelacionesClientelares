@@ -18,7 +18,7 @@ gate_cloud:
   run: ./procesSource/source/gate_cloud.py
   metadata_file: ./metadata.ttl
   delete_graph: true
-  triple_store: http://localhost:7200/repositories/LaDonacion/statements
+  triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphSpacy.nt
 

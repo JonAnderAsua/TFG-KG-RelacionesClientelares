@@ -1,7 +1,7 @@
 from procesSource.source import Procesador
 import os
 import sys
-from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET
+from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON
 from rdflib import Graph
 from unidecode import unidecode
 
@@ -68,15 +68,16 @@ class TextToTriple(object):
         print(eskaera)
         sparql = SPARQLWrapper(self.tripleStore)
         sparql.setQuery(eskaera)
-        sparql.queryType = SELECT
-        sparql.method = GET
-        sparql.setHTTPAuth(BASIC)
+        sparql.setReturnFormat(JSON)
+        # sparql.queryType = SELECT
+        # sparql.method = GET
+        # sparql.setHTTPAuth(BASIC)
 
-        res = sparql.query()
+        res = sparql.queryAndConvert()
         return self.grafoa.parse(res)
 
         try:
-            res = sparql.query()
+            res = sparql.queryAndConvert()
             return self.grafoa.parse(res)
         except:
             print('Algo ha ido mal...')
@@ -89,7 +90,6 @@ class GateCloud(BezeroaSortu,TextToTriple):
 
         print('Gate Cloud bezeroa deklaratuko da...')
         deklarazioa = BezeroaSortu(procesador.triple_store)
-
         deklarazioa.sortu()
 
         print('Testua prozesatuko da...')
