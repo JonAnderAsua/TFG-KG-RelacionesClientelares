@@ -62,7 +62,6 @@ class Zerbitzarira_igo:
             sparql.queryType = INSERT
             sparql.method = POST
             sparql.setHTTPAuth(BASIC)
-            # sparql.query()
             try:
                 sparql.query()
                 print('Lo hace')
