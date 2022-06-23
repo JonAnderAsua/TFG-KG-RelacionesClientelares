@@ -57,14 +57,35 @@ class TextToTriple(object):
             emaitza = base + erlazioa
         return emaitza
 
+    def balioztatu(self,subj,obj):
+        baiEz = input(subj + " elementua " + obj + " bezala klasifikatu da, ondo dago? [B/E] \n")
+
+        if baiEz.lower() == 'b': #https://j2logo.com/python/convertir-a-mayusculas-y-minusculas-en-python/
+            return True,obj
+        elif baiEz.lower() == 'e':
+            zuzendu = input('Zuzendu nahi duzu? [B/E] \n')
+            if zuzendu.lower() == 'b':
+                type = input('Nola klasifikatu nahi duzu? \n 1.Person \n 2.Place \n 3.Entity \n')
+                typeBerria = ""
+                if type == '1':
+                    typeBerria = 'Person'
+                elif type == '2':
+                    typeBerria = 'Place'
+                elif typeBerria == '3':
+                    typeBerria = 'Entity'
+                return True, typeBerria
+            else:
+                return False,""
+
     def grafoaSortu(self,json):
         for i in json:
             if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money'):
-                id = i['annotationText']['value'].replace(' ','_')
-                subjektua = URIRef(self.uri + id)
-                objektua = URIRef(self.getType(i['annotationType']['value']))
-
-                self.grafoa.add((subjektua,RDF.type,objektua))
+                balioztatu, obj = self.balioztatu(i['annotationText']['value'],i['annotationType']['value'])
+                if(balioztatu):
+                    id = i['annotationText']['value'].replace(' ','_')
+                    subjektua = URIRef(self.uri + id)
+                    objektua = URIRef(self.getType(obj))
+                    self.grafoa.add((subjektua,RDF.type,objektua))
 
     def eskaeraEgin(self):
         eskaera = '''
@@ -97,7 +118,6 @@ class TextToTriple(object):
         try:
             res = sparql.queryAndConvert()
             self.grafoaSortu(res['results']['bindings'])
-
             return self.grafoa
         except:
             print('Algo ha ido mal...')
@@ -115,5 +135,6 @@ class GateCloud(BezeroaSortu,TextToTriple):
         print('Testua prozesatuko da...')
         textToTriple = TextToTriple(procesador.triple_store, procesador.data_source,procesador.named_graph)
         grafoa = textToTriple.eskaeraEgin()
-        print(grafoa)
+        for s,p,o in grafoa:
+            print(s)
 
