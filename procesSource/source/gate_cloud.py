@@ -2,7 +2,7 @@ from procesSource.source import Procesador
 import os
 import sys
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON,RDF
-from rdflib import Graph,URIRef
+from rdflib import Graph,URIRef, RDFS, Literal
 from rdflib.namespace import RDF
 from unidecode import unidecode
 import json
@@ -86,6 +86,7 @@ class TextToTriple(object):
                     subjektua = URIRef(self.uri + id)
                     objektua = URIRef(self.getType(obj))
                     self.grafoa.add((subjektua,RDF.type,objektua))
+                    self.grafoa.add((subjektua,RDFS.label,Literal(i['annotationText']['value'])))
 
     def eskaeraEgin(self):
         eskaera = '''
@@ -112,9 +113,6 @@ class TextToTriple(object):
         sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
 
-        res = sparql.queryAndConvert()
-        self.grafoaSortu(res['results']['bindings'])
-
         try:
             res = sparql.queryAndConvert()
             self.grafoaSortu(res['results']['bindings'])
@@ -124,6 +122,32 @@ class TextToTriple(object):
 
 
 class GateCloud(BezeroaSortu,TextToTriple):
+
+    def sortuErlazioa(self,erlazioa):
+
+        # URIak deklaratu
+        schema = "https://schema.org/"
+        erlazioPropioa = "http://ehu.eus/transparentrelations#"
+
+        # Schema + kasu nabariak
+        if erlazioa == "takes_part":
+            emaitza = schema + "participant"
+        elif erlazioa == "authors":
+            emaitza = schema + "author"
+        elif erlazioa == "works_for":
+            emaitza = schema + "worksFor"
+
+        # Schema + kasu orokorrak
+        elif (erlazioa == "mentions" or erlazioa == "parent" or erlazioa == "owns" or erlazioa == "spouse" or erlazioa == "knows"):
+            emaitza = schema + erlazioa
+
+        # kasu orokorrak
+        else:
+            emaitza = erlazioPropioa + erlazioa
+
+        return emaitza
+
+
     if __name__ == '__main__':
 
         procesador = Procesador(sys.argv[1])
@@ -135,6 +159,34 @@ class GateCloud(BezeroaSortu,TextToTriple):
         print('Testua prozesatuko da...')
         textToTriple = TextToTriple(procesador.triple_store, procesador.data_source,procesador.named_graph)
         grafoa = textToTriple.eskaeraEgin()
+        print("Lortutako entitateak hurrengoak izan dira")
+        entitateak = []
+        i = 1
         for s,p,o in grafoa:
-            print(s)
+            if i % 2 == 0:
+                print(str(i/2) + ". " + s)
+                entitateak.append(s)
+            i += 1
+
+        subjektua = ""
+        objektua = ""
+        predZerrenda = ['parent','sibling','related_to','spouse','partner','knows','kontrolls','manages','represents','beneficiary_of','has_bank_account_in','worksFor','pays','part_of','registered_in','owns','gives','author','mentions','participant']
+        atera = False
+        print('Ateratzeko zenbaki bat ez den edozein giltza sakatu...')
+        while not atera:
+            subjektua = input('Sartu subjektuaren zenbakia...')
+            objektua = input('Sartu objektuaren zenbakia...')
+
+            try:
+                subjektua = entitateak[int(subjektua) - 1]
+                objektua = entitateak[int(objektua) - 1]
+
+                for j in predikatuZerrenda:
+                    print(str(predZerrenda.index(j) + 1) + ". " + j)
+                predikatua = predZerrenda[int(input('Aukeratu nahi duzun predikatua...'))]
+                grafoa.add((URIRef(subjektua),URIRef(self.sortuErlazioa(predikatua)),URIRef(objektua)))
+
+            except:
+                atera = True
+
 
