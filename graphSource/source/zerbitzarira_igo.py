@@ -5,7 +5,7 @@ from rdflib import Graph
 
 class Zerbitzarira_igo:
     def __init__(self,rdf_output,triple_store,delete_graph):
-        self.triple_store = triple_store
+        self.triple_store = triple_store + '/statements'
         self.delete_graph = delete_graph
 
         # Grafoa

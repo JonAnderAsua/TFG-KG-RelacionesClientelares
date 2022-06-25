@@ -6,6 +6,7 @@ from rdflib import Graph,URIRef, RDFS, Literal
 from rdflib.namespace import RDF
 from unidecode import unidecode
 import json
+from graphSource.source import fitxategia_sortu,zerbitzarira_igo
 
 class BezeroaSortu(object):
     def __init__(self,tripleStore):
@@ -21,7 +22,7 @@ class BezeroaSortu(object):
         self.tripleStore = tripleStore
 
     def sortu(self):
-        sparql = SPARQLWrapper(self.tripleStore)
+        sparql = SPARQLWrapper(self.tripleStore + '/statements')
         sparql.setQuery(self.eskaera)
         sparql.queryType = INSERT
         sparql.method = POST
@@ -29,8 +30,8 @@ class BezeroaSortu(object):
 
         try:
             sparql.query()
-        except:
-            not print('Algo ha ido mal...')
+        except ValueError as e:
+            print(e)
 
 class TextToTriple(object):
     def __init__(self, tripleStore, testua, named_graph):
@@ -79,7 +80,7 @@ class TextToTriple(object):
 
     def grafoaSortu(self,json):
         for i in json:
-            if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money'):
+            if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money' and i['annotationType']['value'] != 'Date'):
                 balioztatu, obj = self.balioztatu(i['annotationText']['value'],i['annotationType']['value'])
                 if(balioztatu):
                     id = i['annotationText']['value'].replace(' ','_')
@@ -108,7 +109,6 @@ class TextToTriple(object):
                 }
             }
                         '''
-
         sparql = SPARQLWrapper(self.tripleStore)
         sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
@@ -117,13 +117,13 @@ class TextToTriple(object):
             res = sparql.queryAndConvert()
             self.grafoaSortu(res['results']['bindings'])
             return self.grafoa
-        except:
-            print('Algo ha ido mal...')
+        except ValueError as e:
+            print(e)
 
 
 class GateCloud(BezeroaSortu,TextToTriple):
 
-    def sortuErlazioa(self,erlazioa):
+    def sortuErlazioa(erlazioa):
 
         # URIak deklaratu
         schema = "https://schema.org/"
@@ -163,10 +163,10 @@ class GateCloud(BezeroaSortu,TextToTriple):
         entitateak = []
         i = 1
         for s,p,o in grafoa:
-            if i % 2 == 0:
-                print(str(i/2) + ". " + s)
+            if 'label' in p:
+                print(str(i) + ". " + o)
                 entitateak.append(s)
-            i += 1
+                i += 1
 
         subjektua = ""
         objektua = ""
@@ -181,12 +181,19 @@ class GateCloud(BezeroaSortu,TextToTriple):
                 subjektua = entitateak[int(subjektua) - 1]
                 objektua = entitateak[int(objektua) - 1]
 
-                for j in predikatuZerrenda:
+                for j in predZerrenda:
                     print(str(predZerrenda.index(j) + 1) + ". " + j)
-                predikatua = predZerrenda[int(input('Aukeratu nahi duzun predikatua...'))]
-                grafoa.add((URIRef(subjektua),URIRef(self.sortuErlazioa(predikatua)),URIRef(objektua)))
+                predikatua = predZerrenda[int(input('Aukeratu nahi duzun predikatua...'))-1]
+                grafoa.add((URIRef(subjektua),URIRef(sortuErlazioa(predikatua)),URIRef(objektua)))
 
-            except:
+            except ValueError as e:
+                print(e)
                 atera = True
+
+        fitx_prog = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)
+        fitx_prog.main()
+
+        zerb_igo = zerbitzarira_igo.Zerbitzarira_igo(procesador.rdf_output,procesador.triple_store,procesador.delete_graph)
+        zerb_igo.zerbitzariraIgo()
 
 
