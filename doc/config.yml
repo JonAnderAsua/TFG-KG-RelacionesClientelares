@@ -17,7 +17,7 @@ gate_cloud:
   named_graph: http://ehu.eus/
   run: ./procesSource/source/gate_cloud.py
   metadata_file: ./metadata.ttl
-  delete_graph: true
+  delete_graph: false
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphSpacy.nt
