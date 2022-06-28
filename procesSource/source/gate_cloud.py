@@ -80,14 +80,17 @@ class TextToTriple(object):
 
     def grafoaSortu(self,json):
         for i in json:
-            if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money' and i['annotationType']['value'] != 'Date'):
-                balioztatu, obj = self.balioztatu(i['annotationText']['value'],i['annotationType']['value'])
-                if(balioztatu):
-                    id = i['annotationText']['value'].replace(' ','_')
-                    subjektua = URIRef(self.uri + id)
-                    objektua = URIRef(self.getType(obj))
-                    self.grafoa.add((subjektua,RDF.type,objektua))
-                    self.grafoa.add((subjektua,RDFS.label,Literal(i['annotationText']['value'])))
+            try:
+                if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money' and i['annotationType']['value'] != 'Date'):
+                    balioztatu, obj = self.balioztatu(i['annotationText']['value'],i['annotationType']['value'])
+                    if(balioztatu):
+                        id = i['annotationText']['value'].replace(' ','_')
+                        subjektua = URIRef(self.uri + id)
+                        objektua = URIRef(self.getType(obj))
+                        self.grafoa.add((subjektua,RDF.type,objektua))
+                        self.grafoa.add((subjektua,RDFS.label,Literal(i['annotationText']['value'])))
+            except:
+                pass
 
     def eskaeraEgin(self):
         eskaera = '''
