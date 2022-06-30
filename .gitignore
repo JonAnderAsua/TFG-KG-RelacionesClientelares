@@ -27,3 +27,9 @@ data/ladonacion.es/graphLaDonacion.nt
 graphSource/__pycache__/
 graphSource/tests/__pycache__/
 procesSource/__pycache__/
+/data/leaks/nodes-addresses.csv
+/data/leaks/nodes-entities.csv
+/data/leaks/nodes-intermediaries.csv
+/data/leaks/nodes-officers.csv
+/data/leaks/nodes-others.csv
+/data/leaks/relationships.csv
