@@ -10,6 +10,18 @@ la_donacion:
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
 
+leaks:
+  project_name: 'leaks'
+  data_source: data/leaks
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/csv2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion/statements
+  logs: ./logs/leaks.log
+  rdf_output: ./data/ladonacion.es/graphLeaks.nt
+
 la_donacion_stardog:
   project_name: 'la_donacion_stardog'
   data_source: data/ladonacion.es
