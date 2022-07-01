@@ -3,7 +3,6 @@ import re
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Graph, URIRef, Literal, RDFS
 from rdflib.namespace import RDF
-import json
 import os
 import unidecode
 import sys
@@ -83,7 +82,7 @@ class FromCsvToGraph:
 
     def setLabel(self,csv):
         for lerro in csv:
-            triple = (self.uri_base + '/' + lerro['node_id'], RDFS.label, lerro['name'])
+            triple = (self.uri_base + '/' + lerro['node_id'], RDFS.label, Literal(lerro['name']))
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
             self.grafo.add(triple)
 
@@ -97,10 +96,20 @@ class FromCsvToGraph:
             else:
                 type = self.per
 
-            triple = (self.uri_base + '/' + lerro['node_id'], RDFS.label, type)
+            triple = (self.uri_base + '/' + lerro['node_id'], RDF.type, type)
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
             self.grafo.add(triple)
 
+    def getErlazioa(self,erlazioa):
+        schema = 'https://schema.org/'
+        erlazioPropioa = 'http://ehu.eus/transparentrelations#'
+
+    def erlazioakAtera(self):
+        for lerro in self.erlazioak:
+            erlazioa = getErlazioa(lerro[])
+            triple = (self.uri_base + '/' + lerro['node_id_start'], URIRef(erlazioa), self.uri_base + '/' + lerro['node_id_end'])
+            logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
+            self.grafo.add(triple)
 
     def main(self):
         #CSVak kargatu
@@ -112,3 +121,13 @@ class FromCsvToGraph:
         self.setLabel(self.ofizialak)
         self.setLabel(self.bitartekariak)
         self.setLabel(self.bestelakoak)
+
+        #Typeak ezarri
+        self.setType(self.helbideak)
+        self.setType(self.entitateak)
+        self.setType(self.ofizialak)
+        self.setType(self.bitartekariak)
+        self.setType(self.bestelakoak)
+
+        #Erlazioak ezarri
+        self.erlazioakAtera()
