@@ -6,7 +6,8 @@ from rdflib.namespace import RDF
 import os
 import unidecode
 import sys
-import pandas as pd
+from csv import reader
+
 
 class FromCsvToGraph:
 
@@ -45,58 +46,64 @@ class FromCsvToGraph:
     #In: -
     #Out: CSVak kargatuta
         try:
-            self.helbideak = pd.read_csv(self.data + '/nodes-addresses.csv')
+            with open(self.data + '/nodes-addresses.csv') as helb:
+                self.helbideak = reader(helb)
         except:
             logging.error('Helbideen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
         try:
-            self.entitateak = pd.read_csv(self.data + '/nodes-entities.csv')
+            with open(self.data + '/nodes-entities.csv') as enti:
+                self.entitateak = reader(enti)
         except:
             logging.error('Entitateen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
         try:
-            self.bitartekariak = pd.read_csv(self.data + '/nodes-intermediaries.csv')
+            with open(self.data + '/nodes-intermediaries.csv') as bit:
+                self.bitartekariak = reader(bit)
         except:
             logging.error('Bitartekarien CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
         try:
-            self.ofizialak = pd.read_csv(self.data + '/nodes-officers.csv')
+            with open(self.data + '/nodes-officers.csv') as of:
+                self.ofizialak = reader(of)
         except:
             logging.error('Ofizialen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
         try:
-            self.bestelakoak = pd.read_csv(self.data + '/nodes-others.csv')
+            with open(self.data + '/nodes-others.csv') as best:
+                self.bestelakoak = reader(best)
         except:
             logging.error('Bestelakoen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
         try:
-            self.erlazioak = pd.read_csv(self.data + '/nodes-relationships.csv')
+            with open(self.data + '/nodes-relationships.csv') as erl:
+                self.erlazioak = reader(erl)
         except:
             logging.error('Erlazioen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
     def setLabel(self,csv):
         for lerro in csv:
-            triple = (self.uri_base + '/' + lerro['node_id'], RDFS.label, Literal(lerro['name']))
+            triple = (self.uri_base + '/' + lerro[0], RDFS.label, Literal(lerro[2]))
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
             self.grafo.add(triple)
 
     def setType(self,csv):
         for lerro in csv:
             type = ''
-            if (int(lerro['node_id']) % 1000000 == 1): #Entitate bat da
+            if (int(lerro[0]) % 1000000 == 1): #Entitate bat da
                 type = self.enti
-            elif int(lerro['node_id']) % 100000 == 24:
+            elif int(lerro[0]) % 100000 == 24:
                 type = self.leku
             else:
                 type = self.per
 
-            triple = (self.uri_base + '/' + lerro['node_id'], RDF.type, type)
+            triple = (self.uri_base + '/' + lerro[0], RDF.type, type)
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
             self.grafo.add(triple)
 
@@ -106,8 +113,8 @@ class FromCsvToGraph:
 
     def erlazioakAtera(self):
         for lerro in self.erlazioak:
-            erlazioa = getErlazioa(lerro[])
-            triple = (self.uri_base + '/' + lerro['node_id_start'], URIRef(erlazioa), self.uri_base + '/' + lerro['node_id_end'])
+            erlazioa = self.getErlazioa(lerro[3])
+            triple = (self.uri_base + '/' + lerro[0], URIRef(erlazioa), self.uri_base + '/' + lerro[1])
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
             self.grafo.add(triple)
 
