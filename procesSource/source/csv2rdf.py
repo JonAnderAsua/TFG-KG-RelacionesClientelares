@@ -16,7 +16,7 @@ if __name__ == "__main__":
     procesador = Procesador(sys.argv[1])  # https://programmerclick.com/article/54591141924/
 
     print("Grafo fitxategia sortuko da...")
-    programa = fromCsvToGraph.FromCsvToGraph(procesador.data_source, procesador.logs, procesador.named_graph, procesador.triple_store)
+    programa = fromCsvToGraph.FromCsvToGraph(procesador.data_source, procesador.logs, procesador.named_graph)
     programa.main()
 
     grafoa = programa.getGrafoa()

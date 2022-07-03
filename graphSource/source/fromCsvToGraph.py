@@ -11,7 +11,7 @@ from csv import reader
 
 class FromCsvToGraph:
 
-    def __init__(self):
+    def __init__(self,data,logs,named_graph):
         #CSVak
         self.helbideak = ""
         self.entitateak = ""
@@ -21,7 +21,7 @@ class FromCsvToGraph:
         self.erlazioak = ""
 
         #URIak
-        self.uri_base = 'http://ehu.eus/'
+        self.uri_base = named_graph
         self.per = URIRef('https://schema.org/Person')
         self.ekit = URIRef('https://schema.org/Event')
         self.doku = URIRef('https://schema.org/Documentation')
@@ -32,15 +32,8 @@ class FromCsvToGraph:
         self.grafo = Graph()
 
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
-            logging.basicConfig(filename = '/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/logs/unekoLog.log', filemode = 'w', level = logging.DEBUG)
-        self.data = '/home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/data/leaks'
-        self.triple_store = 'http://localhost:7200/repositories/LaDonacion'
-
-        uriTest = self.triple_store.split("/")[:len(self.triple_store.split("/")) - 1]
-        self.testTripleStore = ""
-        for i in uriTest:
-            self.testTripleStore += i + "/"
-        self.testTripleStore = self.testTripleStore[:len(self.testTripleStore) - 1]
+            logging.basicConfig(filename = logs, filemode = 'w', level = logging.DEBUG)
+        self.data = data
 
     def csvakKargatu(self):
     #In: -
@@ -81,13 +74,14 @@ class FromCsvToGraph:
             sys.exit(1)
 
         try:
-            with open(self.data + '/nodes-relationships.csv') as erl:
+            with open(self.data + '/relationships.csv') as erl:
                 self.erlazioak = reader(erl)
         except:
             logging.error('Erlazioen CSVa ez da kargatu, programaren exekuzioa bukatuko da...\n')
             sys.exit(1)
 
     def setLabel(self,csv):
+        print(csv)
         for lerro in csv:
             triple = (self.uri_base + '/' + lerro[0], RDFS.label, Literal(lerro[2]))
             logging.info("Sartutako triplea hurrengoa da...\n" + str(triple) + '\n')
@@ -110,6 +104,22 @@ class FromCsvToGraph:
     def getErlazioa(self,erlazioa):
         schema = 'https://schema.org/'
         erlazioPropioa = 'http://ehu.eus/transparentrelations#'
+
+        if ('shareholder' in erlazioa.lower()):
+            emaitza = schema + 'participant'
+        elif 'registered' in erlazioa.lower():
+            emaitza = erlazioPropioa + 'registered_in'
+        elif 'director' in erlazioa.lower() or 'president' in erlazioa.lower() or 'owner' in erlazioa.lower():
+            emaitza = schema + 'owns'
+        elif 'control' in erlazioa.lower():
+            emaitza = erlazioPropioa + 'controlls'
+        elif 'manage' in erlazioa.lower():
+            emaitza = erlazioPropioa + 'manages'
+        elif 'beneficiary' in erlazioa.lower():
+            emaitza = erlazioPropioa + 'beneficiary_of'
+        else:
+            emaitza = schema + 'worksFor'
+        return emaitza
 
     def erlazioakAtera(self):
         for lerro in self.erlazioak:
