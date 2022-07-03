@@ -19,7 +19,7 @@ if __name__ == "__main__":
     programa = fromCsvToGraph.FromCsvToGraph(procesador.data_source, procesador.logs, procesador.named_graph)
     programa.main()
 
-    grafoa = programa.getGrafoa()
+    grafoa = programa.grafo
     fitxategia_programa = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output, grafoa)
     fitxategia_programa.main()
     print("Grafo fitxategia sortu da hurrengo helbidean: " + procesador.rdf_output)
