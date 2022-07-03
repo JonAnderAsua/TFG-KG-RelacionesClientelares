@@ -24,6 +24,7 @@ hs_err_pid*
 
 .idea/
 data/ladonacion.es/graphLaDonacion.nt
+logs/*
 graphSource/__pycache__/
 graphSource/tests/__pycache__/
 procesSource/__pycache__/
