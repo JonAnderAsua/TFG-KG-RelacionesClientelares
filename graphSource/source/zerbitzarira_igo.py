@@ -1,5 +1,4 @@
 import logging
-import sys
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 from rdflib import Graph
 
@@ -62,10 +61,7 @@ class Zerbitzarira_igo:
             sparql.queryType = INSERT
             sparql.method = POST
             sparql.setHTTPAuth(BASIC)
-            # sparql.query()
             try:
                 sparql.query()
-                print('Lo hace')
             except:
-                # logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
-                print('No lo hace')
+                logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")

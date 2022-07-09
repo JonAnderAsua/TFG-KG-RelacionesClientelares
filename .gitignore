@@ -35,3 +35,4 @@ procesSource/__pycache__/
 /data/leaks/nodes-others.csv
 /data/leaks/relationships.csv
 /relacionesLeaks
+/logs/

@@ -23,6 +23,5 @@ class Grafo_fitxategia_sortu:
                 self.grafo.serialize(destination=self.rdf_output, format="nt")
         except FileNotFoundError:
             print("Grafoaren fitxategia ez da existitzen, sortuko da...")
-            grafo = open(self.rdf_output,'x')
+            self.grafo = open(self.rdf_output,'x')
             self.grafo.serialize(destination=self.rdf_output, format="nt")
-            exit()
