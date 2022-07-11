@@ -5,7 +5,7 @@ from rdflib import Graph
 
 class Zerbitzarira_igo:
     def __init__(self,rdf_output,triple_store,delete_graph):
-        self.triple_store = triple_store
+        self.triple_store = triple_store + '/statements'
         self.delete_graph = delete_graph
 
         # Grafoa
@@ -62,10 +62,7 @@ class Zerbitzarira_igo:
             sparql.queryType = INSERT
             sparql.method = POST
             sparql.setHTTPAuth(BASIC)
-            # sparql.query()
             try:
                 sparql.query()
-                print('Lo hace')
             except:
-                # logging.error("Ezin izan da " + str((s, p, o)) + " triplea grafoan sartu...\n")
-                print('No lo hace')
+                pass

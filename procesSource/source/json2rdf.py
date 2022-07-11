@@ -12,7 +12,7 @@ import procesSource.source.Procesador as Procesador
 from graphSource.source import grafo_objektua_sortu, fitxategia_sortu, zerbitzarira_igo
 
 if __name__ == "__main__":
-    procesador = Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
+    procesador = Procesador.Procesador(sys.argv[1]) #https://programmerclick.com/article/54591141924/
 
     print("Grafo fitxategia sortuko da...")
     programa = grafo_objektua_sortu.Grafo_fitxategia_sortu(procesador.data_source, procesador.logs, procesador.named_graph, procesador.triple_store)
