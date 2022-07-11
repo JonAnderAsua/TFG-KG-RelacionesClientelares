@@ -15,3 +15,4 @@ else:
     irudiIzena = izena.replace(' ','_')
 
 os.system('mv downloads/"' + izena + '"/* grafoavis/public/images/'+irudiIzena+'.jpg')
+print(irudiIzena + '(r)en irudia deskargatu da')
