@@ -10,7 +10,7 @@ class TestJson2rdf(unittest.TestCase):
 
         super(TestJson2rdf, self).__init__()
 
-        procesador = Procesador("la_donacion_local_JonAnder")
+        procesador = Procesador.Procesador("la_donacion")
 
         self.grafo_objektua = grafo_objektua_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.named_graph,procesador.triple_store)
 
