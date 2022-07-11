@@ -82,7 +82,9 @@ class FromCsvToGraph:
 
         #Type eta label etiketak ezarri
         for i in csvak:
+            print(i + ' fitxategiaren labelak eta typeak sortuko dira...')
             self.setLabelAndType(i)
 
+        print('Erlazioak sortuko dira...')
         # #Erlazioak ezarri
         self.erlazioakAtera()
