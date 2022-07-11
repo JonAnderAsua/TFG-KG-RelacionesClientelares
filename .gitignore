@@ -35,3 +35,5 @@ procesSource/__pycache__/
 /data/leaks/relationships.csv
 
 /deepl_api/files/key
+/data/
+/logs/
