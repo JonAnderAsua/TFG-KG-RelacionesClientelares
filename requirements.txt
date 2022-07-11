@@ -3,3 +3,4 @@ SPARQLWrapper
 rdflib
 Unidecode
 validators
+google_images_download
