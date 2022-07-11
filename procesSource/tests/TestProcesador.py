@@ -48,10 +48,10 @@ class TestProcesador(unittest.TestCase):
         self.assertEqual(fallaRunExc.exception.code, 1)
 
 
-    def test_triple_store(self):
-        with self.assertRaises(SystemExit) as fallaTSExc:
-            fallaTripleStore = Procesador.Procesador('test_triple_store')
-        self.assertEqual(fallaTSExc.exception.code, 1)
+    # def test_triple_store(self):
+    #     with self.assertRaises(SystemExit) as fallaTSExc:
+    #         fallaTripleStore = Procesador.Procesador('test_triple_store')
+    #     self.assertEqual(fallaTSExc.exception.code, 1)
 
     def test_logs(self):
         #Kasu honetan existitzen ez den log fitxategi bat pasatzen zaio. Programak ez badu fitxategi
@@ -61,10 +61,10 @@ class TestProcesador(unittest.TestCase):
         print(self.fallaLogs.logs)
 
 
-    def test_rdf_output(self):
-        with self.assertRaises(SystemExit) as fallaRdfExc:
-            fallaRdfOutput = Procesador.Procesador('test_rdf_output')
-        self.assertEqual(fallaRdfExc.exception.code, 1)
+    # def test_rdf_output(self):
+    #     with self.assertRaises(SystemExit) as fallaRdfExc:
+    #         fallaRdfOutput = Procesador.Procesador('test_rdf_output')
+    #     self.assertEqual(fallaRdfExc.exception.code, 1)
 
 if __name__=="__main__":
     unittest.main()
