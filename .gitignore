@@ -33,3 +33,5 @@ procesSource/__pycache__/
 /data/leaks/nodes-officers.csv
 /data/leaks/nodes-others.csv
 /data/leaks/relationships.csv
+
+/deepl_api/files/key
