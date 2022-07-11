@@ -4,8 +4,7 @@ import sys
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON,RDF
 from rdflib import Graph,URIRef, RDFS, Literal
 from rdflib.namespace import RDF
-from unidecode import unidecode
-import json
+from deepl_api.source import deepl_api
 from graphSource.source import fitxategia_sortu,zerbitzarira_igo
 
 class BezeroaSortu(object):
@@ -37,13 +36,8 @@ class TextToTriple(object):
     def __init__(self, tripleStore, testua, named_graph):
         self.tripleStore = tripleStore
         self.grafoa = Graph()
-
-        file = open(testua, 'r')
-        self.testua = ""
-        for i in file:
-            self.testua += i + '\n'
-
-        self.testua = unidecode(self.testua)
+        self.deepl = deepl_api.DeeplApi()
+        self.testua = self.deepl.itzulpenaEgin(testua)
         self.testua = self.testua.replace("\"","")
         self.testua = self.testua.replace("\n","")
         self.uri = named_graph
@@ -171,7 +165,7 @@ class GateCloud(BezeroaSortu,TextToTriple):
 
 
     if __name__ == '__main__':
-        procesador = Procesador(sys.argv[1])
+        procesador = Procesador.Procesador(sys.argv[1])
 
         print('Gate Cloud bezeroa deklaratuko da...')
         deklarazioa = BezeroaSortu(procesador.triple_store)
