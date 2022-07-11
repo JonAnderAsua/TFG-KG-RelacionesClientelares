@@ -123,11 +123,30 @@ class TextToTriple(object):
         except ValueError as e:
             print(e)
 
-
 class GateCloud(BezeroaSortu,TextToTriple):
 
-    def sortuErlazioa(erlazioa):
+    def irudiaDeskargatu(label,triple_store):
+        #Konprobatuko da elementua dban ez dagoela
+        eskaera = '''
+        SELECT ?s ?p ?o
+        WHERE{
+            ?s rdfs:label "%s"
+        }
+        ''' %(label)
 
+        sparql = SPARQLWrapper(triple_store)
+        sparql.setQuery(eskaera)
+        sparql.setReturnFormat(JSON)
+
+        try:
+            res = sparql.queryAndConvert()
+            print(res)
+            if not res['results']['bindings']: #Elementua ez da existitzen datu basean, irudia deskargatuko da
+                os.system('python3 graphSource/source/irudiak_deskargatu.py ' + label)
+        except ValueError as e:
+            print(e)
+
+    def sortuErlazioa(erlazioa):
         # URIak deklaratu
         schema = "https://schema.org/"
         erlazioPropioa = "http://ehu.eus/transparentrelations#"
@@ -152,7 +171,6 @@ class GateCloud(BezeroaSortu,TextToTriple):
 
 
     if __name__ == '__main__':
-
         procesador = Procesador(sys.argv[1])
 
         print('Gate Cloud bezeroa deklaratuko da...')
@@ -164,11 +182,13 @@ class GateCloud(BezeroaSortu,TextToTriple):
         grafoa = textToTriple.eskaeraEgin()
         print("Lortutako entitateak hurrengoak izan dira")
         entitateak = []
+        entiIzenak = []
         i = 1
         for s,p,o in grafoa:
             if 'label' in p:
                 print(str(i) + ". " + o)
                 entitateak.append(s)
+                entiIzenak.append(o)
                 i += 1
 
         subjektua = ""
@@ -192,6 +212,14 @@ class GateCloud(BezeroaSortu,TextToTriple):
             except ValueError as e:
                 print(e)
                 atera = True
+
+        deskargatu = input('Nodoen irudiak deskargatu nahí dituzu? [B/E]')
+        if deskargatu.lower() == 'b':
+            print('Irudiak deskargatuko dira...')
+            for enti in entiIzenak:
+                print(enti + ' elementuaren irudia deskargatuko da...')
+                irudiaDeskargatu(enti,procesador.triple_store)
+
 
         fitx_prog = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)
         fitx_prog.main()

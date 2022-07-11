@@ -30,7 +30,6 @@ if __name__ == "__main__":
         else:
             print("Perdon seño, no hemos hecho más tarea \n")
             exit(1)
-
         #Programa exekutatu
         os.system(interpretatzaile + " " + procesador.run + " " + proiektu_izena)
 
