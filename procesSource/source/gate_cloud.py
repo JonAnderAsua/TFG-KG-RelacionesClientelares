@@ -37,7 +37,11 @@ class TextToTriple(object):
         self.tripleStore = tripleStore
         self.grafoa = Graph()
         self.deepl = deepl_api.DeeplApi()
-        self.testua = self.deepl.itzulpenaEgin(testua)
+        testuaGaz = ''
+        with open(testua) as test:
+            for i in test:
+                testuaGaz += i + '\n'
+        self.testua = self.deepl.itzulpenaEgin(testuaGaz)
         self.testua = self.testua.replace("\"","")
         self.testua = self.testua.replace("\n","")
         self.uri = named_graph

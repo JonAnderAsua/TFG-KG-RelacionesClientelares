@@ -4,7 +4,7 @@ import json
 class DeeplApi:
     def __init__(self):
         #APIaren gakoa lortu
-        with open('deepl_api/files/key') as f:
+        with open('deepl_api/files/key.txt') as f:
             for linea in f:
                 self.key = linea
         self.uri = 'https://api-free.deepl.com/v2/translate'
