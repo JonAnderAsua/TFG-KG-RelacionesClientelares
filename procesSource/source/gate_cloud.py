@@ -76,14 +76,37 @@ class TextToTriple(object):
             else:
                 return False,""
 
+    def bilatuUria(self,izena):
+        eskaera = '''
+        SELECT ?s
+        WHERE{
+            ?s rdfs:label "%s"
+        }
+        ''' %(izena)
+
+        sparql = SPARQLWrapper(self.tripleStore)
+        sparql.setQuery(eskaera)
+        sparql.setReturnFormat(JSON)
+
+        try:
+            res = sparql.queryAndConvert()
+            print(res)
+            if not res['results']['bindings']:
+                return self.uri + izena.replace(' ','_')
+            else:
+                return res['results']['bindings'][0]
+        except:
+            pass
+
+
     def grafoaSortu(self,json):
         for i in json:
             try:
                 if(i['annotationType']['value'] != 'Sentence' and i['annotationType']['value'] != 'Money' and i['annotationType']['value'] != 'Date'):
                     balioztatu, obj = self.balioztatu(i['annotationText']['value'],i['annotationType']['value'])
                     if(balioztatu):
-                        id = i['annotationText']['value'].replace(' ','_')
-                        subjektua = URIRef(self.uri + id)
+                        uria = self.bilatuUria(i['annotationText']['value'])
+                        subjektua = URIRef(uria)
                         objektua = URIRef(self.getType(obj))
                         self.grafoa.add((subjektua,RDF.type,objektua))
                         self.grafoa.add((subjektua,RDFS.label,Literal(i['annotationText']['value'])))

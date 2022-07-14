@@ -20,7 +20,7 @@ gate_cloud:
   delete_graph: false
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
-  rdf_output: ./data/ladonacion.es/graphSpacy.nt
+  rdf_output: ./data/partido_del_negocio_vasco/pNegocioVasco.nt
 
 la_donacion_stardog:
   project_name: 'la_donacion_stardog'
