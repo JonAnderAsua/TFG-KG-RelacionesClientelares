@@ -7,38 +7,24 @@ from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 class Procesador:
 
     def __init__(self, izena): #Eraikitzailea
-        #Root path-a ezarri
-        path_nagusia = os.path.dirname(os.path.abspath(__file__)).split('/')  # https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure
-        path_nagusia = path_nagusia[0:len(path_nagusia) - 2]
-        ROOT_DIR = ""
-        for i in path_nagusia:
-            # if i == 'TFG-KG-RelacionesClientelares': #Honekin bermatzen da aldi bakarrez agertzen dela 'TFG-KG-RelacionesClientelares'
-            #     ROOT_DIR += i + "/"
-            #     # ROOT_DIR += i + "/"
-            #     break
-            ROOT_DIR += i + "/"
 
-        self.workflow = ""
-        if '/home/runner/work/TFG-KG-RelacionesClientelares/TFG-KG-RelacionesClientelares/' in ROOT_DIR:
-            self.workflow = '/home/runner/work/TFG-KG-RelacionesClientelares/TFG-KG-RelacionesClientelares/'
 
-        #Yaml fitxategia kargatu
-        fichero = open(ROOT_DIR + "./doc/config.yml")
-
+        #YAML fitxategia kargatu
+        fichero = open('doc/config.yml')
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         #Klasearen objektuak sortu
         self.proiektuIzena = self.fitxategia[izena]["project_name"]
-        self.data_source = ROOT_DIR + self.fitxategia[izena]["data_source"]
-        self.validate = ROOT_DIR + self.fitxategia[izena]["validate"]
+        self.data_source = self.fitxategia[izena]["data_source"]
+        self.validate = self.fitxategia[izena]["validate"]
         self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
-        self.run = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["run"], False)
-        self.metadata_file = ROOT_DIR + self.fitxategia[izena]["metadata_file"]
+        self.run = self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
+        self.metadata_file = self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
-        self.logs = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["logs"], True)
-        # self.rdf_output = self.konprobatuFitxategia(ROOT_DIR + self.fitxategia[izena]["rdf_output"],False)
-        self.rdf_output = self.fitxategia[izena]["rdf_output"]
+        self.logs = self.konprobatuFitxategia(self.fitxategia[izena]["logs"], True)
+        self.rdf_output = self.konprobatuFitxategia(self.fitxategia[izena]["rdf_output"],False)
+
     def konprobatuTripleStore(self,tripleStoreUri):
         eskaera = ""
         sparql = SPARQLWrapper(tripleStoreUri)
@@ -46,14 +32,12 @@ class Procesador:
         sparql.queryType = INSERT
         sparql.method = POST
         sparql.setHTTPAuth(BASIC)
-        # sparql.query()
-        return tripleStoreUri
-        # try:
-        #     sparql.query()
-        #     return tripleStoreUri
-        # except:
-        #     print("Sartutako triplestorea ez da zuzena...")
-        #     sys.exit(1)
+        try:
+            sparql.query()
+            return tripleStoreUri
+        except:
+            print("Sartutako triplestorea ez da zuzena...")
+            sys.exit(1)
 
     def konprobatuFitxategia(self,fitxategia,logBoolean):
         try:

@@ -38,27 +38,13 @@ class Grafo_fitxategia_sortu:
             logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
 
         self.data = data
-        self.triple_store = triple_store
+        self.triple_store = triple_store + '/statements'
 
         uriTest = self.triple_store.split("/")[:len(self.triple_store.split("/"))-1]
         self.testTripleStore = ""
         for i in uriTest:
             self.testTripleStore += i + "/"
         self.testTripleStore = self.testTripleStore[:len(self.testTripleStore)-1]
-
-    def getPath(self):
-    #In: -
-    #Out: Fitxategian dauden path-a
-        cwd = os.getcwd()
-        if "test" in cwd: #Test
-            cwd = cwd.split("/")[0:-2]
-        else:
-            cwd = cwd.split("/")[0:-2]
-
-        path = ""
-        for i in cwd:
-            path += "/" + i
-        return path
 
     def jsonakKargatu(self):
     #In: -
@@ -292,12 +278,6 @@ class Grafo_fitxategia_sortu:
         for i in self.dokumentuak["documents"]:
             self.tripleakSortu(i)
 
-    def getGrafoa(self):
-        # In: -
-        # Out: Proiektu honen grafoa
-        return self.grafo
-
-
     def getJsonak(self):
         # In: -
         # Out: Proiektuaren JSONak
@@ -320,7 +300,6 @@ class Grafo_fitxategia_sortu:
         results = sparql.query().convert()
         return results['results']['bindings'][0]["label"]['value']
 
-
     def getCommentFromGraph(self, id):
         sparql = SPARQLWrapper(self.testTripleStore)
 
@@ -337,29 +316,25 @@ class Grafo_fitxategia_sortu:
         results = sparql.query().convert()
         return results['results']['bindings'][0]["comment"]['value']
 
-
     def getTypeFromGraph(self,id):
-
         sparql = SPARQLWrapper(self.testTripleStore)
-
-        sparql.setQuery('''
+        eskaera = '''
                     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                     SELECT ?type
                     WHERE
                     {
                         <%s> rdf:type ?type .
                     }           
-                    ''' % (id))
+                    ''' % (id)
 
-
+        sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
+        results = sparql.queryAndConvert()
         return results['results']['bindings'][0]["type"]['value']
 
 
     #Main metodoa
     def main(self):
-
         logging.info("JSONak kargatuko dira...\n")
         self.jsonakKargatu()
 

@@ -25,6 +25,10 @@ if __name__ == "__main__":
 
         if (".py" in procesador.run):
             interpretatzaile = "python3"
+        elif '.java' in procesador.run:
+            interpretatzaile = 'java'
+        elif '.sh' in procesador.run:
+            interpretatzaile = 'sh'
         else:
             print("Perdon seño, no hemos hecho más tarea \n")
             exit(1)

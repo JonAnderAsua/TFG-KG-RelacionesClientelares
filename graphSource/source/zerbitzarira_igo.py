@@ -1,5 +1,3 @@
-import logging
-import sys
 from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
 from rdflib import Graph
 
@@ -11,9 +9,6 @@ class Zerbitzarira_igo:
         # Grafoa
         self.grafo = Graph()
         self.grafo.parse(rdf_output) #https://rdflib.readthedocs.io/en/stable/intro_to_parsing.html
-
-        # Log
-        # logging.basicConfig(filename=logs, filemode='w', level=logging.DEBUG)
 
     def ezabatuZerbitzarikoGrafoa(self):
     #In: -

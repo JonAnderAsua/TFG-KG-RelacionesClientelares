@@ -7,16 +7,11 @@ from procesSource.source import Procesador
 class TestJson2rdf(unittest.TestCase):
 
     def setUp(self) :
-
         super(TestJson2rdf, self).__init__()
-
         procesador = Procesador.Procesador("la_donacion")
-
         self.grafo_objektua = grafo_objektua_sortu.Grafo_fitxategia_sortu(procesador.data_source,procesador.logs,procesador.named_graph,procesador.triple_store)
-
         self.grafo_objektua.jsonakKargatu()
         self.jsonZerrenda = self.grafo_objektua.getJsonak()
-
 
     def test_setType(self):
         self.grafo_objektua.setType(rdflib.term.URIRef("http://ehu.eus/id/article/larazon_dajbkoztojbfnn5rdokylamu7i"),rdflib.term.URIRef("https://schema.org/NewsArticle"))
@@ -65,10 +60,6 @@ class TestJson2rdf(unittest.TestCase):
         self.assertEquals('Tan solo unas semanas de la adjudicacion del megacontrato para la construccion del AVE a La Meca, Corinna zu Sayn-Wittgenstein disuelve sus sociedad Apollonia Ventures, que habia constituido en noviembre de 2005.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/event/disolucion_de_apollonia"))
         self.assertEquals('La hija mayor de los reyes de Espana, Juan Carlos y Sofia, figura junto con su padre y sus hermanos el rey Felipe VI y Cristina de Borbon, como beneficiaria de la fundacion Zagatka, una entidad dada de alta en Liechtenstein bajo el control de un pariente lejano: Alvaro de Orleans-Borbon.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/person/elena"))
         self.assertEquals('Exclusivo atico en el barrio de Knightsbride, que el sultan de Oman adquirio por 50 millones de libras (62,7 millones de euros, un record del momento) para ponerlo a disposicion del rey Juan Carlos, quien habia visitado el pais arabe apenas dos meses antes.', self.grafo_objektua.getCommentFromGraph("http://ehu.eus/id/place/princes_gate_5"))
-
-
-
-
     #setTypeLabelComent metodoa aurreko hiru metodoetan frogatzen da
 
     def test_forPersonsToPeople(self):
