@@ -26,18 +26,21 @@ class Procesador:
         self.rdf_output = self.konprobatuFitxategia(self.fitxategia[izena]["rdf_output"],False)
 
     def konprobatuTripleStore(self,tripleStoreUri):
-        eskaera = ""
-        sparql = SPARQLWrapper(tripleStoreUri)
-        sparql.setQuery(eskaera)
-        sparql.queryType = INSERT
-        sparql.method = POST
-        sparql.setHTTPAuth(BASIC)
-        try:
-            sparql.query()
+        if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
+            eskaera = ""
+            sparql = SPARQLWrapper(tripleStoreUri)
+            sparql.setQuery(eskaera)
+            sparql.queryType = INSERT
+            sparql.method = POST
+            sparql.setHTTPAuth(BASIC)
+            try:
+                sparql.query()
+                return tripleStoreUri
+            except:
+                print("Sartutako triplestorea ez da zuzena...")
+                sys.exit(1)
+        else:
             return tripleStoreUri
-        except:
-            print("Sartutako triplestorea ez da zuzena...")
-            sys.exit(1)
 
     def konprobatuFitxategia(self,fitxategia,logBoolean):
         try:
