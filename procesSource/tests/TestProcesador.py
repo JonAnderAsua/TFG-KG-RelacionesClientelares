@@ -41,9 +41,11 @@ class TestProcesador(unittest.TestCase):
 
 
     def test_rdf_output(self):
-        with self.assertRaises(SystemExit) as fallaRdfExc:
-            fallaRdfOutput = Procesador.Procesador('test_rdf_output')
-        self.assertEqual(fallaRdfExc.exception.code, 1)
+        #Fitxategia ez bada existitzen sortzen du, ondorioz irekitzean ez du errorerik sortuko
+        fallaRdfOutput = Procesador.Procesador('test_rdf_output')
+        open(fallaRdfOutput.rdf_output)
+        self.assertTrue(True)
+
 
 if __name__=="__main__":
     unittest.main()

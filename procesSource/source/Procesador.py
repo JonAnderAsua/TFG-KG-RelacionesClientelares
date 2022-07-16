@@ -23,7 +23,7 @@ class Procesador:
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
         self.logs = self.konprobatuFitxategia(self.fitxategia[izena]["logs"], True)
-        self.rdf_output = self.konprobatuFitxategia(self.fitxategia[izena]["rdf_output"],False)
+        self.rdf_output = self.konprobatuTripleenFItxategia(self.fitxategia[izena]["rdf_output"])
 
     def konprobatuTripleStore(self,tripleStoreUri):
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
@@ -41,6 +41,14 @@ class Procesador:
                 sys.exit(1)
         else:
             return tripleStoreUri
+
+    def konprobatuTripleenFItxategia(self,fitx):
+        try:
+            f = open(fitx)
+            return fitx
+        except:
+            f = open(fitx,'x')
+            return fitx
 
     def konprobatuFitxategia(self,fitxategia,logBoolean):
         try:
