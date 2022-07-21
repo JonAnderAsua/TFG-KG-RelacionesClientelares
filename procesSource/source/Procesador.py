@@ -1,8 +1,10 @@
 import sys
+
 import yaml
 import os
 import validators
-from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST
+from SPARQLWrapper import SPARQLWrapper, BASIC,SELECT, GET
+
 
 class Procesador:
 
@@ -14,24 +16,30 @@ class Procesador:
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
         #Klasearen objektuak sortu
+        self.workspace = self.fitxategia[izena]['workspace']
         self.proiektuIzena = self.fitxategia[izena]["project_name"]
-        self.data_source = self.fitxategia[izena]["data_source"]
-        self.validate = self.fitxategia[izena]["validate"]
+        self.data_source = self.workspace + self.fitxategia[izena]["data_source"]
+        self.validate = self.workspace + self.fitxategia[izena]["validate"]
         self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
-        self.run = self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
-        self.metadata_file = self.fitxategia[izena]["metadata_file"]
+        self.run = self.workspace + self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
+        self.metadata_file = self.workspace + self.fitxategia[izena]["metadata_file"]
         self.delete_graph = self.fitxategia[izena]["delete_graph"]
         self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
-        self.logs = self.konprobatuFitxategia(self.fitxategia[izena]["logs"], True)
-        self.rdf_output = self.konprobatuTripleenFItxategia(self.fitxategia[izena]["rdf_output"])
+        self.logs = self.konprobatuFitxategia(self.workspace + self.fitxategia[izena]["logs"], True)
+        self.rdf_output = self.konprobatuTripleenFItxategia(self.workspace + self.fitxategia[izena]["rdf_output"])
 
     def konprobatuTripleStore(self,tripleStoreUri):
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
-            eskaera = ""
+            eskaera = '''
+                SELECT ?s
+                WHERE{
+                    ?s ?p ?o .
+                }
+            '''
             sparql = SPARQLWrapper(tripleStoreUri)
             sparql.setQuery(eskaera)
-            sparql.queryType = INSERT
-            sparql.method = POST
+            sparql.queryType = SELECT
+            sparql.method = GET
             sparql.setHTTPAuth(BASIC)
             try:
                 sparql.query()

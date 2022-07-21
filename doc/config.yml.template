@@ -1,0 +1,13 @@
+proiektu_izena:
+  project_name: 'proiektu_izena'
+  workspace: #Lan eremuaren patha
+  images: #Lan eremuaren barnean irudiak egongo diren karpeta
+  data_source: #Lan eremuaren barnean datasetak egongo diren karpeta
+  validate: #Lan eremuaren barnean testa egongo diren karpeta
+  named_graph: #Nodoen uriak izango duten uri basea
+  run: #Lan eremuaren barnean exekutatu nahi diren scriptak dauden fitxategia
+  metadata_file: #Lan eremuaren barnean metadatuen fitxategia
+  delete_graph: #Aurretik triple storean zeuden triple guztiak ezabatu nahi diren ala ez
+  triple_store: #Triple storearen SPARQL Endpointera apuntatzen duen uria
+  logs: #Lan eremuaren barnean logak egongo diren karpeta
+  rdf_output: #Lan eremuaren barnean rdf fitxategia
