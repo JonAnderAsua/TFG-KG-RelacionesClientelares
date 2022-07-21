@@ -15,18 +15,33 @@ class Procesador:
         fichero = open('doc/config.yml')
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
 
-        #Klasearen objektuak sortu
-        self.workspace = self.fitxategia[izena]['workspace']
-        self.proiektuIzena = self.fitxategia[izena]["project_name"]
-        self.data_source = self.workspace + self.fitxategia[izena]["data_source"]
-        self.validate = self.workspace + self.fitxategia[izena]["validate"]
-        self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
-        self.run = self.workspace + self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
-        self.metadata_file = self.workspace + self.fitxategia[izena]["metadata_file"]
-        self.delete_graph = self.fitxategia[izena]["delete_graph"]
-        self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
-        self.logs = self.konprobatuFitxategia(self.workspace + self.fitxategia[izena]["logs"], True)
-        self.rdf_output = self.konprobatuTripleenFItxategia(self.workspace + self.fitxategia[izena]["rdf_output"])
+        if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
+            #Klasearen objektuak sortu
+            self.workspace = self.fitxategia[izena]['workspace']
+            self.proiektuIzena = self.fitxategia[izena]["project_name"]
+            self.data_source = self.workspace + self.fitxategia[izena]["data_source"]
+            self.validate = self.workspace + self.fitxategia[izena]["validate"]
+            self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
+            self.run = self.konprobatuFitxategia(self.workspace + self.fitxategia[izena]["run"], False)
+            self.metadata_file = self.workspace + self.fitxategia[izena]["metadata_file"]
+            self.delete_graph = self.fitxategia[izena]["delete_graph"]
+            self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
+            self.logs = self.konprobatuFitxategia(self.workspace + self.fitxategia[izena]["logs"], True)
+            self.rdf_output = self.konprobatuTripleenFItxategia(self.workspace + self.fitxategia[izena]["rdf_output"])
+        else:
+            # Klasearen objektuak sortu
+            self.workspace = self.fitxategia[izena]['workspace']
+            self.proiektuIzena = self.fitxategia[izena]["project_name"]
+            self.data_source = self.fitxategia[izena]["data_source"]
+            self.validate = self.fitxategia[izena]["validate"]
+            self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
+            self.run = self.konprobatuFitxategia(self.fitxategia[izena]["run"], False)
+            self.metadata_file = self.fitxategia[izena]["metadata_file"]
+            self.delete_graph = self.fitxategia[izena]["delete_graph"]
+            self.triple_store = self.konprobatuTripleStore(self.fitxategia[izena]["triple_store"])
+            self.logs = self.konprobatuFitxategia(self.fitxategia[izena]["logs"], True)
+            self.rdf_output = self.konprobatuTripleenFItxategia(self.fitxategia[izena]["rdf_output"])
+
 
     def konprobatuTripleStore(self,tripleStoreUri):
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
