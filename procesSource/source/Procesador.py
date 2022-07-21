@@ -9,8 +9,6 @@ from SPARQLWrapper import SPARQLWrapper, BASIC,SELECT, GET
 class Procesador:
 
     def __init__(self, izena): #Eraikitzailea
-
-
         #YAML fitxategia kargatu
         fichero = open('doc/config.yml')
         self.fitxategia = yaml.load(fichero, Loader=yaml.FullLoader)
@@ -30,7 +28,6 @@ class Procesador:
             self.rdf_output = self.konprobatuTripleenFItxategia(self.workspace + self.fitxategia[izena]["rdf_output"])
         else:
             # Klasearen objektuak sortu
-            self.workspace = self.fitxategia[izena]['workspace']
             self.proiektuIzena = self.fitxategia[izena]["project_name"]
             self.data_source = self.fitxategia[izena]["data_source"]
             self.validate = self.fitxategia[izena]["validate"]
