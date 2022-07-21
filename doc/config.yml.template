@@ -1,5 +1,5 @@
 proiektu_izena:
-  project_name: 'proiektu_izena'
+  project_name: #Proiektuaren izena
   workspace: #Lan eremuaren patha
   images: #Lan eremuaren barnean irudiak egongo diren karpeta
   data_source: #Lan eremuaren barnean datasetak egongo diren karpeta
