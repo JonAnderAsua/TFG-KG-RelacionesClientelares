@@ -15,6 +15,7 @@ la_donacion:
 gate_cloud:
   project_name: 'gate_cloud'
   workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares
+  images: images
   data_source: data/partido_del_negocio_vasco/alonsotegi-eraikiz.txt
   validate: ./graphSource/tests/TestJson2rdf.py
   named_graph: http://ehu.eus/
@@ -37,6 +38,7 @@ la_donacion_stardog:
   triple_store: http://localhost:5820/LaDonacion/update
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 la_donacion_virtuoso:
   project_name: 'la_donacion_virtuoso'
@@ -50,6 +52,7 @@ la_donacion_virtuoso:
   triple_store: http://localhost:8890/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 la_donacion_apache_jena:
   project_name: 'la_donacion_apache_jena'
@@ -63,6 +66,7 @@ la_donacion_apache_jena:
   triple_store: http://localhost:3030/ds/update
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 #Testak egiteko proiektuak
 test_la_donacion:
@@ -77,6 +81,7 @@ test_la_donacion:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_data_source:
   project_name: 'test_data_source'
@@ -90,6 +95,7 @@ test_data_source:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_named_graph:
   project_name: 'test_named_graph'
@@ -103,6 +109,7 @@ test_named_graph:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_run:
   project_name: 'test_run'
@@ -116,6 +123,7 @@ test_run:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_triple_store:
   project_name: 'test_triple_store'
@@ -129,6 +137,7 @@ test_triple_store:
   triple_store: tripleStoreError
   logs: ./logs/laDonacion.log
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_logs:
   project_name: 'test_logs'
@@ -142,6 +151,7 @@ test_logs:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: noExiste.txt
   rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
 
 test_rdf_output:
   project_name: 'test_rdf_output'
@@ -155,3 +165,4 @@ test_rdf_output:
   triple_store: http://localhost:7200/repositories/LaDonacion
   logs: ./logs/laDonacion.log
   rdf_output: grafoError.nt
+  images: images
