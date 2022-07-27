@@ -1,18 +1,15 @@
 from google_images_download import google_images_download
 import unidecode
-import sys
 import os
 
-response = google_images_download.googleimagesdownload()
+class IrudiakDeskargatu:
+    def __init__(self, izena,pathIrudiak):
+        self.response = google_images_download.googleimagesdownload()
+        self.izena = izena
+        self.arguments = {"keywords":unidecode.unidecode(izena),"limit":1,"print_urls":True}
+        self.paths = self.response.download(self.arguments)
+        self.irudiIZena = izena.replace(' ','_')
 
-izena = sys.argv[1]
-arguments = {"keywords":unidecode.unidecode(izena),"limit":1,"print_urls":True}
-paths = response.download(arguments)
-
-if sys.argv[2]:
-    irudiIzena = sys.argv[2]
-else:
-    irudiIzena = izena.replace(' ','_')
-
-os.system('mv downloads/"' + izena + '"/* grafoavis/public/images/'+irudiIzena+'.jpg')
-print(irudiIzena + '(r)en irudia deskargatu da')
+    def irudiaDeskargatu(self):
+        os.system('mv downloads/"' + self.izena + '"/* ' + self.paths + '/' + self.izena+'.jpg')
+        print(self.izena + '(r)en irudia deskargatu da')

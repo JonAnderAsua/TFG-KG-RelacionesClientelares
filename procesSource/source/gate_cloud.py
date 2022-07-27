@@ -5,7 +5,7 @@ from SPARQLWrapper import SPARQLWrapper, BASIC, INSERT, POST, SELECT, GET, JSON,
 from rdflib import Graph,URIRef, RDFS, Literal
 from rdflib.namespace import RDF
 from deepl_api.source import deepl_api
-from graphSource.source import fitxategia_sortu,zerbitzarira_igo
+from graphSource.source import fitxategia_sortu,zerbitzarira_igo, irudiak_deskargatu
 
 class BezeroaSortu(object):
     def __init__(self,tripleStore):
@@ -146,7 +146,7 @@ class TextToTriple(object):
 
 class GateCloud(BezeroaSortu,TextToTriple):
 
-    def irudiaDeskargatu(label,triple_store):
+    def irudiaDeskargatu(label,procesador):
         #Konprobatuko da elementua dban ez dagoela
         eskaera = '''
         SELECT ?s ?p ?o
@@ -155,7 +155,7 @@ class GateCloud(BezeroaSortu,TextToTriple):
         }
         ''' %(label)
 
-        sparql = SPARQLWrapper(triple_store)
+        sparql = SPARQLWrapper(procesador.triple_store)
         sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
 
@@ -163,7 +163,7 @@ class GateCloud(BezeroaSortu,TextToTriple):
             res = sparql.queryAndConvert()
             print(res)
             if not res['results']['bindings']: #Elementua ez da existitzen datu basean, irudia deskargatuko da
-                os.system('python3 graphSource/source/irudiak_deskargatu.py ' + label)
+                irudiak = irudiak_deskargatu.IrudiakDeskargatu(label,procesador.images)
         except ValueError as e:
             print(e)
 
@@ -239,7 +239,7 @@ class GateCloud(BezeroaSortu,TextToTriple):
             print('Irudiak deskargatuko dira...')
             for enti in entiIzenak:
                 print(enti + ' elementuaren irudia deskargatuko da...')
-                irudiaDeskargatu(enti,procesador.triple_store)
+                irudiaDeskargatu(enti,procesador)
 
 
         fitx_prog = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)

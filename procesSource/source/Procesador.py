@@ -16,6 +16,7 @@ class Procesador:
         if not '/home/runner/work/' in os.path.dirname(os.path.abspath(__file__)):
             #Klasearen objektuak sortu
             self.workspace = self.fitxategia[izena]['workspace']
+            self.images = self.workspace + self.fitxategia[izena]['images']
             self.proiektuIzena = self.fitxategia[izena]["project_name"]
             self.data_source = self.workspace + self.fitxategia[izena]["data_source"]
             self.validate = self.workspace + self.fitxategia[izena]["validate"]
@@ -29,6 +30,7 @@ class Procesador:
         else:
             # Klasearen objektuak sortu
             self.proiektuIzena = self.fitxategia[izena]["project_name"]
+            self.images = self.workspace + self.fitxategia[izena]['images']
             self.data_source = self.fitxategia[izena]["data_source"]
             self.validate = self.fitxategia[izena]["validate"]
             self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
