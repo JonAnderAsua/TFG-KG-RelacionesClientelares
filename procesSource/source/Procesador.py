@@ -30,7 +30,7 @@ class Procesador:
         else:
             # Klasearen objektuak sortu
             self.proiektuIzena = self.fitxategia[izena]["project_name"]
-            self.images = self.workspace + self.fitxategia[izena]['images']
+            self.images = self.fitxategia[izena]['images']
             self.data_source = self.fitxategia[izena]["data_source"]
             self.validate = self.fitxategia[izena]["validate"]
             self.named_graph = self.konprobatuUria(self.fitxategia[izena]["named_graph"])
