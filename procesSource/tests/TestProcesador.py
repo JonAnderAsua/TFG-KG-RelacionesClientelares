@@ -36,8 +36,9 @@ class TestProcesador(unittest.TestCase):
         #Kasu honetan existitzen ez den log fitxategi bat pasatzen zaio. Programak ez badu fitxategi
         #hori aurkitzen berri bat sortzen du log fitxategian. Konprobatu behar da fitxategi hori ondo
         #sortu duen ala ez
-        self.fallaLogs = Procesador.Procesador('test_logs')
-        print(self.fallaLogs.logs)
+        fallaLogs = Procesador.Procesador('test_logs')
+        open(fallaLogs.logs)
+        self.assertTrue(True)
 
 
     def test_rdf_output(self):
