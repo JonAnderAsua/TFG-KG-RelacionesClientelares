@@ -1,5 +1,5 @@
 # TFG-KG-RelacionesClientelares - Tutoriala
-Readme honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. Adibide bezala 'la_donacion' proiektua hartu da.
+README honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Aurkibidea
 
@@ -11,7 +11,7 @@ Readme honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. 
 - [Programaren exekuzioa](#programaren-exekuzioa)
 
 ## Informazio orokorra
-README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. Programa honek parametro batzuk pasatu ostean era automatiko batean eta _SPARQL_ eskaerei esker datu multzo bat eraldatu eta _triple store_ batera igotzen du. Adibide bezala 'la_donacion' proiektua hartu da.
+README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. Programa honek parametro batzuk pasatu ostean era automatiko batean datu multzo bat eraldatu eta _triple store_ batera igotzen du. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Erabilitako teknologiak
 - Python >= 3.7
@@ -21,7 +21,7 @@ README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. 
 
 Programaren exekuzioarekin hasi baino lehen hurrengo aurrebaldintzak betetzen direla kontuan hartuko da:
 
-- Graphdb instantzia bat martxan edukitzea. Honetarako jarraitu _Graphdb_ berak daukan [tutoriala](https://graphdb.ontotext.com/documentation/free/free/run-desktop-installation.html).
+- GraphDB instantzia bat martxan edukitzea. Honetarako jarraitu _Graphdb_ berak daukan [tutoriala](https://graphdb.ontotext.com/documentation/free/free/run-desktop-installation.html).
 - Programa exekutatu nahi den terminalean Python interpretatzaile bat instalatuta izatea (gutxienez 3.7 bertsioa).
 - Terminalean proiektu hau klonatuta edukitzea, horretarako exekutatu hurrengo komandoa terminalean:
 ```bash
