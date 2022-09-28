@@ -32,6 +32,8 @@ git clone -b develop https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesC
 Behin aurrebaldintza guztiak bete direnean konfigurazioaren hasi ahal da. Horretarako [YAML fitxategi bat](https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares/blob/develop/doc/config.yml) aurkitzen da *doc* karpetaren barnean hurrengo parametroekin:
 
 - _project_name_: Proiektuaren izena.
+- _workspace_: Erabili nahi diren datuen helbide nagusia.
+- _images_: #Lan eremuaren barnean irudiak egongo diren karpeta
 - _data_source_: Erabili beharreko datuen _path-a_.
 - _validate_: SHACL testen _path-a_.
 - _named_graph_: Datuak GraphDB barnean egongo diren taldea adierazten duen URIa.
@@ -44,18 +46,22 @@ Behin aurrebaldintza guztiak bete direnean konfigurazioaren hasi ahal da. Horret
 
 _la_donacion_ proiektuaren kasuan hurrengo konfigurazioa jarri da: 
 ```yaml
- la_donacion: 
-    project_name: 'la_donacion_local_JonAnder' 
-    data_source: ./data/ladonacion.es 
-    validate: ./graphSource/tests/TestJson2rdf.py 
-    named_graph: http://ehu.eus/ 
-    run: ./procesSource/source/json2rdf.py 
-    metadata_file: ./metadata.ttl 
-    delete_graph: true 
-    triple_store: http://localhost:7200/repositories/LaDonacion/statements 
-    logs: ./logs/laDonacion.log 
-    rdf_output: ./data/ladonacion.es/graphLaDonacion.nt  
+la_donacion:
+  project_name: 'la_donacion'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  images: images
+  data_source: data/ladonacion.es
+  validate: graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: procesSource/source/json2rdf.py
+  metadata_file: metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: logs/laDonacion.log
+  rdf_output: data/ladonacion.es/graphLaDonacion.nt
 ```
+Esan beharra dago workspace parametroan prozesatu nahi diren datuen helbidea jarri behar da, **dagoen helbidea ez du funtzionatuko**
+
 
 ## Dependentzien instalazioa
 Programa exekutatu baino lehen programaren dependentziak instalatu behar dira, horretarako hurrengo komandoak exekutatu behar dira proiektuko fitxategi nagusitik:
