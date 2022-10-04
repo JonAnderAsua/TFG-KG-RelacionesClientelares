@@ -4,11 +4,11 @@ la_donacion:
   images: images
   data_source: data/ladonacion.es
   validate: graphSource/tests/TestJson2rdf.py
-  named_graph: http://ehu.eus/
+  named_graph: http://localhost:8080/
   run: procesSource/source/json2rdf.py
   metadata_file: metadata.ttl
   delete_graph: true
-  triple_store: http://localhost:7200/repositories/LaDonacion
+  triple_store: http://localhost:7200/repositories/ustelkeria
   logs: logs/laDonacion.log
   rdf_output: data/ladonacion.es/graphLaDonacion.nt
 

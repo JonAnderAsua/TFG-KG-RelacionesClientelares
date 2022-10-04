@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+   graphdb:
+      image: graphdb
+      ports:
+         - "7200:7200"
+      volumes:
+         - ./graphdb-data:/data
+
+   trifid: 
+      image: zazuko/trifid
+      ports:
+         - "8080:8080"
+      environment:
+              SPARQL_ENDPOINT_URL: 'http://graphdb:7200/repositories/ustelkeria/statements'
