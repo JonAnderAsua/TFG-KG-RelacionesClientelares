@@ -9,11 +9,14 @@ services:
          - ./graphdb-data:/data
 
    trifid: 
-      image: zazuko/trifid
+      image: ghcr.io/zazuko/trifid
       ports:
          - "8080:8080"
       environment:
-              #  SPARQL_ENDPOINT_URL: "http://graphdb:7200/repositories/ustelkeria/statements"
-              SPARQL_ENDPOINT_URL: "http://172.20.0.2:7200/repositories/ustelkeria/statemets"
+              SPARQL_ENDPOINT_URL: "http://graphdb:7200/repositories/ustelkeria/statemets"
               DATASET_BASE_URL: "http://localhost:8080/"
+   bisual:
+      image: bisualizazioa
+      ports:
+         - "5000:3000"
 
