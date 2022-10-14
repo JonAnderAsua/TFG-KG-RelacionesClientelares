@@ -83,3 +83,12 @@ python3 /procesSource/source/ejecutador.py la_donacion
 ```
 
 **Sartutako proiektua ez bada existitzen programa berak argitaratuko ditu eskuragarri dauden proiektuen izenak.**
+
+Honetaz aparte _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
+```bash
+docker build -t graphdb datuBaseak/
+docker build -t bisualizazioa grafoavis/
+cd datuBaseak/
+docker-compose up
+```
+Hau egin ostean _http://localhost:5000/bisualizazioa_ atalean sortutako grafoa agertzen da. _SPARQL Endpointa_ ikusteko _URIa http://localhost:5000/yasgui_ da.
