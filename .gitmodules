@@ -1,0 +1,6 @@
+[submodule "grafoavis"]
+	path = grafoavis
+	url = https://github.com/JonAnderAsua/grafoavis
+[submodule "ScriptGoogleImagesDownloader"]
+	path = ScriptGoogleImagesDownloader
+	url = https://github.com/JonAnderAsua/ScriptGoogleImagesDownloader

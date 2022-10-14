@@ -1,0 +1,168 @@
+la_donacion:
+  project_name: 'la_donacion'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  images: images
+  data_source: data/ladonacion.es
+  validate: graphSource/tests/TestJson2rdf.py
+  named_graph: http://localhost:8080/
+  run: procesSource/source/json2rdf.py
+  metadata_file: metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/ustelkeria
+  logs: logs/laDonacion.log
+  rdf_output: data/ladonacion.es/graphLaDonacion.nt
+
+gate_cloud:
+  project_name: 'gate_cloud'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares
+  images: images
+  data_source: /data/partido_del_negocio_vasco/alonsotegi-eraikiz.txt
+  validate: graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: /procesSource/source/gate_cloud.py
+  metadata_file: ./metadata.ttl
+  delete_graph: false
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: /logs/laDonacion.log
+  rdf_output: /data/partido_del_negocio_vasco/pNegocioVasco.nt
+
+la_donacion_stardog:
+  project_name: 'la_donacion_stardog'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:5820/LaDonacion/update
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+la_donacion_virtuoso:
+  project_name: 'la_donacion_virtuoso'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:8890/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+la_donacion_apache_jena:
+  project_name: 'la_donacion_apache_jena'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:3030/ds/update
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+#Testak egiteko proiektuak
+test_la_donacion:
+  project_name: 'test_la_donacion'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_data_source:
+  project_name: 'test_data_source'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: /errores/
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_named_graph:
+  project_name: 'test_named_graph'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: uriMal
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_run:
+  project_name: 'test_run'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: graphSource/
+  named_graph: http://ehu.eus/
+  run: error
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_triple_store:
+  project_name: 'test_triple_store'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: ./data/ladonacion.es/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: tripleStoreError
+  logs: ./logs/laDonacion.log
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_logs:
+  project_name: 'test_logs'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: noExiste.txt
+  rdf_output: ./data/ladonacion.es/graphLaDonacion.nt
+  images: images
+
+test_rdf_output:
+  project_name: 'test_rdf_output'
+  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  data_source: ./data/ladonacion.es
+  validate: ./graphSource/tests/TestJson2rdf.py
+  named_graph: http://ehu.eus/
+  run: ./procesSource/source/json2rdf.py
+  metadata_file: ./metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/LaDonacion
+  logs: ./logs/laDonacion.log
+  rdf_output: grafoError.nt
+  images: images
