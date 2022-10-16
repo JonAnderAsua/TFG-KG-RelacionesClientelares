@@ -1,4 +1,5 @@
 # TFG-KG-RelacionesClientelares - Tutoriala
+
 README honetan programa hau nola konfigutatzen eta exekutatzen den azaltzen da. Adibide bezala 'la_donacion' proiektua hartu da.
 
 ## Aurkibidea
@@ -25,7 +26,7 @@ Programaren exekuzioarekin hasi baino lehen hurrengo aurrebaldintzak betetzen di
 - Programa exekutatu nahi den terminalean Python interpretatzaile bat instalatuta izatea (gutxienez 3.7 bertsioa).
 - Terminalean proiektu hau klonatuta edukitzea, horretarako exekutatu hurrengo komandoa terminalean:
 ```bash
-git clone -b develop https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
+git clone --recurse-submodules -b develop https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
 ```
 ## YAML fitxategiaren konfigurazioa
 
@@ -71,8 +72,15 @@ pip install -e .
 ```
 Lehenengo komandoarekin _requirements.txt_ fitxategiaren barnean adierazitako moduluak instalatuko dira. Aldiz, bigarrenean, modulu lokalak instalatzen dira.
 ## Programaren exekuzioa 
+_GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
+```bash
+docker build -t graphdb datuBaseak/
+docker build -t bisualizazioa grafoavis/
+cd datuBaseak/
+docker-compose up
+```
 
-Programa exekutatu ahal izateko fitxategi nagusian kokatuta hurrengo komandoa exekutatu behar da:
+Behin hau eginda, programa exekutatu ahal izateko, fitxategi nagusian kokatuta, hurrengo komandoa exekutatu behar da:
 ```bash
 python3 procesSource/source/ejecutador.py [sortutako proiektuaren izena]
 ```
@@ -83,3 +91,5 @@ python3 /procesSource/source/ejecutador.py la_donacion
 ```
 
 **Sartutako proiektua ez bada existitzen programa berak argitaratuko ditu eskuragarri dauden proiektuen izenak.**
+
+Hau egin ostean _http://localhost:5000/bisualizazioa_ atalean sortutako grafoa agertzen da. _SPARQL Endpointa_ ikusteko _URIa http://localhost:5000/yasgui_ da.
