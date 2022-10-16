@@ -26,7 +26,7 @@ Programaren exekuzioarekin hasi baino lehen hurrengo aurrebaldintzak betetzen di
 - Programa exekutatu nahi den terminalean Python interpretatzaile bat instalatuta izatea (gutxienez 3.7 bertsioa).
 - Terminalean proiektu hau klonatuta edukitzea, horretarako exekutatu hurrengo komandoa terminalean:
 ```bash
-git clone --recurse-submodules -b develop https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
+git clone --recurse-submodules https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
 ```
 ## YAML fitxategiaren konfigurazioa
 
