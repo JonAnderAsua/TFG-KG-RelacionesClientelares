@@ -17,6 +17,8 @@ README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. 
 ## Erabilitako teknologiak
 - Python >= 3.7
 - Docker 20.10.7
+- GraphDB 9.7.0 Free Edition (deskargatzeko [SAKATU HEMEN](https://www.ontotext.com/products/graphdb/download/))
+_GraphDBren_ beste bertsio bat izatekotan _Dockerfile_ fitxategian deklaratu behar da.
 
 ## Aurrebaldintzak
 
@@ -72,6 +74,8 @@ pip install -e .
 ```
 Lehenengo komandoarekin _requirements.txt_ fitxategiaren barnean adierazitako moduluak instalatuko dira. Aldiz, bigarrenean, modulu lokalak instalatzen dira.
 ## Programaren exekuzioa 
+Exekuzioa hasi baino lehen _SPARQL Endpointaren URIa_ aldatu behar da, honetarako [datu basearen kontra eskaerak egiteko fitxategian](https://github.com/JonAnderAsua/grafoavis/blob/9a5e041b41208da4233531d3b3997fd672263e0e/public/js/db.js), _uri_ parametroan, nahi den _endpointaren URIa_ jarri behar da. 
+
 _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
 ```bash
 docker build -t graphdb datuBaseak/
@@ -93,3 +97,5 @@ python3 /procesSource/source/ejecutador.py la_donacion
 **Sartutako proiektua ez bada existitzen programa berak argitaratuko ditu eskuragarri dauden proiektuen izenak.**
 
 Hau egin ostean _http://localhost:5000/bisualizazioa_ atalean sortutako grafoa agertzen da. _SPARQL Endpointa_ ikusteko _URIa http://localhost:5000/yasgui_ da.
+
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/jonan_bateria.svg?style=social&label=Follow%20%40jonan_bateria)](https://twitter.com/jonan_bateria)
