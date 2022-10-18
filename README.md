@@ -74,7 +74,7 @@ pip install -e .
 ```
 Lehenengo komandoarekin _requirements.txt_ fitxategiaren barnean adierazitako moduluak instalatuko dira. Aldiz, bigarrenean, modulu lokalak instalatzen dira.
 ## Programaren exekuzioa 
-Exekuzioa hasi baino lehen _SPARQL Endpointaren URIa_ aldatu behar da, honetarako [datu basearen kontra eskaerak egiteko fitxategian](https://github.com/JonAnderAsua/grafoavis/blob/9a5e041b41208da4233531d3b3997fd672263e0e/public/js/db.js), _uri_ parametroan, nahi den _endpointaren URIa_ jarri behar da. 
+Exekuzioa hasi baino lehen _SPARQL Endpointaren URIa_ aldatu behar da, honetarako [datu basearen kontra eskaerak egiteko fitxategian](https://github.com/JonAnderAsua/grafoavis/blob/9a5e041b41208da4233531d3b3997fd672263e0e/public/js/db.js) eta [_YASGUI SPARQL Endpointaren_ fitxategian](https://github.com/JonAnderAsua/grafoavis/blob/master/public/yasgui.html), _uri_ parametroan, nahi den _endpointaren URIa_ jarri behar da. 
 
 _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
 ```bash
