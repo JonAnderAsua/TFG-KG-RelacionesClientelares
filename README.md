@@ -18,7 +18,8 @@ README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. 
 - Python >= 3.7
 - Docker 20.10.7
 - GraphDB 9.7.0 Free Edition (deskargatzeko [SAKATU HEMEN](https://www.ontotext.com/products/graphdb/download/))
-_GraphDBren_ beste bertsio bat izatekotan _Dockerfile_ fitxategian deklaratu behar da.
+
+Deskargatutako _GraphDB_ binarioa datuBaseak/ fitxategiaren barnean egon behar da eta hurrengo formatua jarraitu behar du: _graphdb-$edizioa-$bertsioa-dist.zip_. Kasu honetan bitarraren izena _graphdb-free-9.7.0-dist.zip_, beste bat izatekotan, _Dockerfile_ fitxategian parametroak aldatu behar dira.
 
 ## Aurrebaldintzak
 
