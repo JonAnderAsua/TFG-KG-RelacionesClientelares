@@ -19,7 +19,7 @@ README honetan programa hau nola konfiguratzen eta exekutatzen den azaltzen da. 
 - Docker 20.10.7
 - GraphDB 9.7.0 Free Edition (deskargatzeko [SAKATU HEMEN](https://www.ontotext.com/products/graphdb/download/))
 
-Deskargatutako _GraphDB_ binarioa datuBaseak/ fitxategiaren barnean egon behar da eta hurrengo formatua jarraitu behar du: _graphdb-$edizioa-$bertsioa-dist.zip_. Kasu honetan bitarraren izena _graphdb-free-9.7.0-dist.zip_, beste bat izatekotan, _Dockerfile_ fitxategian parametroak aldatu behar dira.
+Deskargatutako _GraphDB_ binarioa graphDB/ fitxategiaren barnean egon behar da eta hurrengo formatua jarraitu behar du: _graphdb-$edizioa-$bertsioa-dist.zip_. Kasu honetan bitarraren izena _graphdb-free-9.7.0-dist.zip_, beste bat izatekotan, _Dockerfile_ fitxategian parametroak aldatu behar dira.
 
 ## Aurrebaldintzak
 
@@ -80,9 +80,9 @@ Exekuzioa hasi baino lehen _SPARQL Endpointaren URIa_ aldatu behar da, honetarak
 
 _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
 ```bash
-docker build -t graphdb datuBaseak/
+docker build -t graphdb graphDB/
 docker build -t bisualizazioa grafoavis/
-cd datuBaseak/
+
 docker-compose up
 ```
 

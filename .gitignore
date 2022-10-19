@@ -38,5 +38,5 @@ procesSource/__pycache__/
 /data/
 /logs/
 /deepl_api/files/key.txt
-/datuBaseak/graphdb-free-9.7.0-dist.zip
-/datuBaseak/graphdb-data/
+/graphDB/graphdb-free-9.7.0-dist.zip
+/graphDB/graphdb-data/
