@@ -30,6 +30,8 @@ Programaren exekuzioarekin hasi baino lehen hurrengo aurrebaldintzak betetzen di
 - Terminalean proiektu hau klonatuta edukitzea, horretarako exekutatu hurrengo komandoak terminalean:
 ```bash
 git clone --recurse-submodules https://github.com/mikel-egana-aranguren/TFG-KG-RelacionesClientelares
+```
+```bash
 git submodule update --remote --merge
 ```
 ## YAML fitxategiaren konfigurazioa
@@ -72,6 +74,8 @@ Esan beharra dago workspace parametroan prozesatu nahi diren datuen helbidea jar
 Programa exekutatu baino lehen programaren dependentziak instalatu behar dira, horretarako hurrengo komandoak exekutatu behar dira proiektuko fitxategi nagusitik:
 ```bash
 pip install -r requirements.txt
+```
+```bash
 pip install -e .
 ```
 Lehenengo komandoarekin _requirements.txt_ fitxategiaren barnean adierazitako moduluak instalatuko dira. Aldiz, bigarrenean, modulu lokalak instalatzen dira.
@@ -81,9 +85,16 @@ Exekuzioa hasi baino lehen _SPARQL Endpointaren URIa_ aldatu behar da, honetarak
 _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri behar dira. Lehenenngo eta hirugarren kasuetarako _Docker_ irudi propiak sortu behar dira, aldiz, _Trifid_ instantzia martxan jartzeko _docker compose_ komandoaren bitartez egin behar da, honetarako hurrengo komandoak exekutatu behar dira:
 ```bash
 docker build -t graphdb graphDB/
-docker build -t bisualizazioa grafoavis/
-
+```
+```bash
+docker build -t graphdb graphDB/
+```
+```bash
 docker-compose up
+```
+Komando guztiak batean batzeko hurrengo komandoa exekutatu:
+```bash
+docker build -t graphdb graphDB/ && docker build -t graphdb graphDB/ && docker-compose up
 ```
 
 Behin hau eginda, programa exekutatu ahal izateko, fitxategi nagusian kokatuta, hurrengo komandoa exekutatu behar da:
