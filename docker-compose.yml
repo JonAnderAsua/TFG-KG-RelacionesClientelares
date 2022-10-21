@@ -13,8 +13,8 @@ services:
       ports:
          - "8080:8080"
       environment:
-              SPARQL_ENDPOINT_URL: "http://graphdb:7200/repositories/ustelkeria/statemets"
-              DATASET_BASE_URL: "http://localhost:8080/"
+         SPARQL_ENDPOINT_URL: "http://graphdb:7200/repositories/ustelkeria"
+         DATASET_BASE_URL: "http://localhost:8080/"
    bisual:
       image: bisualizazioa
       ports:
