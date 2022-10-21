@@ -18,5 +18,5 @@ services:
    bisual:
       image: bisualizazioa
       ports:
-         - "5000:3000"
+         - "3000:3000"
 
