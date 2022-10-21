@@ -104,7 +104,7 @@ python3 procesSource/source/ejecutador.py [sortutako proiektuaren izena]
 
 Adibidearen kasuan komandoa hurrengoa izango litzateke:
 ```bash
-python3 /procesSource/source/ejecutador.py la_donacion
+python3 procesSource/source/ejecutador.py la_donacion
 ```
 
 **Sartutako proiektua ez bada existitzen programa berak argitaratuko ditu eskuragarri dauden proiektuen izenak.**
