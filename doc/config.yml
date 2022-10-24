@@ -1,6 +1,6 @@
 la_donacion:
   project_name: 'la_donacion'
-  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  workspace: ./
   images: images
   data_source: data/ladonacion.es
   validate: graphSource/tests/TestJson2rdf.py
@@ -14,7 +14,7 @@ la_donacion:
 
 gate_cloud:
   project_name: 'gate_cloud'
-  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares
+  workspace: ./
   images: images
   data_source: /data/partido_del_negocio_vasco/alonsotegi-eraikiz.txt
   validate: graphSource/tests/TestJson2rdf.py
