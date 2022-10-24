@@ -55,11 +55,11 @@ _la_donacion_ proiektuaren kasuan hurrengo konfigurazioa jarri da:
 ```yaml
 la_donacion:
   project_name: 'la_donacion'
-  workspace: /home/jonander/PycharmProjects/TFG-KG-RelacionesClientelares/
+  workspace: ./
   images: images
   data_source: data/ladonacion.es
   validate: graphSource/tests/TestJson2rdf.py
-  named_graph: http://ehu.eus/
+  named_graph: http://localhost:8080/
   run: procesSource/source/json2rdf.py
   metadata_file: metadata.ttl
   delete_graph: true
