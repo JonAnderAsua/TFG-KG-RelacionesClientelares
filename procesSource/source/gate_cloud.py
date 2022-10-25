@@ -90,7 +90,6 @@ class TextToTriple(object):
 
         try:
             res = sparql.queryAndConvert()
-            print(res)
             if not res['results']['bindings']:
                 return self.uri + izena.replace(' ','_')
             else:
@@ -133,6 +132,7 @@ class TextToTriple(object):
                 }
             }
                         '''
+
         sparql = SPARQLWrapper(self.tripleStore)
         sparql.setQuery(eskaera)
         sparql.setReturnFormat(JSON)
@@ -239,7 +239,8 @@ class GateCloud(BezeroaSortu,TextToTriple):
             print('Irudiak deskargatuko dira...')
             for enti in entiIzenak:
                 print(enti + ' elementuaren irudia deskargatuko da...')
-                irudiaDeskargatu(enti,procesador)
+                irudi = irudiak_deskargatu.IrudiakDeskargatu(enti,procesador)
+                irudi.irudiaDeskargatu()
 
 
         fitx_prog = fitxategia_sortu.Grafo_fitxategia_sortu(procesador.rdf_output,grafoa)

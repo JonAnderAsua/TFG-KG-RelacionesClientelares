@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ScriptGoogleImagesDownloader" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/google-images-download" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/grafoavis" vcs="Git" />
   </component>
 </project>

@@ -16,15 +16,15 @@ gate_cloud:
   project_name: 'gate_cloud'
   workspace: ./
   images: images
-  data_source: /data/partido_del_negocio_vasco/alonsotegi-eraikiz.txt
+  data_source: data/partido_del_negocio_vasco/alonsotegi-eraikiz.txt
   validate: graphSource/tests/TestJson2rdf.py
   named_graph: http://ehu.eus/
-  run: /procesSource/source/gate_cloud.py
+  run: procesSource/source/gate_cloud.py
   metadata_file: ./metadata.ttl
   delete_graph: false
-  triple_store: http://localhost:7200/repositories/LaDonacion
-  logs: /logs/laDonacion.log
-  rdf_output: /data/partido_del_negocio_vasco/pNegocioVasco.nt
+  triple_store: http://localhost:7200/repositories/ustelkeria
+  logs: logs/laDonacion.log
+  rdf_output: data/partido_del_negocio_vasco/pNegocioVasco.nt
 
 la_donacion_stardog:
   project_name: 'la_donacion_stardog'
