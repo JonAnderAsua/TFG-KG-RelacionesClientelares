@@ -6,9 +6,10 @@ import os
 
 
 class IrudiakDeskargatu:
-    def __init__(self, izena):
+    def __init__(self, izena, proiektua):
 
         self.izena = izena
+        self.irudiPath = proiektua.images
         self.irudiIzena = self.izena.replace(' ','_')
         self.response = google_images_download.googleimagesdownload()
         self.arguments = {"keywords": unidecode.unidecode(self.izena), "limit": 1, "print_urls":True}
@@ -16,7 +17,7 @@ class IrudiakDeskargatu:
     def irudiaDeskargatu(self):
         try:
             self.paths = self.response.download(self.arguments)
-            os.system('mv downloads/"' + self.izena + '"/* grafoavis/public/images/' + self.irudiIzena+'.jpg')
+            os.system('mv downloads/"' + self.izena + '"/* ' + self.irudiPath + '/' +self.irudiIzena+'.jpg')
             print(self.izena + '(r)en irudia deskargatu da')
 
         except:

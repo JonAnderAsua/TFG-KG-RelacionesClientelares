@@ -1,3 +1,4 @@
+#Txantiloia
 proiektu_izena:
   project_name: #Proiektuaren izena
   workspace: #Lan eremuaren patha
@@ -11,3 +12,18 @@ proiektu_izena:
   triple_store: #Triple storearen SPARQL Endpointera apuntatzen duen uria
   logs: #Lan eremuaren barnean logak egongo diren karpeta
   rdf_output: #Lan eremuaren barnean rdf fitxategia
+
+#Adibidetarako proiektua
+la_donacion:
+  project_name: 'la_donacion'
+  workspace: ./
+  images: grafoavis/public/images
+  data_source: data/ladonacion.es
+  validate: graphSource/tests/TestJson2rdf.py
+  named_graph: http://localhost:8080/
+  run: procesSource/source/json2rdf.py
+  metadata_file: metadata.ttl
+  delete_graph: true
+  triple_store: http://localhost:7200/repositories/ustelkeria
+  logs: logs/laDonacion.log
+  rdf_output: data/ladonacion.es/graphLaDonacion.nt
