@@ -109,6 +109,6 @@ python3 procesSource/source/ejecutador.py la_donacion
 
 **Sartutako proiektua ez bada existitzen programa berak argitaratuko ditu eskuragarri dauden proiektuen izenak.**
 
-Hau egin ostean _http://localhost:5000/bisualizazioa_ atalean sortutako grafoa agertzen da. _SPARQL Endpointa_ ikusteko _URIa http://localhost:5000/yasgui_ da.
+Hau egin ostean _http://localhost:3000/bisualizazioa_ atalean sortutako grafoa agertzen da. _SPARQL Endpointa_ ikusteko _URIa http://localhost:3000/yasgui_ da.
 
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/jonan_bateria.svg?style=social&label=Follow%20%40jonan_bateria)](https://twitter.com/jonan_bateria)
