@@ -87,14 +87,14 @@ _GraphDB_ eta _Trifid_ instantziak eta bisualizaziorako programa martxan jarri b
 docker build -t graphdb graphDB/
 ```
 ```bash
-docker build -t graphdb graphDB/
+docker build -t bisualizazioa grafoavis/
 ```
 ```bash
 docker-compose up
 ```
 Komando guztiak batean batzeko hurrengo komandoa exekutatu:
 ```bash
-docker build -t graphdb graphDB/ && docker build -t graphdb graphDB/ && docker-compose up
+docker build -t graphdb graphDB/ && docker build -t bisualizazioa grafoavis/ && docker-compose up
 ```
 
 Behin hau eginda, programa exekutatu ahal izateko, fitxategi nagusian kokatuta, hurrengo komandoa exekutatu behar da:
