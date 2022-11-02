@@ -2,16 +2,16 @@ FROM adoptopenjdk/openjdk12:alpine
 
 RUN apk update && apk add -u bash 
 
-ARG VERSION=9.7.0
+ARG VERSION=10.0.3
 ARG EDITION=free
 
 COPY graphdb-${EDITION}-${VERSION}-dist.zip /opt/
 RUN cd /opt/ \
         && unzip graphdb-${EDITION}-${VERSION}-dist.zip \
-        && rm graphdb-${EDITION}-${VERSION}-dist.zip \
-        && rm /opt/graphdb-${EDITION}-${VERSION}/bin/*.cmd
+        && rm graphdb-${VERSION}-dist.zip \
+        && rm /opt/graphdb-${VERSION}/bin/*.cmd
 
-RUN ln -s /opt/graphdb-${EDITION}-${VERSION} /opt/graphdb && \
+RUN ln -s /opt/graphdb-${VERSION} /opt/graphdb && \
     mkdir -p /data && \
     ln -s /data /opt/graphdb/data
 
