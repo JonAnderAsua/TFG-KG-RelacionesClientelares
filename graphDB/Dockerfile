@@ -17,4 +17,4 @@ RUN ln -s /opt/graphdb-${VERSION} /opt/graphdb && \
 
 EXPOSE 7200
 
-ENTRYPOINT ["/opt/graphdb/bin/graphdb"]
+ENTRYPOINT /opt/graphdb/bin/graphdb -Dgraphdb.workbench.cors.enable=true -Dgraphdb.workbench.cors.origin=*
